@@ -53,7 +53,7 @@ public class Professor implements Serializable, Autenticavel {
      * @see String
      * @see Boolean
      */
-    public Professor (String nome, String materia, String senha, String usuario) {
+    public Professor (String nome, String materia,String usuario, String senha) {
 
         this.materia = materia;
         this.nome = nome;
@@ -212,15 +212,22 @@ public class Professor implements Serializable, Autenticavel {
 
         if (usuario == null) throw new NullPointerException("\nERRO: O usuário não pode ser nulo!");
         if (!(getAutenticacao())) throw new IllegalStateException("\nERRO: O usuário precisa estar autenticado para se alterar o nome de usuário!");
+        if (this.getUsuario().equals(usuario)) throw new IllegalArgumentException("\nERRO: O nome de usuário inserido deve ser diferente do atual!");
         if (Professor.usuarios.containsKey(usuario)) throw new IllegalArgumentException("\nERRO: O nome de usuário inseriodo já existe!");
 
-        Period periodo = Period.between(this.getUltimaMudanca(), LocalDate.now());
+        if (this.getUltimaMudanca() != null) {
 
-        if (periodo.getDays() < 30) throw new RejectedExecutionException("\nERRO: Não é possivel trocar de nome de usuário pois fazem menos de 30 dias que desde que você alterou seu nome de usuário pela última vez.");
+            Period periodo = Period.between(this.getUltimaMudanca(), LocalDate.now());
+
+            if (periodo.getDays() < 30) throw new RejectedExecutionException("\nERRO: Não é possivel trocar de nome de usuário pois fazem menos de 30 dias que desde que você alterou seu nome de usuário pela última vez.");
+
+        }
 
         this.setPermissaoNovoUsuario();
         this.setUsuario(usuario);
         this.setUltimaMudanca();
+
+        System.out.println("\nSeu nome de usuário foi redefinido com sucesso!");
 
     }
 
@@ -285,7 +292,7 @@ public class Professor implements Serializable, Autenticavel {
         if (!getNovaSenha()) throw new RejectedExecutionException("\nERRO: Você não tem permissão para alterar a senha!");
         if (senha == null) throw new NullPointerException("\nERRO: A senha não pode ser nula!");
         setSenha(senha);
-        System.out.println("Sua senha foi redefinida com sucesso!");
+        System.out.println("\nSua senha foi redefinida com sucesso!");
 
     }
 
@@ -339,6 +346,7 @@ public class Professor implements Serializable, Autenticavel {
         if (!(this.getSenha().equals(s)) && (this.getUsuario().equals(u))) throw new RejectedExecutionException("\nERRO: A senha ou o usuário estão incorretos!");
 
         this.autenticado = Boolean.TRUE;
+        System.out.println("\nAutenticado com sucesso!");
         return Boolean.TRUE;
 
     }

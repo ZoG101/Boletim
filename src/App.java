@@ -9,7 +9,7 @@ public class App {
 
     public static void main(String[] args) {
 
-        Professor professor = new Professor("Marcos", "Matemática", "asdfS1", "Zinc");
+        Professor professor = new Professor("Marcos", "Matemática", "Zinc","asdfS1");
         Aluno aluno = new Aluno("Davi Campolina", "POSGRADUACAO");
         Boletim nota = new Boletim(aluno, professor);
 
@@ -29,11 +29,24 @@ public class App {
 
         try (Scanner scan = new Scanner(System.in)) {
 
+            System.out.println("\nDigite seu usuário:");
+            String logUsuario = scan.next();
+
+            System.out.println("\nDigite sua senha:");
+            String logSenha = scan.next();
+
+            System.out.println(professor.autentica(logUsuario, logSenha));
+
+            System.out.println("\nDigite seu novo usuário: ");
+            String novoUsuario = scan.next();
+
+            professor.mudarUsuario(novoUsuario);
+
             Integer tokenDigitado = Integer.valueOf(scan.nextInt());
 
             professor.solicitaNovaSenha(token, tokenDigitado);
 
-            System.out.println("A senha deve conter entre 6 a 12 caracteres, deve conter pelo menos uma letra maiúscula, um número e não deve conter símbolos.");
+            System.out.println("\nA senha deve conter entre 6 a 12 caracteres, deve conter pelo menos uma letra maiúscula, um número e não deve conter símbolos.");
 
             String novaSenha = scan.next();
 
