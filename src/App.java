@@ -31,7 +31,13 @@ public class App {
 
             Integer tokenDigitado = Integer.valueOf(scan.nextInt());
 
-            professor.redefinirSenha(token, tokenDigitado, "Agdfer2");
+            professor.solicitaNovaSenha(token, tokenDigitado);
+
+            System.out.println("A senha deve conter entre 6 a 12 caracteres, deve conter pelo menos uma letra maiúscula, um número e não deve conter símbolos.");
+
+            String novaSenha = scan.next();
+
+            professor.redefinirSenha(novaSenha);
             
         } catch (Exception e) {
             

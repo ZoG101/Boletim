@@ -18,7 +18,7 @@ import security.Token;
  * contém suas informações básicas e de maior interesse.
  * 
  * @author Davi Campolina Leite Morato
- * @version 1.0
+ * @version 1.1
  * @see Aluno
  * @see Turma
  * @see Serializable
@@ -31,6 +31,7 @@ public class Professor implements Serializable, Autenticavel {
     private String materia;
     private String nome;
     private String senha;
+    private Boolean novaSenha;
     private List<Turma> turmas = new ArrayList<Turma>();
 
     /**
@@ -40,12 +41,14 @@ public class Professor implements Serializable, Autenticavel {
      * @param nome
      * @param materia
      * @see String
+     * @see Boolean
      */
     public Professor (String nome, String materia, String senha) {
 
         this.materia = materia;
         this.nome = nome;
         this.senha = new String();
+        this.novaSenha = Boolean.TRUE;
         setSenha(senha);
 
     }
@@ -100,6 +103,44 @@ public class Professor implements Serializable, Autenticavel {
     }
 
     /**
+     * Retorna o estado de permissão do usuário para uma nova senha ser 
+     * gravada ou não.
+     * 
+     * @return {@value true} se o usuário tiver permissão;
+     *         {@value false} se o usuário não tiver permissão.
+     * @see Boolean
+     */
+    private Boolean getNovaSenha() {
+
+        return novaSenha.booleanValue();
+
+    }
+
+    /**
+     * Método privado auxiliar para manipular e dar adequadamente a
+     * permissão para o usuário trocar de senha.
+     * 
+     * @see Boolean
+     */
+    private void setPermissao () {
+
+        this.novaSenha = Boolean.TRUE;
+
+    }
+
+    /**
+     * Método privado auxiliar para manipular e retirar adequadamente a
+     * permissão para o usuário não trocar de senha.
+     * 
+     * @see Boolean
+     */
+    private void unsetPermissao () {
+
+        this.novaSenha = Boolean.FALSE;
+
+    }
+
+    /**
      * Grava a senha do usuário.
      * 
      * @throws NullPointerException
@@ -113,13 +154,43 @@ public class Professor implements Serializable, Autenticavel {
         if (this.senha.equals(senha)) throw new IllegalArgumentException("\nERRO: A senha não pode ser igual a atual!");
         if (!(this.verificaSenha(senha))) throw new IllegalArgumentException("\nERRO: A senha deve conter entre 6 a 12 caracteres, deve conter pelo menos uma letra maiúscula, um número e não deve conter símbolos.");
         this.senha = senha;
+        this.unsetPermissao();
 
     }
 
-    public void redefinirSenha (Token token, Integer tokenPassado, String senha) {
+    /**
+     * Método de redefiniçãode senha que recebe um {@code Token}, um {@code Integer} que
+     * se refere ao token digitado pelo usuário para conferir se o usuário tem a permissão
+     * para redefinir a senha.
+     * 
+     * @param token
+     * @param tokenPassado
+     * @param senha
+     * @throws NullPointerException
+     * @throws RejectedExecutionException
+     * @see Token
+     * @see Integer
+     */
+    public void solicitaNovaSenha (Token token, Integer tokenPassado) {
 
         if (token == null || tokenPassado == null) throw new NullPointerException("\nERRO: Nem o token e nem o token passado podem ser nulos!");
         if (!(token.verificaToken(tokenPassado))) throw new RejectedExecutionException("\nERRO: Você errou o token de redefinição de 6 dígitos!");
+        this.setPermissao();
+
+    }
+
+    /**
+     * Método que redefine a {@code senha} do usuário caso ele tenha a permissão para tal.
+     * 
+     * @param senha
+     * @throws RejectedExecutionException
+     * @throws NullPointerException
+     * @see String
+     */
+    public void redefinirSenha (String senha) {
+
+        if (!getNovaSenha()) throw new RejectedExecutionException("\nERRO: Você não tem permissão para alterar a senha!");
+        if (senha == null) throw new NullPointerException("\nERRO: A senha não pode ser nula!");
         setSenha(senha);
         System.out.println("Sua senha foi redefinida com sucesso!");
 
