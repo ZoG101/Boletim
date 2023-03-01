@@ -5,7 +5,7 @@ package security;
  * que a implementão.
  * 
  * @author Davi Campolina Leite Morato
- * @version 1.0
+ * @version 1.1
  */
 public interface Autenticavel {
     
@@ -16,6 +16,8 @@ public interface Autenticavel {
      * @param s
      * @return {@value Boolean}
      */
+    public Boolean autentica (String u, String s);
+
     public Boolean autentica (String s);
 
 }

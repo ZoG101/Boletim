@@ -1,10 +1,13 @@
 package models;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Scanner;
+import java.util.Map;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,7 +21,7 @@ import security.Token;
  * contém suas informações básicas e de maior interesse.
  * 
  * @author Davi Campolina Leite Morato
- * @version 1.1
+ * @version 1.2
  * @see Aluno
  * @see Turma
  * @see Serializable
@@ -31,8 +34,13 @@ public class Professor implements Serializable, Autenticavel {
     private String materia;
     private String nome;
     private String senha;
+    private String usuario;
     private Boolean novaSenha;
+    private Boolean novoUsuario;
+    private Boolean autenticado;
+    private LocalDate ultimaMudanca;
     private List<Turma> turmas = new ArrayList<Turma>();
+    private static Map<String, Professor> usuarios = new HashMap<>();
 
     /**
      * Construtor da classe para instânciar o objeto {@code Professor}
@@ -40,16 +48,21 @@ public class Professor implements Serializable, Autenticavel {
      * 
      * @param nome
      * @param materia
+     * @param senha
+     * @param usuario
      * @see String
      * @see Boolean
      */
-    public Professor (String nome, String materia, String senha) {
+    public Professor (String nome, String materia, String senha, String usuario) {
 
         this.materia = materia;
         this.nome = nome;
         this.senha = new String();
         this.novaSenha = Boolean.TRUE;
+        this.novoUsuario = Boolean.TRUE;
+        this.autenticado = Boolean.FALSE;
         setSenha(senha);
+        setUsuario(usuario);
 
     }
 
@@ -89,6 +102,12 @@ public class Professor implements Serializable, Autenticavel {
 
     }
 
+    private String getUsuario () {
+
+        return this.usuario;
+
+    }
+
     /**
      * Retorna uma {@code List} contendo as turmas do professor.
      * 
@@ -110,9 +129,33 @@ public class Professor implements Serializable, Autenticavel {
      *         {@value false} se o usuário não tiver permissão.
      * @see Boolean
      */
-    private Boolean getNovaSenha() {
+    private Boolean getNovaSenha () {
 
         return novaSenha.booleanValue();
+
+    }
+
+    private Boolean getNovoUsuario() {
+
+        return this.novoUsuario.booleanValue();
+
+    }
+
+    public Boolean getAutenticacao () {
+
+        return this.autenticado.booleanValue();
+
+    }
+
+    private LocalDate getUltimaMudanca() {
+
+        return ultimaMudanca;
+
+    }
+
+    private void setUltimaMudanca () {
+
+        this.ultimaMudanca = LocalDate.now();
 
     }
 
@@ -122,9 +165,15 @@ public class Professor implements Serializable, Autenticavel {
      * 
      * @see Boolean
      */
-    private void setPermissao () {
+    private void setPermissaoNovaSenha () {
 
         this.novaSenha = Boolean.TRUE;
+
+    }
+
+    private void setPermissaoNovoUsuario () {
+
+        this.novoUsuario = Boolean.TRUE;
 
     }
 
@@ -134,9 +183,53 @@ public class Professor implements Serializable, Autenticavel {
      * 
      * @see Boolean
      */
-    private void unsetPermissao () {
+    private void unsetPermissaoNovaSenha () {
 
         this.novaSenha = Boolean.FALSE;
+
+    }
+
+    private void unsetPermissaoNovoUsuario () {
+
+        this.novoUsuario = Boolean.FALSE;
+
+    }
+
+    private void setUsuario (String usuario) {
+
+        if (usuario == null) throw new NullPointerException("\nERRO: O usuário não pode ser nulo!");
+        if (Professor.usuarios.containsKey(usuario)) throw new IllegalArgumentException("\nERRO: O nome de usuário inseriodo já existe!");
+        if (!(getNovoUsuario())) throw new IllegalStateException("\nERRO: Você não tem permissão para auterar o nome de usuário!");
+        if (!(this.verificaUsuário(usuario))) throw new IllegalArgumentException("\nERRO: O nome de usuário não pode conter símbolos e deve ter pelo menos 4 caracteres!");
+
+        this.addUsuario(usuario);
+        this.usuario = usuario;
+        this.unsetPermissaoNovoUsuario();
+
+    }
+
+    public void mudarUsuario (String usuario) {
+
+        if (usuario == null) throw new NullPointerException("\nERRO: O usuário não pode ser nulo!");
+        if (!(getAutenticacao())) throw new IllegalStateException("\nERRO: O usuário precisa estar autenticado para se alterar o nome de usuário!");
+        if (Professor.usuarios.containsKey(usuario)) throw new IllegalArgumentException("\nERRO: O nome de usuário inseriodo já existe!");
+
+        Period periodo = Period.between(this.getUltimaMudanca(), LocalDate.now());
+
+        if (periodo.getDays() < 30) throw new RejectedExecutionException("\nERRO: Não é possivel trocar de nome de usuário pois fazem menos de 30 dias que desde que você alterou seu nome de usuário pela última vez.");
+
+        this.setPermissaoNovoUsuario();
+        this.setUsuario(usuario);
+        this.setUltimaMudanca();
+
+    }
+
+    private void addUsuario (String usuario) {
+
+        if (usuario == null) throw new NullPointerException("\nERRO: O usuário não pode ser nulo!");
+        if (Professor.usuarios.containsKey(usuario)) throw new IllegalArgumentException("\nERRO: O nome de usuário inseriodo já existe!");
+
+        Professor.usuarios.put(usuario, this);
 
     }
 
@@ -154,7 +247,7 @@ public class Professor implements Serializable, Autenticavel {
         if (this.senha.equals(senha)) throw new IllegalArgumentException("\nERRO: A senha não pode ser igual a atual!");
         if (!(this.verificaSenha(senha))) throw new IllegalArgumentException("\nERRO: A senha deve conter entre 6 a 12 caracteres, deve conter pelo menos uma letra maiúscula, um número e não deve conter símbolos.");
         this.senha = senha;
-        this.unsetPermissao();
+        this.unsetPermissaoNovaSenha();
 
     }
 
@@ -175,7 +268,7 @@ public class Professor implements Serializable, Autenticavel {
 
         if (token == null || tokenPassado == null) throw new NullPointerException("\nERRO: Nem o token e nem o token passado podem ser nulos!");
         if (!(token.verificaToken(tokenPassado))) throw new RejectedExecutionException("\nERRO: Você errou o token de redefinição de 6 dígitos!");
-        this.setPermissao();
+        this.setPermissaoNovaSenha();
 
     }
 
@@ -196,6 +289,16 @@ public class Professor implements Serializable, Autenticavel {
 
     }
 
+    public void redefinirSenhaAutenticado (String senha) {
+
+        if (!getAutenticacao()) throw new RejectedExecutionException("\nERRO: Você não tem permissão para alterar a senha!");
+        if (senha == null) throw new NullPointerException("\nERRO: A senha não pode ser nula!");
+        this.setPermissaoNovaSenha();
+        setSenha(senha);
+        System.out.println("Sua senha foi redefinida com sucesso!");
+
+    }
+
     /**
      * Método auxiliar para verificar se a senha está conforme o 
      * padrão de sengurança de senha permitido.
@@ -209,19 +312,45 @@ public class Professor implements Serializable, Autenticavel {
         Pattern formato = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?!.*[ !@#$%^&*_=+-]).{6,12}$");
         Matcher confirma = formato.matcher(s);
 
-        if(confirma.matches()) return true;
-        return false;
+        if(confirma.matches()) return Boolean.TRUE;
+        return Boolean.FALSE;
+
+    }
+
+    private Boolean verificaUsuário (String u) {
+
+        Pattern formato = Pattern.compile("^(?!.*[ !@#$%^&*_=+-]).{4,14}$");
+        Matcher confirma = formato.matcher(u);
+
+        if (confirma.matches()) return Boolean.TRUE;
+        return Boolean.FALSE;
 
     }
 
     /**
-     * Autentica o usuário verificando se a senha inserida está conforme a senha gravada.
+     * Autentica o usuário verificando se a senha e usuário inserido 
+     * está conforme a senha e usuário gravados.
      * 
      */
     @Override
-    public Boolean autentica(String s) {
+    public Boolean autentica (String u, String s) {
         
-        return this.getSenha().equals(s);
+        if ((s == null) || (u == null)) throw new NullPointerException("\nERRO: A senha e usuário não podem ser nulos!");
+        if (!(this.getSenha().equals(s)) && (this.getUsuario().equals(u))) throw new RejectedExecutionException("\nERRO: A senha ou o usuário estão incorretos!");
+
+        this.autenticado = Boolean.TRUE;
+        return Boolean.TRUE;
+
+    }
+
+    @Override
+    public Boolean autentica (String s) {
+
+        if (s == null) throw new NullPointerException("\nERRO: A senha não pode ser nula!");
+        if (!(getAutenticacao())) throw new IllegalStateException("\nERRO: Usuário tem que estar autenticado para acessar esta área!");
+        if (!(this.getSenha().equals(s))) throw new RejectedExecutionException("\nERRO: A senha está incorreta!");
+
+        return Boolean.TRUE;
 
     }
     

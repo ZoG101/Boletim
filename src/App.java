@@ -9,7 +9,7 @@ public class App {
 
     public static void main(String[] args) {
 
-        Professor professor = new Professor("Marcos", "Matemática", "asdfS1");
+        Professor professor = new Professor("Marcos", "Matemática", "asdfS1", "Zinc");
         Aluno aluno = new Aluno("Davi Campolina", "POSGRADUACAO");
         Boletim nota = new Boletim(aluno, professor);
 
