@@ -9,10 +9,6 @@ import java.util.Random;
  * 
  * @author Davi Campolina Leite Morato
  * @version 1.1
- * @see Random
- * @see Integer
- * @see String
- * @see Boolean
  */
 public final class Token {
 

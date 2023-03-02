@@ -102,6 +102,12 @@ public class Professor implements Serializable, Autenticavel {
 
     }
 
+    /**
+     * Método privado auxiliar para retornar o
+     * nome de usuário.
+     * 
+     * @return {@value usuario}
+     */
     private String getUsuario () {
 
         return this.usuario;
@@ -135,24 +141,67 @@ public class Professor implements Serializable, Autenticavel {
 
     }
 
+    /**
+     * Método auxiliar para retornar a
+     * permissão de troca de nome de
+     * usuário.
+     * 
+     * @return {@value true} Se tiver permissão para trocar de nome de usuário;
+     *         {@value false} Se não tiver permissão para trocar de nome de usuário.
+     * @see Boolean
+     */
     private Boolean getNovoUsuario() {
 
         return this.novoUsuario.booleanValue();
 
     }
 
+    /**
+     * Retorna o estado de autenticação de um 
+     * usuário.
+     * 
+     * @return {@value true} Se o usuário estiver autenticado;
+     *         {@value false} Se não estiver autenticado.
+     * @see Boolean
+     */
     public Boolean getAutenticacao () {
 
         return this.autenticado.booleanValue();
 
     }
 
+    /**
+     * Método auxiliar que retorna a última mudança 
+     * de nome de usuário através de um {@code LocalDate}.
+     * 
+     * @return {@value ultimaMudanca}
+     * @see LocalDate
+     */
     private LocalDate getUltimaMudanca() {
 
         return ultimaMudanca;
 
     }
 
+    /**
+     * Retorna os usuários em um {@code Map} não modificável.
+     * 
+     * @return {@value usuarios}
+     * @see Map
+     * @see Collections
+     */
+    public static Map<String, Professor> getUsuarios () {
+
+        return Collections.unmodifiableMap(Professor.usuarios);
+
+    }
+
+    /**
+     * Método auxiliar para marcar a data de uma nova mudança
+     * no nome de usuário.
+     * 
+     * @see LocalDate
+     */
     private void setUltimaMudanca () {
 
         this.ultimaMudanca = LocalDate.now();
@@ -171,6 +220,12 @@ public class Professor implements Serializable, Autenticavel {
 
     }
 
+    /**
+     * Método auxiliar para dar permissão de troca de nome 
+     * de usuário.
+     * 
+     * @see Boolean
+     */
     private void setPermissaoNovoUsuario () {
 
         this.novoUsuario = Boolean.TRUE;
@@ -189,12 +244,28 @@ public class Professor implements Serializable, Autenticavel {
 
     }
 
+    /**
+     * Método auxiliar para retirar a permissão de troca de nome 
+     * de usuário.
+     * 
+     * @see Boolean
+     */
     private void unsetPermissaoNovoUsuario () {
 
         this.novoUsuario = Boolean.FALSE;
 
     }
 
+    /**
+     * Método auxiliar para gravar um novo nome de usuário no sistema
+     * garantindo todas as verificações necessárias.
+     * 
+     * @param usuario
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
+     * @throws IllegalStateException
+     * @see String
+     */
     private void setUsuario (String usuario) {
 
         if (usuario == null) throw new NullPointerException("\nERRO: O usuário não pode ser nulo!");
@@ -208,6 +279,18 @@ public class Professor implements Serializable, Autenticavel {
 
     }
 
+    /**
+     * Método para trocar o nome de usuário garantindo as verificações necessárias.
+     * 
+     * @param usuario
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
+     * @throws IllegalStateException
+     * @throws RejectedExecutionException
+     * @see String
+     * @see Period
+     * @see LocalDate
+     */
     public void mudarUsuario (String usuario) {
 
         if (usuario == null) throw new NullPointerException("\nERRO: O usuário não pode ser nulo!");
@@ -231,6 +314,16 @@ public class Professor implements Serializable, Autenticavel {
 
     }
 
+    /**
+     * Método auxiliar para adicionar um nome de usuário ao {@code Map}
+     * junto com seu usuário e execuatar as verificações necessárias antes
+     * das midificações.
+     * 
+     * @param usuario
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
+     * @see Map
+     */
     private void addUsuario (String usuario) {
 
         if (usuario == null) throw new NullPointerException("\nERRO: O usuário não pode ser nulo!");
@@ -241,7 +334,7 @@ public class Professor implements Serializable, Autenticavel {
     }
 
     /**
-     * Grava a senha do usuário.
+     * Método auxiliar para gravar a senha do usuário.
      * 
      * @throws NullPointerException
      * @throws IllegalArgumentException
@@ -296,6 +389,14 @@ public class Professor implements Serializable, Autenticavel {
 
     }
 
+    /**
+     * Método para redefinir a senha com o usuário autenticado.
+     * 
+     * @param senha
+     * @throws RejectedExecutionException
+     * @throws NullPointerException
+     * @see String
+     */
     public void redefinirSenhaAutenticado (String senha) {
 
         if (!getAutenticacao()) throw new RejectedExecutionException("\nERRO: Você não tem permissão para alterar a senha!");
@@ -313,6 +414,10 @@ public class Professor implements Serializable, Autenticavel {
      * @param s
      * @return {@value true} se a senha estiver conforme o padrão de sengurança de senha;
      *         {@value false} se a senha estiver fora do padrão de sengurança de senha.
+     * @see Boolean
+     * @see String
+     * @see Pattern
+     * @see Matcher
      */
     private Boolean verificaSenha (String s) {
 
@@ -324,6 +429,18 @@ public class Professor implements Serializable, Autenticavel {
 
     }
 
+    /**
+     * Método auxiliar que verifica se o nome de usuário inserido para
+     * cadastro ou troca está de acordo com as regras da instituição.
+     * 
+     * @param u
+     * @return {@value true} se o nome de usuário estiver de acordo com as regras da instituição;
+     *         {@value false} se o nome de usuário não estiver de acordo com as regras da instituição.
+     * @see Boolean
+     * @see String
+     * @see Pattern
+     * @see Matcher
+     */
     private Boolean verificaUsuário (String u) {
 
         Pattern formato = Pattern.compile("^(?!.*[ !@#$%^&*_=+-]).{4,14}$");
@@ -338,6 +455,10 @@ public class Professor implements Serializable, Autenticavel {
      * Autentica o usuário verificando se a senha e usuário inserido 
      * está conforme a senha e usuário gravados.
      * 
+     * @throws NullPointerException
+     * @throws RejectedExecutionException
+     * @see Boolean
+     * @see String
      */
     @Override
     public Boolean autentica (String u, String s) {
@@ -351,6 +472,17 @@ public class Professor implements Serializable, Autenticavel {
 
     }
 
+    /**
+     * Autentica o usuário verificando se a senha inserida 
+     * está conforme a senha gravados. É um método sobrecarregado para
+     * caso o usuário já esteja autenticado porém a senha precisa ser 
+     * confirmada para utilizar alguma funcionalidade interna do sistema.
+     * 
+     * @throws NullPointerException
+     * @throws RejectedExecutionException
+     * @see Boolean
+     * @see String
+     */
     @Override
     public Boolean autentica (String s) {
 
