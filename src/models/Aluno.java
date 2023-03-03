@@ -15,12 +15,11 @@ import java.util.List;
  * @see Turma
  * @see Serializable
  */
-public class Aluno implements Serializable {
+public class Aluno extends Usuario {
 
     private static final long serialVersionUID = 1L;
 
     private List<Boletim> boletins = new ArrayList<Boletim>();
-    private String nome;
     private String nivel;
 
     /**
@@ -32,21 +31,10 @@ public class Aluno implements Serializable {
      * @param nivel
      * @see String
      */
-    public Aluno (String nome, String nivel) {
+    public Aluno (String nome, String sobrenome, String cpf, String usuario, String senha, String nivel) {
 
-        this.nome = nome;
+        super(nome, sobrenome, cpf, usuario, senha);
         this.nivel = nivel;
-
-    }
-
-    /**
-     * Retorna o {@code nome} do {@code Aluno}.
-     * 
-     * @return {@value nome}
-     */
-    public String getNome () {
-
-        return this.nome;
 
     }
 
