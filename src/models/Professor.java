@@ -1,11 +1,8 @@
 package models;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import security.Autenticavel;
 
 /**
  * A classe {@code Professor} é feita como uma abstração
@@ -13,11 +10,10 @@ import security.Autenticavel;
  * contém suas informações básicas e de maior interesse.
  * 
  * @author Davi Campolina Leite Morato
- * @version 1.2
+ * @version 1.3
+ * @see Usuario
  * @see Aluno
  * @see Turma
- * @see Serializable
- * @see Autenticavel
  */
 public class Professor extends Usuario {
 
@@ -37,9 +33,9 @@ public class Professor extends Usuario {
      * @see String
      * @see Boolean
      */
-    public Professor (String nome, String sobrenome, String cpf, String usuario, String senha, String materia) {
+    public Professor (String nome, String sobrenome, String cpf, String telefone, String email, String usuario, String senha, String materia) {
 
-        super(nome, sobrenome, cpf, usuario, senha);
+        super(nome, sobrenome, cpf, telefone, email, usuario, senha);
         this.materia = materia;
 
     }

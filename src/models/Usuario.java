@@ -13,6 +13,19 @@ import java.util.regex.Pattern;
 import security.Autenticavel;
 import security.Token;
 
+/**
+ * A classe {@code Usuario} é abstrata e feita para gerenciar
+ * todos os aspectos de usuário que uma conta pode ter, verificá-los,
+ * autentica-lo, administra-los e modifica-los.
+ * 
+ * @author Davi Campolina Leite Morato
+ * @version 1.0
+ * @see Professor
+ * @see Aluno
+ * @see Turma
+ * @see Serializable
+ * @see Autenticavel
+ */
 public abstract class Usuario implements Serializable, Autenticavel {
 
     private static final long serialVersionUID = 1L;
@@ -22,6 +35,8 @@ public abstract class Usuario implements Serializable, Autenticavel {
     private String senha;
     private String usuario;
     private String cpf;
+    private String telefone;
+    private String email;
     private Boolean novaSenha;
     private Boolean novoUsuario;
     private Boolean autenticado;
@@ -39,11 +54,19 @@ public abstract class Usuario implements Serializable, Autenticavel {
      * @see String
      * @see Boolean
      */
-    public Usuario (String nome, String sobrenome, String cpf, String usuario, String senha) {
+    public Usuario (String nome, String sobrenome, String cpf, String telefone, String email, String usuario, String senha) {
+
+        if (!(this instanceof Aluno) && (cpf == null)) throw new RejectedExecutionException("\nERRO: Somente um aluno pode não ter um CPF!");
+        if ((telefone == null) && (email == null)) throw new RejectedExecutionException("\nERRO: Você deve adicionar pelo menos um meio de contato!");
+        if (email != null) if ((!this.verificaEmail(email))) throw new IllegalArgumentException("\nERRO: E-mail inválido!");
+
+        
 
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.cpf = cpf;
+        this.telefone = telefone;
+        this.email = email;
         this.senha = new String();
         this.novaSenha = Boolean.TRUE;
         this.novoUsuario = Boolean.TRUE;
@@ -65,12 +88,24 @@ public abstract class Usuario implements Serializable, Autenticavel {
 
     }
 
+    /**
+     * Retorna o {@code sobrenome} do usuário.
+     * 
+     * @return {@value sobrenome}
+     * @see String
+     */
     public String getSobrenome () {
 
         return sobrenome;
 
     }
 
+    /**
+     * retorna o nome completo do usuário.
+     * 
+     * @return {@value nomeCompleto}
+     * @see String
+     */
     public String getNomeCompleto () {
 
         return getNome() + " " + getSobrenome();
@@ -81,6 +116,7 @@ public abstract class Usuario implements Serializable, Autenticavel {
      * Retorna a senha gravada.
      * 
      * @return {@value senha}
+     * @see String
      */
     private String getSenha () {
 
@@ -90,9 +126,10 @@ public abstract class Usuario implements Serializable, Autenticavel {
 
     /**
      * Método privado auxiliar para retornar o
-     * nome de usuário.
+     * nome de {@code Usuario}.
      * 
      * @return {@value usuario}
+     * @see String
      */
     private String getUsuario () {
 
@@ -100,9 +137,47 @@ public abstract class Usuario implements Serializable, Autenticavel {
 
     }
 
-    public String getCpf () {
+    /**
+     * retorna o cpf do {@code Usuario}.
+     * 
+     * @return {@value cpf}
+     * @throws IllegalStateException
+     * @throws RejectedExecutionException
+     * @see String
+     */
+    public String getCpf (String senha) {
 
-        return cpf;
+        if (!(this.getAutenticacao())) throw new IllegalStateException("\nERRO: Você deve estar autenticado para acessar essa informação!");
+        if (!(this.autentica(senha))) throw new RejectedExecutionException("\nERRO: Senha incorreta!");
+        return this.cpf;
+
+    }
+
+    /**
+     * Retorna o número de telefone do {@code Usuario}.
+     * 
+     * @return {@value telefone}
+     * @throws IllegalStateException
+     * @see String
+     */
+    public String getTelefone () {
+
+        if (!(this.getAutenticacao())) throw new IllegalStateException("\nERRO: Você deve estar autenticado para acessar essa informação!");
+        return this.telefone;
+
+    }
+
+    /**
+     * Retorna o email do {@code Usuario}.
+     * 
+     * @return {@value email}
+     * @throws IllegalStateException
+     * @see String
+     */
+    public String getEmail () {
+
+        if (!(this.getAutenticacao())) throw new IllegalStateException("\nERRO: Você deve estar autenticado para acessar essa informação!");
+        return this.email;
 
     }
 
@@ -422,10 +497,28 @@ public abstract class Usuario implements Serializable, Autenticavel {
      */
     private Boolean verificaUsuário (String u) {
 
-        Pattern formato = Pattern.compile("^(?!.*[ !@#$%^&*_=+-]).{4,14}$");
+        Pattern formato = Pattern.compile("^(?!.*[ !@#$%^&*_=+-]).{4,20}$");
         Matcher confirma = formato.matcher(u);
 
         if (confirma.matches()) return Boolean.TRUE;
+        return Boolean.FALSE;
+
+    }
+
+    /**
+     * Método privado auxiliar para verificar formatos de {@code email} que
+     * podem ser válidos.
+     * 
+     * @param email
+     * @return {@value true} Se o fomato de {@code email} inserido for válido;
+     *         {@value false} Se o fomato de {@code email} não for válido.
+     */
+    private Boolean verificaEmail (String email) {
+
+        Pattern formato = Pattern.compile("^([a-zA-Z0-9._]){2,64}([@]){1,1}([a-zA-Z0-9._]){2,64}(?=.*[.])(?!.*[ !#$%^&*=+-]).{6,64}$");
+        Matcher confirma = formato.matcher(email);
+
+        if (confirma.matches()) return Boolean.TRUE; 
         return Boolean.FALSE;
 
     }

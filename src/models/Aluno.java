@@ -1,6 +1,5 @@
 package models;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,10 +9,10 @@ import java.util.List;
  * contém suas informações básicas e de maior interesse.
  * 
  * @author Davi Campolina Leite Morato
- * @version 1.0
+ * @version 1.1
+ * @see Usuario
  * @see Professor
  * @see Turma
- * @see Serializable
  */
 public class Aluno extends Usuario {
 
@@ -31,9 +30,9 @@ public class Aluno extends Usuario {
      * @param nivel
      * @see String
      */
-    public Aluno (String nome, String sobrenome, String cpf, String usuario, String senha, String nivel) {
+    public Aluno (String nome, String sobrenome, String cpf, String telefone, String email, String usuario, String senha, String nivel) {
 
-        super(nome, sobrenome, cpf, usuario, senha);
+        super(nome, sobrenome, cpf, telefone, email, usuario, senha);
         this.nivel = nivel;
 
     }
