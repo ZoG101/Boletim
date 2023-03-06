@@ -19,7 +19,7 @@ import security.Token;
  * autentica-lo, administra-los e modifica-los.
  * 
  * @author Davi Campolina Leite Morato
- * @version 1.0
+ * @version 1.1
  * @see Professor
  * @see Aluno
  * @see Turma
@@ -59,6 +59,7 @@ public abstract class Usuario implements Serializable, Autenticavel {
         if (!(this instanceof Aluno) && (cpf == null)) throw new RejectedExecutionException("\nERRO: Somente um aluno pode não ter um CPF!");
         if ((telefone == null) && (email == null)) throw new RejectedExecutionException("\nERRO: Você deve adicionar pelo menos um meio de contato!");
         if (email != null) if ((!this.verificaEmail(email))) throw new IllegalArgumentException("\nERRO: E-mail inválido!");
+        if ((cpf != null) && (!this.verificaCPF(cpf))) throw new IllegalArgumentException("\nERRO: CPF inválido!");
 
         
 
@@ -399,7 +400,7 @@ public abstract class Usuario implements Serializable, Autenticavel {
 
         if (senha == null) throw new NullPointerException("\nERRO: A senha não pôde ser definida!");
         if (this.senha.equals(senha)) throw new IllegalArgumentException("\nERRO: A senha não pode ser igual a atual!");
-        if (!(this.verificaSenha(senha))) throw new IllegalArgumentException("\nERRO: A senha deve conter entre 6 a 12 caracteres, deve conter pelo menos uma letra maiúscula, um número e não deve conter símbolos.");
+        if (!(this.verificaSenha(senha))) throw new IllegalArgumentException("\nERRO: A senha deve conter entre 6 a 20 caracteres, deve conter pelo menos uma letra maiúscula, um número e não deve conter símbolos.");
         this.senha = senha;
         this.unsetPermissaoNovaSenha();
 
@@ -475,7 +476,7 @@ public abstract class Usuario implements Serializable, Autenticavel {
      */
     private Boolean verificaSenha (String s) {
 
-        Pattern formato = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?!.*[ !@#$%^&*_=+-]).{6,12}$");
+        Pattern formato = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?!.*[ !@#$%^&*_=+-]).{6,20}$");
         Matcher confirma = formato.matcher(s);
 
         if(confirma.matches()) return Boolean.TRUE;
@@ -524,6 +525,150 @@ public abstract class Usuario implements Serializable, Autenticavel {
     }
 
     /**
+     * Método auxiliar para verificar o CPF por meio do cálculo para confirmar os
+     * dois dígitos verificadores.
+     * 
+     * @param cpf
+     * @return
+     * @implNote <p>Para o primeiro dígito ({@code dig1}) os nove primeiros algarismos são 
+     * ordenadamente multiplicados pela sequência {@value10, 9, 8, 7, 6,
+     * 5, 4, 3, 2} (o primeiro por {@value 10}, o segundo por {@value 9}, e
+     * assim sucessivamente). Em seguida, calcula-se o resto da divisão
+     * ({@code sobra}) da soma dos resultados das multiplicações por {@value 11}.
+     * Se esse resto ({@code sobra}) for {@value 0} ou {@value 1}, o primeiro dígito
+     * verificador é {@value 0}.</p>
+     * 
+     * <p>Para o segundo dígito verificador {@code dig2} é calculado pela mesma
+     * regra, na qual os números a serem multiplicados pela sequência {@value 10,
+     * 9, 8, 7, 6, 5, 4, 3, 2} são contados a partir do segundo algarismo, sendo 
+     * {@code dig1} o último algarismo. Se {@code sobra} for {@value 0} ou {@value 1},
+     * {@code dig2} é igual a {@value 0}.</p>
+     */
+    private Boolean verificaCPF (String cpf) {
+
+        Pattern formato1 = Pattern.compile("^([0-9]){3}.([0-9]){3}.([0-9]){3}-([0-9]){2}$");
+        Matcher matcher1 = formato1.matcher(cpf);
+
+        Pattern formato2 = Pattern.compile("^([0-9]){3}([0-9]){3}([0-9]){3}([0-9]){2}$");
+        Matcher matcher2 = formato2.matcher(cpf);
+
+        if (matcher1.matches()) {
+
+            int count1 = 10;
+            int count2 = 10;
+            int dig1 = 0;
+            int dig2 = 0;
+            Integer cpfPartido;
+
+            for (int i = 0; i < cpf.length()-1; i++) {
+
+                if ((i != 3) && (i != 7) && (i != 11)) {
+
+                    cpfPartido = Integer.parseInt(cpf.substring(i, i + 1));
+
+                    if (count1 >= 2) { 
+
+                        dig1 += cpfPartido * count1; 
+
+                        count1--;
+
+                    } else {
+
+                        int sobra = (dig1 % 11);
+
+                        if ((sobra == 0) || (sobra == 1)) {
+
+                            dig1 = 0;
+
+                        } else {
+
+                            dig1 = 11 - sobra;
+
+                        }
+
+                    }
+
+                    if ((i >= 1) && (count2 >= 2)) {
+
+                        dig2 += cpfPartido * count2;
+
+                        count2--;
+
+                        if (i == 12) {
+
+                            int sobra = (dig2 % 11);
+
+                            if ((sobra == 0) || (sobra == 1)) {
+
+                                dig2 = 0;
+    
+                            } else {
+    
+                                dig2 = 11 - sobra;
+    
+                            }
+    
+                        }
+
+                    }
+
+                }
+
+            }
+
+            if ((dig1 == (Integer.parseInt(cpf.substring(cpf.length() - 2, cpf.length() - 1)))) && (dig2 == Integer.parseInt(cpf.substring(cpf.length() - 1, cpf.length())))) return Boolean.TRUE;
+
+        } else if (matcher2.matches()) {
+
+            int count1 = 10;
+            int count2 = 10;
+            int dig1 = 0;
+            int dig2 = 0;
+            Integer cpfPartido;
+
+            for (int i = 0; i < cpf.length()-1; i++) {
+
+                cpfPartido = Integer.parseInt(cpf.substring(i, i + 1));
+
+                if (count1 >= 2) { 
+
+                    dig1 += cpfPartido * count1; 
+
+                    count1--;
+
+                } else {
+
+                    int sobra = (dig1 % 11);
+                    dig1 = 11 - sobra;
+
+                }
+
+                if ((i >= 1) && (count2 >= 2)) {
+
+                    dig2 += cpfPartido * count2;
+
+                    count2--;
+
+                    if (i == 9) {
+
+                        int sobra = (dig2 % 11);
+                        dig2 = 11 - sobra;
+
+                    }
+
+                }
+
+            }
+
+            if ((dig1 == (Integer.parseInt(cpf.substring(cpf.length() - 2, cpf.length() - 1)))) && (dig2 == Integer.parseInt(cpf.substring(cpf.length() - 1, cpf.length())))) return Boolean.TRUE;
+
+        }
+
+        return Boolean.FALSE;
+
+    }
+
+    /**
      * Autentica o usuário verificando se a senha e usuário inserido 
      * está conforme a senha e usuário gravados.
      * 
@@ -536,7 +681,7 @@ public abstract class Usuario implements Serializable, Autenticavel {
     public Boolean autentica (String u, String s) {
         
         if ((s == null) || (u == null)) throw new NullPointerException("\nERRO: A senha e usuário não podem ser nulos!");
-        if (!(this.getSenha().equals(s)) && (this.getUsuario().equals(u))) throw new RejectedExecutionException("\nERRO: A senha ou o usuário estão incorretos!");
+        if (!(this.getSenha().equals(s)) && (!this.getUsuario().equals(u))) throw new RejectedExecutionException("\nERRO: A senha ou o usuário estão incorretos!");
 
         this.autenticado = Boolean.TRUE;
         System.out.println("\nAutenticado com sucesso!");

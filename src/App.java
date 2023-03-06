@@ -9,8 +9,8 @@ public class App {
 
     public static void main(String[] args) {
 
-        Professor professor = new Professor("Marcos", "Filho","123.456.789-10", "(22) 2222-2222", null, "Zinc", "asdfS1", "Matemática");
-        Aluno aluno = new Aluno("Davi", "Campolina", "123.456.789-10", "(11) 1111-1111", "blavla@gamil.com", "Blab", "Zasp23", "POSGRADUACAO");
+        Professor professor = new Professor("Marcos", "Filho","28001238938", "(22) 2222-2222", null, "Zinc", "asdfS1", "Matemática");
+        Aluno aluno = new Aluno("Davi", "Campolina", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "Blab", "Zasp23", "POSGRADUACAO");
         Boletim nota = new Boletim(aluno, professor);
 
         nota.setFalta();
