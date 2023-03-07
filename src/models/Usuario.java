@@ -56,12 +56,10 @@ public abstract class Usuario implements Serializable, Autenticavel {
      */
     public Usuario (String nome, String sobrenome, String cpf, String telefone, String email, String usuario, String senha) {
 
-        if (!(this instanceof Aluno) && (cpf == null)) throw new RejectedExecutionException("\nERRO: Somente um aluno pode não ter um CPF!");
-        if ((telefone == null) && (email == null)) throw new RejectedExecutionException("\nERRO: Você deve adicionar pelo menos um meio de contato!");
-        if (email != null) if ((!this.verificaEmail(email))) throw new IllegalArgumentException("\nERRO: E-mail inválido!");
-        if ((cpf != null) && (!this.verificaCPF(cpf))) throw new IllegalArgumentException("\nERRO: CPF inválido!");
-
-        
+        if (!(this instanceof Aluno) && ((cpf == null) ||(cpf.equals("")))) throw new RejectedExecutionException("\nERRO: Somente um aluno pode não ter um CPF!");
+        if (((telefone == null) || (telefone.equals(""))) && ((email == null) || (email.equals("")))) throw new RejectedExecutionException("\nERRO: Você deve adicionar pelo menos um meio de contato!");
+        if ((email != null) && (!email.equals(""))) if ((!this.verificaEmail(email))) throw new IllegalArgumentException("\nERRO: E-mail inválido!");
+        if ((cpf != null) && (!cpf.equals(""))) if (!this.verificaCPF(cpf)) throw new IllegalArgumentException("\nERRO: CPF inválido!");
 
         this.nome = nome;
         this.sobrenome = sobrenome;
@@ -513,6 +511,10 @@ public abstract class Usuario implements Serializable, Autenticavel {
      * @param email
      * @return {@value true} Se o fomato de {@code email} inserido for válido;
      *         {@value false} Se o fomato de {@code email} não for válido.
+     * @see Boolean
+     * @see String
+     * @see Pattern
+     * @see Matcher
      */
     private Boolean verificaEmail (String email) {
 
@@ -529,7 +531,13 @@ public abstract class Usuario implements Serializable, Autenticavel {
      * dois dígitos verificadores.
      * 
      * @param cpf
-     * @return
+     * @return {@value true} Se o cpf for válido;
+     *         {@value false} Se o cpf for inválido.
+     * @see Boolean
+     * @see String
+     * @see Pattern
+     * @see Matcher
+     * @see Integer
      * @implNote <p>Para o primeiro dígito ({@code dig1}) os nove primeiros algarismos são 
      * ordenadamente multiplicados pela sequência {@value10, 9, 8, 7, 6,
      * 5, 4, 3, 2} (o primeiro por {@value 10}, o segundo por {@value 9}, e
@@ -560,7 +568,7 @@ public abstract class Usuario implements Serializable, Autenticavel {
             int dig2 = 0;
             Integer cpfPartido;
 
-            for (int i = 0; i < cpf.length()-1; i++) {
+            for (int i = 0; i < cpf.length() - 1; i++) {
 
                 if ((i != 3) && (i != 7) && (i != 11)) {
 
@@ -672,6 +680,9 @@ public abstract class Usuario implements Serializable, Autenticavel {
      * Autentica o usuário verificando se a senha e usuário inserido 
      * está conforme a senha e usuário gravados.
      * 
+     * @param u
+     * @param s
+     * @return {@value true} Se a senha e usuário estiverem corretos.
      * @throws NullPointerException
      * @throws RejectedExecutionException
      * @see Boolean
@@ -681,7 +692,7 @@ public abstract class Usuario implements Serializable, Autenticavel {
     public Boolean autentica (String u, String s) {
         
         if ((s == null) || (u == null)) throw new NullPointerException("\nERRO: A senha e usuário não podem ser nulos!");
-        if (!(this.getSenha().equals(s)) && (!this.getUsuario().equals(u))) throw new RejectedExecutionException("\nERRO: A senha ou o usuário estão incorretos!");
+        if (!(this.getSenha().equals(s)) || (!this.getUsuario().equals(u))) throw new RejectedExecutionException("\nERRO: A senha ou o usuário estão incorretos!");
 
         this.autenticado = Boolean.TRUE;
         System.out.println("\nAutenticado com sucesso!");
@@ -695,6 +706,8 @@ public abstract class Usuario implements Serializable, Autenticavel {
      * caso o usuário já esteja autenticado porém a senha precisa ser 
      * confirmada para utilizar alguma funcionalidade interna do sistema.
      * 
+     * @param s
+     * @return {@value true} Se a senha estiver correta.
      * @throws NullPointerException
      * @throws RejectedExecutionException
      * @see Boolean

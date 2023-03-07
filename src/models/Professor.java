@@ -2,7 +2,12 @@ package models;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.RejectedExecutionException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A classe {@code Professor} é feita como uma abstração
@@ -20,7 +25,7 @@ public class Professor extends Usuario {
     private static final long serialVersionUID = 1L;
 
     private String materia;
-    private List<Turma> turmas = new ArrayList<Turma>();
+    private Map<String, Turma> turmas = new HashMap<String, Turma>();
 
     /**
      * Construtor da classe para instânciar o objeto {@code Professor}
@@ -54,15 +59,99 @@ public class Professor extends Usuario {
     }
 
     /**
-     * Retorna uma {@code List} contendo as turmas do professor.
+     * Retorna um {@code Map} contendo as turmas do {@code professor}.
      * 
      * @return {@value turmas}
-     * @see List
+     * @throws IllegalStateException
+     * @throws RejectedExecutionException
+     * @see ArrayList
+     * @see Map
      * @see Collections
      */
-    public List<Turma> getTurmas () {
+    public Map<String, Turma> getTurmas () {
 
-        return Collections.unmodifiableList(turmas);
+        if (!this.getAutenticacao()) throw new IllegalStateException("\nERRO: Autenticação necessária para executar tais ações!");
+        if(this.turmas.isEmpty()) throw new RejectedExecutionException("\nERRO: Você não tem turmas!");
+
+        return Collections.unmodifiableMap(this.turmas);
+
+    }
+
+    /**
+     * Retorna um {@code List} contendo a turma buscada pelo {@code Professor}.
+     * 
+     * @param id
+     * @return {@value turmas}
+     * @throws IllegalStateException
+     * @throws RejectedExecutionException
+     * @throws IllegalArgumentException
+     * @see List
+     * @see String
+     * @see Pattern
+     * @see Matcher
+     */
+    public Turma getTurma (String id) {
+
+        if (!this.getAutenticacao()) throw new IllegalStateException("\nERRO: Autenticação necessária para executar tais ações!");
+        if (this.turmas.isEmpty()) throw new RejectedExecutionException("\nERRO: Você não tem turmas!");
+        if ((id == null) || (id.equals("")) || (id.length() > 4)) throw new IllegalArgumentException("\nERRO: Formato de id inválido!");
+
+        Pattern formato = Pattern.compile("^([0-9]){1,4}$");
+        Matcher matcher = formato.matcher(id);
+
+        if (!matcher.find()) throw new IllegalArgumentException("\nERRO: Formato de id inválido!");
+
+        if (id.length() < 4) {
+
+            for (int i = 0; i <= (4 - (id.length() + 1)); i++) {
+
+                id = String.format("%d%s", 0, id);
+
+            }
+
+        }
+
+        return this.turmas.get(id);
+
+    }
+
+    /**
+     * Método auxiliar privado que adiciona uma nova turma no {@code Map}.
+     * 
+     * @param t
+     * @throws IllegalArgumentException
+     * @see Turma
+     */
+    private void addTurma (Turma t) {
+
+        if (t == null) throw new IllegalArgumentException("\nERRO: Turma não pode ser nula!");
+
+        this.turmas.put(t.getId(), t);
+
+    }
+
+    /**
+     * Método para criar uma nova {@code Turma}.
+     * 
+     * @param senha
+     * @throws IllegalStateException
+     * @throws IllegalArgumentException
+     * @see String
+     * @see Turma
+     */
+    public void criaTurma (String senha) {
+
+        if (!this.getAutenticacao()) throw new IllegalStateException("\nERRO: Autenticação necessária para executar tais ações!");
+        if ((senha == null) || (senha.equals(""))) throw new IllegalArgumentException("\nERRO: Formato de id inválido!");
+
+        if (this.autentica(senha)) {
+
+            Turma t = new Turma();
+
+            this.addTurma(t);
+
+        }
+
 
     }
     

@@ -21,18 +21,18 @@ public class Turma implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private int num;
+    private String id;
     private List<Aluno> alunos = new ArrayList<Aluno>();
 
     /**
      * Construtor da classe {@code Turma} que recebe um parâmetro
      * com o número da turma que a identifica.
      * 
-     * @param num
+     * @param id
      */
-    public Turma (int num) {
+    public Turma (String id) {
 
-        this.num = num;
+        this.id = id;
 
     }
 
@@ -41,14 +41,20 @@ public class Turma implements Serializable {
      * com o número que a identifica e uma lista pronta de {@code Aluno} 
      * para aquela turma.
      * 
-     * @param num
+     * @param id
      * @param alunos
      * @see List
      */
-    public Turma (int num, List<Aluno> alunos) {
+    public Turma (String id, List<Aluno> alunos) {
 
-        this.num = num;
+        this.id = id;
         this.alunos = alunos;
+
+    }
+
+    public Turma () {
+
+
 
     }
 
@@ -69,9 +75,9 @@ public class Turma implements Serializable {
      * 
      * @return {@value num}
      */
-    public int getNum () {
+    public String getId () {
 
-        return num;
+        return this.id;
 
     }
 

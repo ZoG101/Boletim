@@ -55,8 +55,8 @@ public class Boletim implements Serializable {
         this.materia = professor.getMateria();
         this.aprovacao = false;
         this.nivel = aluno.getNivel();
-        this.alunoNome = aluno.getNome();
-        this.professorNome = professor.getNome();
+        this.alunoNome = aluno.getNomeCompleto();
+        this.professorNome = professor.getNomeCompleto();
         notas = new ArrayList<Double>(0);
 
     }
