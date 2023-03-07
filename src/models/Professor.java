@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
  * contém suas informações básicas e de maior interesse.
  * 
  * @author Davi Campolina Leite Morato
- * @version 1.3
+ * @version 1.4
  * @see Usuario
  * @see Aluno
  * @see Turma
@@ -110,6 +110,8 @@ public class Professor extends Usuario {
             }
 
         }
+
+        if (!this.turmas.containsKey(id)) throw new IllegalArgumentException("\nERRO: Essa turma que você está procurando não existe!");
 
         return this.turmas.get(id);
 

@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
+
+import data.DataHelper;
 
 /**
  * A classe {@code Turma} é feita para gerenciar
@@ -11,7 +14,7 @@ import java.util.List;
  * professor que possui estas turmas.
  * 
  * @author Davi Campolina Leite Morato
- * @version 1.0
+ * @version 1.1
  * @see Aluno
  * @see Professor
  * @see Boletim
@@ -23,38 +26,72 @@ public class Turma implements Serializable {
 
     private String id;
     private List<Aluno> alunos = new ArrayList<Aluno>();
+    private static List<String> IDs = new ArrayList<String>();
 
     /**
-     * Construtor da classe {@code Turma} que recebe um parâmetro
-     * com o número da turma que a identifica.
+     * Construtor da classe {@code Turma} que chama um método que gera 
+     * automaticamente um parâmetro com o número da turma que a identifica.
      * 
-     * @param id
      */
-    public Turma (String id) {
+    public Turma () {
 
-        this.id = id;
+        this.id = this.setID();
 
     }
 
     /**
-     * Construtor da classe {@code Turma} que recebe um parâmetro
-     * com o número que a identifica e uma lista pronta de {@code Aluno} 
-     * para aquela turma.
+     * Construtor da classe {@code Turma} que chama um método que gera 
+     * automaticamente um parâmetro com o número da turma que a identifica 
+     * e uma lista pronta de {@code Aluno} para aquela turma.
      * 
-     * @param id
      * @param alunos
      * @see List
      */
-    public Turma (String id, List<Aluno> alunos) {
+    public Turma (List<Aluno> alunos) {
 
-        this.id = id;
         this.alunos = alunos;
+        this.id = this.setID();
 
     }
 
-    public Turma () {
+    /**
+     * Método privado que cuida de criar um {@code id}, formatá-lo e adicionar 
+     * na lista de turmas.
+     * 
+     * @return {@value resultado}
+     * @see Random
+     * @see String
+     */
+    private String setID () {
 
+        Random aleatorio = new Random();
+        String ID = "" + aleatorio.nextInt(9) + aleatorio.nextInt(9) + aleatorio.nextInt(9) + aleatorio.nextInt(9);
 
+        while (verificaID(ID)) {
+
+            ID = "" + aleatorio.nextInt(9) + aleatorio.nextInt(9) + aleatorio.nextInt(9) + aleatorio.nextInt(9);
+
+        }
+
+        this.adicionaID(ID);
+
+        return ID;
+
+    }
+
+    private Boolean verificaID (String id) {
+
+        if (Turma.IDs.isEmpty()) return Boolean.FALSE; 
+
+        return DataHelper.procuraBoolean(Turma.IDs, id, 0, Turma.IDs.size());
+
+    }
+
+    private void adicionaID (String id) {
+
+        Turma.IDs.add(id);
+
+        DataHelper.ordena(Turma.IDs, 0, (Turma.IDs.size() - 1));
 
     }
 

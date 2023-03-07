@@ -19,7 +19,7 @@ import security.Token;
  * autentica-lo, administra-los e modifica-los.
  * 
  * @author Davi Campolina Leite Morato
- * @version 1.1
+ * @version 1.2
  * @see Professor
  * @see Aluno
  * @see Turma
@@ -676,6 +676,14 @@ public abstract class Usuario implements Serializable, Autenticavel {
 
     }
 
+    private Usuario recuperaUsuario (String usuario) {
+
+        if (!Usuario.usuarios.containsKey(usuario)) throw new IllegalArgumentException("\nERRO: Usuário não existe!");
+
+        return Usuario.usuarios.get(usuario);
+
+    }
+
     /**
      * Autentica o usuário verificando se a senha e usuário inserido 
      * está conforme a senha e usuário gravados.
@@ -692,7 +700,10 @@ public abstract class Usuario implements Serializable, Autenticavel {
     public Boolean autentica (String u, String s) {
         
         if ((s == null) || (u == null)) throw new NullPointerException("\nERRO: A senha e usuário não podem ser nulos!");
-        if (!(this.getSenha().equals(s)) || (!this.getUsuario().equals(u))) throw new RejectedExecutionException("\nERRO: A senha ou o usuário estão incorretos!");
+
+        Usuario user = (Usuario) recuperaUsuario(u);
+
+        if (!(user.getSenha().equals(s)) || (!user.getUsuario().equals(u))) throw new RejectedExecutionException("\nERRO: A senha ou o usuário estão incorretos!");
 
         this.autenticado = Boolean.TRUE;
         System.out.println("\nAutenticado com sucesso!");

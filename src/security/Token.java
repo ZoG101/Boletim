@@ -26,7 +26,7 @@ public final class Token {
     }
 
     /**
-     * Método privado que cuida de criar um token formatá-lo e executar um cast para 
+     * Método privado que cuida de criar um token, formatá-lo e executar um cast para 
      * {@code Integer}.
      * 
      * @return {@value resultado}

@@ -37,7 +37,8 @@ public class App {
 
             System.out.println(professor.autentica(logUsuario, logSenha));
 
-            professor.getTurma("2222");
+            professor.criaTurma(logSenha);
+            //professor.getTurma("2222");
 
             System.out.println("\nDigite seu novo usuário: ");
             String novoUsuario = scan.next();
