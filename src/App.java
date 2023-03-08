@@ -3,6 +3,7 @@ import java.util.Scanner;
 import models.Aluno;
 import models.Boletim;
 import models.Professor;
+import models.Turma;
 import security.Token;
 
 public class App {
@@ -11,6 +12,18 @@ public class App {
 
         Professor professor = new Professor("Marcos", "Filho","28001238938", "(22) 2222-2222", null, "Zinc", "asdfS1", "Matemática");
         Aluno aluno = new Aluno("Davi", "Campolina", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "Blab", "Zasp23", "POSGRADUACAO");
+        Aluno aluno2 = new Aluno("zezé", "Bota", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "fdsfs", "dfdS2f", "POSGRADUACAO");
+        Aluno aluno3 = new Aluno("Lucas", "Morato", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "Bvcxczvlab", "xcD4vs", "POSGRADUACAO");
+        Aluno aluno4 = new Aluno("Augusto", "Pinto", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "vcxvz", "Zasp23", "POSGRADUACAO");
+        Aluno aluno5 = new Aluno("Lara", "Moraes", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "ascvav", "Zasp23", "POSGRADUACAO");
+        Aluno aluno6 = new Aluno("Santiago", "Matos", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "Blascvasab", "Zasp23", "POSGRADUACAO");
+        Aluno aluno7 = new Aluno("Léo", "Soares", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "savsvavas", "Zasp23", "POSGRADUACAO");
+        Aluno aluno8 = new Aluno("Vitor", "Santos", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "Basvvaslab", "Zasp23", "POSGRADUACAO");
+        Aluno aluno9 = new Aluno("fulano", "de Tal", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "asvav", "Zasp23", "POSGRADUACAO");
+        Aluno aluno10 = new Aluno("Vitória", "Luiza", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "wVCw", "Zasp23", "POSGRADUACAO");
+        Aluno aluno11 = new Aluno("Marcos", "Paulo", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "Bavavalab", "Zasp23", "POSGRADUACAO");
+        Aluno aluno12 = new Aluno("Trevor", "Silas", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "Bawfvtrblab", "Zasp23", "POSGRADUACAO");
+        Aluno aluno13 = new Aluno("Link", "Linkado", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "Blsacvavrvab", "Zasp23", "POSGRADUACAO");
         Boletim nota = new Boletim(aluno, professor);
 
         nota.setFalta();
@@ -38,7 +51,23 @@ public class App {
             System.out.println(professor.autentica(logUsuario, logSenha));
 
             professor.criaTurma(logSenha);
-            //professor.getTurma("2222");
+            professor.criaTurma(logSenha);
+            professor.criaTurma(logSenha);
+            professor.criaTurma(logSenha);
+            professor.criaTurma(logSenha);
+            professor.criaTurma(logSenha);
+            professor.criaTurma(logSenha);
+            professor.criaTurma(logSenha);
+            professor.criaTurma(logSenha);
+            professor.criaTurma(logSenha);
+            professor.criaTurma(logSenha);
+
+            System.out.println("Digite o id da turma:");
+            String id = scan.next();
+
+            System.out.println(professor.getTurma(id));
+            Turma a = professor.getTurma(id);
+            a.adicionarAluno(aluno, aluno2, aluno3, aluno4, aluno5, aluno6, aluno7, aluno8, aluno9, aluno10, aluno11, aluno12, aluno13);
 
             System.out.println("\nDigite seu novo usuário: ");
             String novoUsuario = scan.next();

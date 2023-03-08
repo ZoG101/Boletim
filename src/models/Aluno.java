@@ -14,7 +14,7 @@ import java.util.List;
  * @see Professor
  * @see Turma
  */
-public class Aluno extends Usuario {
+public class Aluno extends Usuario implements Comparable<Aluno>{
 
     private static final long serialVersionUID = 1L;
 
@@ -74,6 +74,21 @@ public class Aluno extends Usuario {
     private void adicionarBoletim (Boletim boletim) {
 
         boletins.add(boletim);
+
+    }
+
+    @Override
+    public int compareTo(Aluno o) {
+        
+        return this.getNomeCompleto().compareTo(o.getNomeCompleto());
+
+    }
+
+    @Override
+    public String toString() {
+        
+        String formato = String.format("Nome: %s", this.getNomeCompleto());
+        return formato;
 
     }
     

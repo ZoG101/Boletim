@@ -9,7 +9,7 @@ public final class DataHelper {
 
         if (inicio < fim) {
 
-            int pivot = divide(dados, inicio, fim);
+            int pivot = DataHelper.divide(dados, inicio, fim);
 
             ordena(dados, inicio, pivot - 1);
             ordena(dados, pivot + 1, fim);
@@ -44,7 +44,7 @@ public final class DataHelper {
 
     public static final <T extends Comparable<T>> T procura (List<T> lista, T valor, int inicio, int fim) {
 
-        if (inicio > fim) throw new ArrayIndexOutOfBoundsException("\nERRO: Tamanho de lista inválido:");
+        if (inicio > fim) return null;
 
         int mid = (inicio + fim) / 2;
 
