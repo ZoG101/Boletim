@@ -13,6 +13,7 @@ import java.util.List;
  * @see Usuario
  * @see Professor
  * @see Turma
+ * @see Boletim
  */
 public class Aluno extends Usuario implements Comparable<Aluno>{
 

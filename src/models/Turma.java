@@ -16,6 +16,7 @@ import data.DataHelper;
  * 
  * @author Davi Campolina Leite Morato
  * @version 1.1
+ * @see Usuario
  * @see Aluno
  * @see Professor
  * @see Boletim
