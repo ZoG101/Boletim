@@ -24,6 +24,8 @@ public class App {
         Aluno aluno11 = new Aluno("Marcos", "Paulo", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "Bavavalab", "Zasp23", "POSGRADUACAO");
         Aluno aluno12 = new Aluno("Trevor", "Silas", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "Bawfvtrblab", "Zasp23", "POSGRADUACAO");
         Aluno aluno13 = new Aluno("Link", "Linkado", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "Blsacvavrvab", "Zasp23", "POSGRADUACAO");
+        Aluno aluno14 = new Aluno("Davi", "Morato", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "Blabdfgsfg", "Zasp23", "POSGRADUACAO");
+        Aluno aluno15 = new Aluno("Davi", "zé", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "Blaasdjfncb", "Zasp23", "POSGRADUACAO");
         Boletim nota = new Boletim(aluno, professor);
 
         nota.setFalta();
@@ -68,6 +70,15 @@ public class App {
             System.out.println(professor.getTurma(id));
             Turma a = professor.getTurma(id);
             a.adicionarAluno(aluno, aluno2, aluno3, aluno4, aluno5, aluno6, aluno7, aluno8, aluno9, aluno10, aluno11, aluno12, aluno13);
+
+            System.out.println("Digite o id da turma:");
+            id = scan.next();
+            a = professor.getTurma(id);
+            a.adicionarAluno(aluno15, aluno2, aluno3, aluno4, aluno5, aluno6, aluno7, aluno8, aluno9, aluno10, aluno11, aluno12, aluno13, aluno14);
+
+            System.out.println("\nDigite o nome do aluno");
+            String nome = scan.next();
+            System.out.println(professor.procuraAluno(nome));
 
             System.out.println("\nDigite seu novo usuário: ");
             String novoUsuario = scan.next();

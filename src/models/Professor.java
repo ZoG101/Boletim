@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,7 +21,7 @@ import java.util.regex.Pattern;
  * @see Aluno
  * @see Turma
  */
-public class Professor extends Usuario {
+public final class Professor extends Usuario {
 
     private static final long serialVersionUID = 1L;
 
@@ -144,7 +145,7 @@ public class Professor extends Usuario {
     public void criaTurma (String senha) {
 
         if (!this.getAutenticacao()) throw new IllegalStateException("\nERRO: Autenticação necessária para executar tais ações!");
-        if ((senha == null) || (senha.equals(""))) throw new IllegalArgumentException("\nERRO: Formato de id inválido!");
+        if ((senha == null) || (senha.equals(""))) throw new IllegalArgumentException("\nERRO: Senha não pode estar vazia!");
 
         if (this.autentica(senha)) {
 
@@ -154,7 +155,29 @@ public class Professor extends Usuario {
 
         }
 
+    }
 
+    public List<Aluno> procuraAluno (String nome) {
+
+        if (!this.getAutenticacao()) throw new IllegalStateException("\nERRO: Autenticação necessária para executar tais ações!");
+        if ((nome == null) || (nome.equals(""))) throw new IllegalArgumentException("\nERRO: O nome não pode estar vazio!");
+
+        List<Aluno> alunos = new ArrayList<Aluno>();
+
+        Set<String> k = this.turmas.keySet();
+
+        k.forEach((chave) -> {
+
+            turmas.get(chave).procuraAluno(nome).forEach((aluno) -> {
+                
+                if ((aluno != null) && (!alunos.contains(aluno))) alunos.add(aluno);
+            
+            });
+
+        });
+
+        return alunos;
+    
     }
     
 }

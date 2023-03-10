@@ -76,38 +76,38 @@ public abstract class Usuario implements Serializable, Autenticavel {
     }
 
     /**
-     * Retorna uma {@code String} contendo o nome do professor.
+     * Retorna uma {@code String} contendo o nome do {@code Usuario}.
      * 
      * @return {@value nome}
      * @see String
      */
     public String getNome () {
 
-        return nome;
+        return this.nome;
 
     }
 
     /**
-     * Retorna o {@code sobrenome} do usuário.
+     * Retorna o {@code sobrenome} do {@code Usuario}.
      * 
      * @return {@value sobrenome}
      * @see String
      */
     public String getSobrenome () {
 
-        return sobrenome;
+        return this.sobrenome;
 
     }
 
     /**
-     * retorna o nome completo do usuário.
+     * retorna o nome completo do {@code Usuario}.
      * 
      * @return {@value nomeCompleto}
      * @see String
      */
     public String getNomeCompleto () {
 
-        return getNome() + " " + getSobrenome();
+        return this.getNome() + " " + this.getSobrenome();
 
     }
 

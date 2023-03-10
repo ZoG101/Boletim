@@ -48,11 +48,11 @@ public class Turma implements Serializable {
      * e uma lista pronta de {@code Aluno} para aquela turma.
      * 
      * @param alunos
-     * @see List
+     * @see ArrayList
      */
     public Turma (ArrayList<Aluno> alunos) {
 
-        this.alunos = alunos;
+        DataHelper.ordena((this.alunos = alunos), 0, (this.alunos.size() - 1));
         this.id = this.setID();
 
     }
@@ -171,6 +171,26 @@ public class Turma implements Serializable {
         }
 
         DataHelper.ordena(this.alunos, 0, (this.alunos.size() - 1));
+
+        System.out.println(this.alunos);
+
+    }
+
+    public List<Aluno> procuraAluno(String nome) {
+
+        List<Aluno> alunos = new ArrayList<Aluno>();
+        Aluno aluno = null;
+        boolean permissao = false;
+
+        for (int i = 0; (((aluno != null) && (permissao)) || (i < (this.alunos.size() - i))); i++) {
+
+            aluno = (Aluno) DataHelper.procuraNome(this.alunos, nome, (0 + i), (this.alunos.size() - i));
+            alunos.add(aluno);
+            permissao = true;
+
+        }
+
+        return alunos;
 
     }
     

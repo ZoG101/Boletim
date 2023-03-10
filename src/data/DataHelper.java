@@ -2,6 +2,9 @@ package data;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+
+import models.Usuario;
+
 /**
  * A classe {@code DataHelper} é feita para auxiliar
  * a organizar e procurar os dados dos usuários.
@@ -144,7 +147,7 @@ public final class DataHelper {
      */
     public static final <T extends Comparable<T>> T procura (List<T> lista, T valor, int inicio, int fim) {
 
-        if (inicio > fim) return null;
+        if (inicio > fim || (lista.isEmpty())) return null;
 
         int mid = (inicio + fim) / 2;
 
@@ -187,7 +190,7 @@ public final class DataHelper {
      */
     public static final <T extends Comparable<T>> Boolean procuraBoolean (List<T> lista, T valor, int inicio, int fim) {
 
-        if (inicio > fim) return Boolean.FALSE;
+        if (inicio > fim || (lista.isEmpty())) return Boolean.FALSE;
 
         int mid = (inicio + fim) / 2;
 
@@ -198,5 +201,36 @@ public final class DataHelper {
         return Boolean.FALSE;
 
     }
-    
+
+    /* 
+    public static final <T extends Usuario> Usuario procuraNome (List<T> lista, String nome, int inicio, int fim) {
+
+        if ((inicio > fim) || (lista.isEmpty())) return null;
+
+        int mid = (inicio + fim) / 2;
+        String l = lista.get(mid).getNome();
+
+        if (lista.get(mid).getNome().compareToIgnoreCase(nome) == 0) return lista.get(mid);
+        if (lista.get(mid).getNome().compareToIgnoreCase(nome) < 0) procuraNome(lista, nome, mid + 1, fim);
+        if (lista.get(mid).getNome().compareToIgnoreCase(nome) > 0) procuraNome(lista, nome, inicio, mid - 1);
+
+        return null;
+
+    }
+    */
+
+    public static final <T extends Usuario> Usuario procuraNome (List<T> lista, String nome, int inicio, int fim) {
+
+        if ((inicio > fim) || (lista.isEmpty())) return null;
+
+        int mid = (inicio + fim) / 2;
+
+        if (lista.get(mid).getNome().compareToIgnoreCase(nome) == 0) return lista.get(mid);
+        if (lista.get(mid).getNome().compareToIgnoreCase(nome) < 0) return procuraNome(lista, nome, mid + 1, fim);
+        if (lista.get(mid).getNome().compareToIgnoreCase(nome) > 0) return procuraNome(lista, nome, inicio, mid - 1);
+
+        return null;
+
+    }
+
 }
