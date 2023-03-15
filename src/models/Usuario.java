@@ -346,7 +346,7 @@ public abstract class Usuario implements Serializable, Autenticavel {
      */
     public void mudarUsuario (String usuario) {
 
-        if (usuario == null) throw new NullPointerException("\nERRO: O usuário não pode ser nulo!");
+        if ((usuario == null) || (usuario.compareToIgnoreCase("") == 0)) throw new NullPointerException("\nERRO: O usuário não pode ser nulo!");
         if (!(getAutenticacao())) throw new IllegalStateException("\nERRO: O usuário precisa estar autenticado para se alterar o nome de usuário!");
         if (this.getUsuario().equals(usuario)) throw new IllegalArgumentException("\nERRO: O nome de usuário inserido deve ser diferente do atual!");
         if (Usuario.usuarios.containsKey(usuario)) throw new IllegalArgumentException("\nERRO: O nome de usuário inseriodo já existe!");

@@ -180,13 +180,13 @@ public class Turma implements Serializable {
 
         List<Aluno> alunos = new ArrayList<Aluno>();
         Aluno aluno = null;
-        boolean permissao = false;
+        Boolean permissao = Boolean.FALSE;
 
         for (int i = 0; (((aluno != null) && (permissao)) || (i < (this.alunos.size() - i))); i++) {
 
             aluno = (Aluno) DataHelper.procuraNome(this.alunos, nome, (0 + i), (this.alunos.size() - i));
             alunos.add(aluno);
-            permissao = true;
+            permissao = Boolean.TRUE;
 
         }
 

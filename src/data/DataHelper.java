@@ -202,32 +202,43 @@ public final class DataHelper {
 
     }
 
-    /* 
     public static final <T extends Usuario> Usuario procuraNome (List<T> lista, String nome, int inicio, int fim) {
 
-        if ((inicio > fim) || (lista.isEmpty())) return null;
-
-        int mid = (inicio + fim) / 2;
-        String l = lista.get(mid).getNome();
-
-        if (lista.get(mid).getNome().compareToIgnoreCase(nome) == 0) return lista.get(mid);
-        if (lista.get(mid).getNome().compareToIgnoreCase(nome) < 0) procuraNome(lista, nome, mid + 1, fim);
-        if (lista.get(mid).getNome().compareToIgnoreCase(nome) > 0) procuraNome(lista, nome, inicio, mid - 1);
-
-        return null;
-
-    }
-    */
-
-    public static final <T extends Usuario> Usuario procuraNome (List<T> lista, String nome, int inicio, int fim) {
-
-        if ((inicio > fim) || (lista.isEmpty())) return null;
+        if ((inicio >= fim) || (lista.isEmpty())) return null;
 
         int mid = (inicio + fim) / 2;
 
         if (lista.get(mid).getNome().compareToIgnoreCase(nome) == 0) return lista.get(mid);
         if (lista.get(mid).getNome().compareToIgnoreCase(nome) < 0) return procuraNome(lista, nome, mid + 1, fim);
         if (lista.get(mid).getNome().compareToIgnoreCase(nome) > 0) return procuraNome(lista, nome, inicio, mid - 1);
+
+        return null;
+
+    }
+
+    public static final <T extends Usuario> Usuario procuraSobrenome (List<T> lista, String nome, int inicio, int fim) {
+
+        if ((inicio >= fim) || (lista.isEmpty())) return null;
+
+        int mid = (inicio + fim) / 2;
+
+        if (lista.get(mid).getSobrenome().compareToIgnoreCase(nome) == 0) return lista.get(mid);
+        if (lista.get(mid).getSobrenome().compareToIgnoreCase(nome) < 0) return procuraSobrenome(lista, nome, mid + 1, fim);
+        if (lista.get(mid).getSobrenome().compareToIgnoreCase(nome) > 0) return procuraSobrenome(lista, nome, inicio, mid - 1);
+
+        return null;
+
+    }
+
+    public static final <T extends Usuario> Usuario procuraNomeCompleto (List<T> lista, String nome, int inicio, int fim) {
+
+        if ((inicio >= fim) || (lista.isEmpty())) return null;
+
+        int mid = (inicio + fim) / 2;
+
+        if (lista.get(mid).getNomeCompleto().compareToIgnoreCase(nome) == 0) return lista.get(mid);
+        if (lista.get(mid).getNomeCompleto().compareToIgnoreCase(nome) < 0) return procuraNomeCompleto(lista, nome, mid + 1, fim);
+        if (lista.get(mid).getNomeCompleto().compareToIgnoreCase(nome) > 0) return procuraNomeCompleto(lista, nome, inicio, mid - 1);
 
         return null;
 

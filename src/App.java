@@ -1,3 +1,4 @@
+//import java.nio.charset.Charset;
 import java.util.Scanner;
 
 import models.Aluno;
@@ -24,7 +25,7 @@ public class App {
         Aluno aluno11 = new Aluno("Marcos", "Paulo", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "Bavavalab", "Zasp23", "POSGRADUACAO");
         Aluno aluno12 = new Aluno("Trevor", "Silas", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "Bawfvtrblab", "Zasp23", "POSGRADUACAO");
         Aluno aluno13 = new Aluno("Link", "Linkado", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "Blsacvavrvab", "Zasp23", "POSGRADUACAO");
-        Aluno aluno14 = new Aluno("Davi", "Morato", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "Blabdfgsfg", "Zasp23", "POSGRADUACAO");
+        Aluno aluno14 = new Aluno("Davi", "Campolina", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "Blabdfgsfg", "Zasp23", "POSGRADUACAO");
         Aluno aluno15 = new Aluno("Davi", "zé", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "Blaasdjfncb", "Zasp23", "POSGRADUACAO");
         Boletim nota = new Boletim(aluno, professor);
 
