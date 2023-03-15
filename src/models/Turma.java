@@ -190,6 +190,26 @@ public class Turma implements Serializable {
 
         }
 
+        permissao = Boolean.FALSE;
+
+        for (int i = 0; (((aluno != null) && (permissao)) || (i < (this.alunos.size() - i))); i++) {
+
+            aluno = (Aluno) DataHelper.procuraSobrenome(this.alunos, nome, (0 + i), (this.alunos.size() - i));
+            alunos.add(aluno);
+            permissao = Boolean.TRUE;
+
+        }
+
+        permissao = Boolean.FALSE;
+
+        for (int i = 0; (((aluno != null) && (permissao)) || (i < (this.alunos.size() - i))); i++) {
+
+            aluno = (Aluno) DataHelper.procuraNomeCompleto(this.alunos, nome, (0 + i), (this.alunos.size() - i));
+            alunos.add(aluno);
+            permissao = Boolean.TRUE;
+
+        }
+
         return alunos;
 
     }
