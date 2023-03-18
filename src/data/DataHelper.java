@@ -392,7 +392,6 @@ public final class DataHelper {
         DataHelper.ordenaSobrenome(copia, inicio, (fim - 1));
 
         int mid = (inicio + fim) / 2;
-        String s = copia.get(mid).getSobrenome();
 
         if (copia.get(mid).getSobrenome().compareToIgnoreCase(nome) == 0) return copia.get(mid);
         if (copia.get(mid).getSobrenome().compareToIgnoreCase(nome) < 0) return procuraSobrenome(copia, nome, mid + 1, fim);
