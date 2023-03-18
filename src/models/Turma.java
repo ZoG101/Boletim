@@ -166,7 +166,12 @@ public class Turma implements Serializable {
 
         for (Aluno aluno : alunos) {
             
-            if (aluno != null) this.alunos.add(aluno);
+            if ((aluno != null) && (!this.alunos.contains(aluno))) { 
+                
+                this.alunos.add(aluno);
+                aluno.setTurma(this);
+
+            }
 
         }
 

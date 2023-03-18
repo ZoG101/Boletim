@@ -159,7 +159,7 @@ public final class Professor extends Usuario {
     }
 
     /** 
-     * Função para pesquisar por um aluno específico dentro de todas as turmas do {@code Professor} 
+     * Função para pesquisar por um aluno específico, ou alunos, dentro de todas as turmas do {@code Professor} 
      * e retorna uma {@code List} auxiliar com os alunos selecionados.
      * 
      * @param nome
@@ -175,7 +175,7 @@ public final class Professor extends Usuario {
     public List<Aluno> procuraAluno (String nome) {
 
         if (!this.getAutenticacao()) throw new IllegalStateException("\nERRO: Autenticação necessária para executar tais ações!");
-        if ((nome == null) || (nome.equals(""))) throw new IllegalArgumentException("\nERRO: O nome não pode estar vazio!");
+        if ((nome == null) || (nome.equals(""))) throw new IllegalArgumentException("\nERRO: O nome não pode ser nulo e nem vazio!");
 
         List<Aluno> alunos = new ArrayList<Aluno>();
 
@@ -194,6 +194,29 @@ public final class Professor extends Usuario {
         if (alunos.isEmpty()) throw new NoSuchElementException("\nERRO: Nenhum elemento com esse nome foi encontrado!");
 
         return alunos;
+    
+    }
+
+    /** 
+     * Função para pesquisar por um aluno específico, ou alunos, pelo ID dentro de todas as turmas do {@code Professor} 
+     * e retorna uma {@code List} auxiliar com os alunos selecionados.
+     * 
+     * @param nome
+     * @return {@value alunos}
+     * @throws IllegalStateException
+     * @throws IllegalArgumentException
+     * @throws NoSuchElementException
+     * @see List
+     * @see Aluno
+     * @see String
+     * @see Set
+     */
+    public Aluno procuraAlunoID (String id) {
+
+        if (!this.getAutenticacao()) throw new IllegalStateException("\nERRO: Autenticação necessária para executar tais ações!");
+        if ((id == null) || (id.equals(""))) throw new IllegalArgumentException("\nERRO: O ID não pode ser nulo e nem vazio!");
+
+        return Aluno.getAluno(id);
     
     }
     

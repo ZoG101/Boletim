@@ -1,8 +1,13 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import data.DataHelper;
 
@@ -12,7 +17,7 @@ import data.DataHelper;
  * contém suas informações básicas e de maior interesse.
  * 
  * @author Davi Campolina Leite Morato
- * @version 1.1
+ * @version 1.2
  * @see Usuario
  * @see Professor
  * @see Turma
@@ -24,7 +29,9 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
 
     private String id;
     private String nivel;
+    private Turma turma;
     private static List<String> IDs = new ArrayList<String>();
+    private static Map<String, Aluno> alunoMap = new HashMap<String, Aluno>();
     private List<Boletim> boletins;
 
     /**
@@ -105,6 +112,8 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
 
         Aluno.IDs.add(id);
 
+        Aluno.alunoMap.put(id, this);
+
         DataHelper.ordena(Aluno.IDs, 0, (Aluno.IDs.size() - 1));
 
         System.out.println("\n" + Aluno.IDs);
@@ -124,55 +133,71 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
     }
 
     /**
-     * Retorna uma {@code String} contendo o nome do professor.
-     * 
-     * @return {@value nome}
-     * @see String
-     * @see Usuario
-     */
-    @Override
-    public String getNome () {
-
-        return super.getNome();
-
-    }
-
-    /**
-     * Retorna o {@code sobrenome} do usuário.
-     * 
-     * @return {@value sobrenome}
-     * @see String
-     * @see Usuario
-     */
-    @Override
-    public String getSobrenome () {
-
-        return super.getSobrenome();
-
-    }
-
-    /**
-     * retorna o nome completo do usuário.
-     * 
-     * @return {@value nomeCompleto}
-     * @see String
-     * @see Usuario
-     */
-    @Override
-    public String getNomeCompleto () {
-
-        return super.getNome() + " " + super.getSobrenome();
-
-    }
-
-    /**
      * Retorna o {@code nivel} do {@code Aluno}.
      * 
      * @return {@value nivel}
+     * @see String
      */
     public String getNivel () {
 
         return this.nivel;
+
+    }
+
+    /**
+     * Método que retorna a 
+     * referência da turma a qual este respectivo
+     * {@code Aluno} pertence.
+     * 
+     * @return {@value turma}
+     * @see Turma
+     */
+    public Turma getTurma () {
+
+        return this.turma;
+
+    }
+
+    /**
+     * Método que retorna o {@value ID} da turma que
+     * este respectivo {@code Aluno} pertence.
+     * 
+     * @return {@value ID}
+     * @see String
+     * @see Turma#getId()
+     */
+    public String getTurmaID () {
+
+        return this.turma.getId();
+
+    }
+
+    public static Aluno getAluno (String id) {
+
+        if ((id == null) || (id.equals(""))) throw new IllegalArgumentException("\nERRO: O ID não pode ser nulo e nem vazio!");
+
+        Pattern formato = Pattern.compile("^([0-9]){4}$");
+        Matcher matcher = formato.matcher(id);
+
+        if (!matcher.find()) throw new IllegalArgumentException("\nERRO: Formato de id inválido!");
+
+        if (!Aluno.IDs.contains(id)) throw new NoSuchElementException("\nERRO: O aluno não existe ou o id foi digitado incorretamente!");
+
+        return Aluno.alunoMap.get(id);
+
+    }
+
+    /**
+     * Método pra escrever a turma deste respectivo {@code Aluno}.
+     * 
+     * @param turma
+     * @throws IllegalArgumentException
+     */
+    public void setTurma (Turma turma) {
+
+        if (turma == null) throw new IllegalArgumentException("\nERRO: A turma não pode ser nula!");
+
+        this.turma = turma;
 
     }
 
@@ -208,14 +233,14 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
     @Override
     public int compareTo(Aluno o) {
         
-        return this.getNomeCompleto().compareTo(o.getNomeCompleto());
+        return this.getNomeCompleto().compareToIgnoreCase(o.getNomeCompleto());
 
     }
 
     @Override
     public String toString() {
         
-        String formato = String.format("Nome: %s", this.getNomeCompleto());
+        String formato = String.format("Nome: %s; id: %s\n", this.getNomeCompleto(), this.getId());
         return formato;
 
     }

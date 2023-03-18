@@ -201,7 +201,7 @@ public final class DataHelper {
 
         for (int i = inicio + 1; i <= fim; i++) {
 
-            if (x.get(i).getSobrenome().compareTo(pivot.getSobrenome()) < 0) {
+            if (x.get(i).getSobrenome().compareToIgnoreCase(pivot.getSobrenome()) < 0) {
 
                 x.set(postPivot, x.get(i));
                 x.set(i, x.get(postPivot + 1));
@@ -296,8 +296,8 @@ public final class DataHelper {
         int mid = (inicio + fim) / 2;
 
         if (lista.get(mid).compareTo(valor) == 0) return Boolean.TRUE;
-        if (lista.get(mid).compareTo(valor) < 0) procura(lista, valor, mid + 1, fim);
-        if (lista.get(mid).compareTo(valor) > 0) procura(lista, valor, inicio, mid - 1);
+        if (lista.get(mid).compareTo(valor) < 0) return procuraBoolean(lista, valor, mid + 1, fim);
+        if (lista.get(mid).compareTo(valor) > 0) return procuraBoolean(lista, valor, inicio, mid - 1);
 
         return Boolean.FALSE;
 
@@ -392,6 +392,7 @@ public final class DataHelper {
         DataHelper.ordenaSobrenome(copia, inicio, (fim - 1));
 
         int mid = (inicio + fim) / 2;
+        String s = copia.get(mid).getSobrenome();
 
         if (copia.get(mid).getSobrenome().compareToIgnoreCase(nome) == 0) return copia.get(mid);
         if (copia.get(mid).getSobrenome().compareToIgnoreCase(nome) < 0) return procuraSobrenome(copia, nome, mid + 1, fim);
