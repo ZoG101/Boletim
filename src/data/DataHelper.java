@@ -1,5 +1,6 @@
 package data;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -10,7 +11,7 @@ import models.Usuario;
  * a organizar e procurar os dados dos usuários.
  * 
  * @author Davi Campolina Leite Morato
- * @version 1.0
+ * @version 1.2
  * @see Usuario
  * @see Professor
  * @see Aluno
@@ -101,6 +102,43 @@ public final class DataHelper {
         for (int i = inicio + 1; i <= fim; i++) {
 
             if (x.get(i).compareTo(pivot) < 0) {
+
+                x.set(postPivot, x.get(i));
+                x.set(i, x.get(postPivot + 1));
+
+                postPivot++;
+
+            }
+
+        }
+
+        x.set(postPivot, pivot);
+
+        return postPivot;
+
+    }
+
+    private static final <T extends Usuario> void ordenaSobrenome (List<T> dados, int inicio, int fim) {
+
+        if (inicio < fim) {
+
+            int pivot = DataHelper.divideSobrenome(dados, inicio, fim);
+
+            ordenaSobrenome(dados, inicio, pivot - 1);
+            ordenaSobrenome(dados, pivot + 1, fim);
+
+        }
+
+    }
+
+    private static final <T extends Usuario> int divideSobrenome (List<T> x, int inicio, int fim) {
+
+        T pivot = x.get(inicio);
+        int postPivot = inicio;
+
+        for (int i = inicio + 1; i <= fim; i++) {
+
+            if (x.get(i).getSobrenome().compareTo(pivot.getSobrenome()) < 0) {
 
                 x.set(postPivot, x.get(i));
                 x.set(i, x.get(postPivot + 1));
@@ -218,13 +256,17 @@ public final class DataHelper {
 
     public static final <T extends Usuario> Usuario procuraSobrenome (List<T> lista, String nome, int inicio, int fim) {
 
-        if ((inicio >= fim) || (lista.isEmpty())) return null;
+        List<T> copia = new ArrayList<T>(lista);
+
+        if ((inicio >= fim) || (lista.isEmpty()) || (copia.isEmpty())) return null;
+
+        DataHelper.ordenaSobrenome(copia, inicio, (fim - 1));
 
         int mid = (inicio + fim) / 2;
 
-        if (lista.get(mid).getSobrenome().compareToIgnoreCase(nome) == 0) return lista.get(mid);
-        if (lista.get(mid).getSobrenome().compareToIgnoreCase(nome) < 0) return procuraSobrenome(lista, nome, mid + 1, fim);
-        if (lista.get(mid).getSobrenome().compareToIgnoreCase(nome) > 0) return procuraSobrenome(lista, nome, inicio, mid - 1);
+        if (copia.get(mid).getSobrenome().compareToIgnoreCase(nome) == 0) return copia.get(mid);
+        if (copia.get(mid).getSobrenome().compareToIgnoreCase(nome) < 0) return procuraSobrenome(copia, nome, mid + 1, fim);
+        if (copia.get(mid).getSobrenome().compareToIgnoreCase(nome) > 0) return procuraSobrenome(copia, nome, inicio, mid - 1);
 
         return null;
 

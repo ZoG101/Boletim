@@ -1,4 +1,5 @@
 //import java.nio.charset.Charset;
+import java.nio.charset.Charset;
 import java.util.Scanner;
 
 import models.Aluno;
@@ -43,7 +44,9 @@ public class App {
 
         Token token = new Token();
 
-        try (Scanner scan = new Scanner(System.in)) {
+        Charset charset = Charset.defaultCharset();
+
+        try (Scanner scan = new Scanner(System.in, charset)) {
 
             System.out.println("\nDigite seu usuário:");
             String logUsuario = scan.next();
