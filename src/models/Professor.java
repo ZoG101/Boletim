@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.regex.Matcher;
@@ -16,7 +17,7 @@ import java.util.regex.Pattern;
  * contém suas informações básicas e de maior interesse.
  * 
  * @author Davi Campolina Leite Morato
- * @version 1.4
+ * @version 1.5
  * @see Usuario
  * @see Aluno
  * @see Turma
@@ -157,6 +158,20 @@ public final class Professor extends Usuario {
 
     }
 
+    /** 
+     * Função para pesquisar por um aluno específico dentro de todas as turmas do {@code Professor} 
+     * e retorna uma {@code List} auxiliar com os alunos selecionados.
+     * 
+     * @param nome
+     * @return {@value alunos}
+     * @throws IllegalStateException
+     * @throws IllegalArgumentException
+     * @throws NoSuchElementException
+     * @see List
+     * @see Aluno
+     * @see String
+     * @see Set
+     */
     public List<Aluno> procuraAluno (String nome) {
 
         if (!this.getAutenticacao()) throw new IllegalStateException("\nERRO: Autenticação necessária para executar tais ações!");
@@ -175,6 +190,8 @@ public final class Professor extends Usuario {
             });
 
         });
+
+        if (alunos.isEmpty()) throw new NoSuchElementException("\nERRO: Nenhum elemento com esse nome foi encontrado!");
 
         return alunos;
     

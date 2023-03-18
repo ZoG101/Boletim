@@ -15,7 +15,7 @@ import data.DataHelper;
  * professor que possui estas turmas.
  * 
  * @author Davi Campolina Leite Morato
- * @version 1.1
+ * @version 1.2
  * @see Usuario
  * @see Aluno
  * @see Professor
@@ -176,6 +176,20 @@ public class Turma implements Serializable {
 
     }
 
+    /**
+     * Método auxiliar que executa a busca de um ou mais alunos 
+     * dentro da {@code Turma}.
+     * 
+     * @param nome
+     * @return {@value alunos}
+     * @see List
+     * @see Aluno
+     * @see String
+     * @see Boolean
+     * @see DataHelper#procuraNome(List, String, int, int)
+     * @see DataHelper#procuraSobrenome(List, String, int, int)
+     * @see DataHelper#procuraNomeCompleto(List, String, int, int)
+     */
     public List<Aluno> procuraAluno(String nome) {
 
         List<Aluno> alunos = new ArrayList<Aluno>();
