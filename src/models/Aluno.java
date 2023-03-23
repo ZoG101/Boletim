@@ -172,14 +172,24 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
 
     }
 
-    public static Aluno getAluno (String id) {
+    public static Aluno getAlunoID (String id) {
 
         if ((id == null) || (id.equals(""))) throw new IllegalArgumentException("\nERRO: O ID não pode ser nulo e nem vazio!");
 
-        Pattern formato = Pattern.compile("^([0-9]){4}$");
+        Pattern formato = Pattern.compile("^([0-9]){1,4}$");
         Matcher matcher = formato.matcher(id);
 
         if (!matcher.find()) throw new IllegalArgumentException("\nERRO: Formato de id inválido!");
+
+        if (id.length() < 4) {
+
+            for (int i = 0; i < (4 - (id.length())); i++) {
+
+                id = String.format("%d%s", 0, id);
+
+            }
+
+        }
 
         if (!Aluno.IDs.contains(id)) throw new NoSuchElementException("\nERRO: O aluno não existe ou o id foi digitado incorretamente!");
 

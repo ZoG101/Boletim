@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
  * contém suas informações básicas e de maior interesse.
  * 
  * @author Davi Campolina Leite Morato
- * @version 1.5
+ * @version 1.6
  * @see Usuario
  * @see Aluno
  * @see Turma
@@ -105,7 +105,7 @@ public final class Professor extends Usuario {
 
         if (id.length() < 4) {
 
-            for (int i = 0; i <= (4 - (id.length() + 1)); i++) {
+            for (int i = 0; i < (4 - (id.length())); i++) {
 
                 id = String.format("%d%s", 0, id);
 
@@ -216,7 +216,7 @@ public final class Professor extends Usuario {
         if (!this.getAutenticacao()) throw new IllegalStateException("\nERRO: Autenticação necessária para executar tais ações!");
         if ((id == null) || (id.equals(""))) throw new IllegalArgumentException("\nERRO: O ID não pode ser nulo e nem vazio!");
 
-        return Aluno.getAluno(id);
+        return Aluno.getAlunoID(id);
     
     }
     
