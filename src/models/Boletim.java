@@ -21,7 +21,7 @@ import java.util.Locale;
  * @see Turma
  * @see Serializable
  */
-public class Boletim implements Serializable {
+public class Boletim implements Serializable, Comparable<String> {
 
     private static final long serialVersionUID = 1L;
 
@@ -725,6 +725,60 @@ public class Boletim implements Serializable {
 
         System.out.println("|" + repeteCaracter('-', 80) + "|");
         
+    }
+
+    @Override
+    public String toString() {
+
+        System.out.println("|" + repeteCaracter('-', 80) + "|");
+        this.printTitulo();
+        System.out.println("|" + repeteCaracter('-', 80) + "|");
+        this.printCabecalhoNotas();
+        System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+        switch (this.getNivel()) {
+
+            case "GRADUACAO": 
+
+                printCabecalhoGraduacao();
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                printNotasGraduacao();
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+            break;
+
+            case "POSGRADUACAO": 
+            
+                printCabecalhoPosGraduacao();
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                printNotasPosGraduacao ();
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+            
+            break;
+
+        }
+
+
+        printMediaCabecalho();
+        System.out.println("|" + repeteCaracter('-', 80) + "|");
+        printMedia();
+        System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+        if (this.getAprovado()) printAprovado();
+        else printReprovado();
+
+        System.out.println("|" + repeteCaracter('-', 80) + "|");
+        
+        return "\n";
+
+    }
+
+    @Override
+    public int compareTo(String o) {
+        
+        return this.getMateria().compareToIgnoreCase(o);
+
     }
     
 }

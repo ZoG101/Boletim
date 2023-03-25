@@ -105,7 +105,7 @@ public final class Professor extends Usuario {
 
         if (id.length() < 4) {
 
-            for (int i = 0; i < (4 - (id.length())); i++) {
+            for (int i = 0; i <= (4 - (id.length()) + 1); i++) {
 
                 id = String.format("%d%s", 0, id);
 
