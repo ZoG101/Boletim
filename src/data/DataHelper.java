@@ -118,7 +118,6 @@ public final class DataHelper {
 
     }
 
-
     /**
      * Método auxiliar estático, privado e final de ordenação que 
      * irá ajudar a ordenar com base no sobrenome de 
@@ -302,7 +301,6 @@ public final class DataHelper {
         return Boolean.FALSE;
 
     }
-
 
     /**
      * Método que procura pelo primeiro nome de um {@code Usuario} dentro de uma {@code List} 

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Random;
+import java.util.concurrent.RejectedExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -223,7 +224,14 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
     public void criarBoletim (Professor professor) {
 
         Boletim a = new Boletim(this, professor);
+        if (!this.verificaBoletim(professor)) throw new RejectedExecutionException("\nERRO: Já existe um boletim da matéria deste professor matéria para este aluno! \n Matéria: " + professor.getMateria()); 
         this.adicionarBoletim(a);
+
+    }
+
+    private Boolean verificaBoletim (Professor professor) {
+
+        return DataHelper.procuraBoolean(this.boletins, new Boletim(this, professor.getMateria(), professor.getNome()), 0, (this.boletins.size() - 1));
 
     }
 
@@ -237,6 +245,7 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
     private void adicionarBoletim (Boletim boletim) {
 
         boletins.add(boletim);
+        DataHelper.ordena(this.boletins, 0, (this.boletins.size() - 1));
 
     }
 
@@ -252,6 +261,12 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
         
         String formato = String.format("Nome: %s; id: %s\n", this.getNomeCompleto(), this.getId());
         return formato;
+
+    }
+
+    public Boletim getBoletim (String materia) {
+
+        return null;
 
     }
     

@@ -15,13 +15,13 @@ import java.util.Locale;
  * suas operações.
  * 
  * @author Davi Campolina Leite Morato
- * @version 1.0
+ * @version 1.1
  * @see Aluno
  * @see Professor
  * @see Turma
  * @see Serializable
  */
-public class Boletim implements Serializable, Comparable<String> {
+public class Boletim implements Serializable, Comparable<Boletim> {
 
     private static final long serialVersionUID = 1L;
 
@@ -57,6 +57,31 @@ public class Boletim implements Serializable, Comparable<String> {
         this.nivel = aluno.getNivel();
         this.alunoNome = aluno.getNomeCompleto();
         this.professorNome = professor.getNomeCompleto();
+        notas = new ArrayList<Double>(0);
+
+    }
+
+    /**
+     * Construtor padrão da classe precisa ter pelo menos um {@code aluno}
+     * e um {@code professor} recebidos para a construção do objeto já que a 
+     * gerencia das notas e reponsabilidades atribuidas pelo mesmo 
+     * precisam ser reconhecidas.
+     * 
+     * @param aluno
+     * @param professor
+     * @see Aluno
+     * @see String
+     * @see Turma
+     */
+    public Boletim (Aluno aluno, String materia, String nomeProfessor) {
+
+        if (aluno == null) throw new NullPointerException("\nERRO: Para criar um boletim o aluno não pode ser nulo!");
+
+        this.materia = materia;
+        this.aprovacao = false;
+        this.nivel = aluno.getNivel();
+        this.alunoNome = aluno.getNomeCompleto();
+        this.professorNome = nomeProfessor;
         notas = new ArrayList<Double>(0);
 
     }
@@ -775,9 +800,11 @@ public class Boletim implements Serializable, Comparable<String> {
     }
 
     @Override
-    public int compareTo(String o) {
-        
-        return this.getMateria().compareToIgnoreCase(o);
+    public int compareTo(Boletim o) {
+
+        if (o == null) throw new NullPointerException("\nERRO: O objeto de comparação não pode ser nulo!");
+
+        return this.getMateria().compareToIgnoreCase(o.getMateria());
 
     }
     

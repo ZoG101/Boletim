@@ -219,5 +219,17 @@ public final class Professor extends Usuario {
         return Aluno.getAlunoID(id);
     
     }
+
+    public void criaBoletimRapido (Aluno aluno) {
+
+        aluno.criarBoletim(this);
+
+    }
+
+    public Boletim procuraBoletim (String materia, Aluno aluno) {
+
+        return aluno.getBoletim(materia);
+
+    }
     
 }
