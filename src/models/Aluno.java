@@ -18,7 +18,7 @@ import data.DataHelper;
  * contém suas informações básicas e de maior interesse.
  * 
  * @author Davi Campolina Leite Morato
- * @version 1.2
+ * @version 1.3
  * @see Usuario
  * @see Professor
  * @see Turma
@@ -231,7 +231,7 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
 
     private Boolean verificaBoletim (Professor professor) {
 
-        return DataHelper.procuraBoolean(this.boletins, new Boletim(this, professor.getMateria(), professor.getNome()), 0, (this.boletins.size() - 1));
+        return DataHelper.procuraBoolean(this.boletins, new Boletim(this, professor), 0, (this.boletins.size() - 1));
 
     }
 
@@ -264,7 +264,12 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
 
     }
 
-    public Boletim getBoletim (String materia) {
+    public Boletim getBoletim (String materia, Professor professor) {
+
+        if (professor.getMateria().equalsIgnoreCase(materia)) return DataHelper.procura(this.boletins, new Boletim(this, materia, professor.getNome()), 0, (this.boletins.size() - 1));
+        else System.out.println("Você pode visualizar este boletim, mas você não tem permissão de alterá-lo já que ele pertence a outro professor.");
+
+        DataHelper.procura(this.boletins, new Boletim(this, materia, professor.getNome()), 0, (this.boletins.size() - 1)).toString();
 
         return null;
 

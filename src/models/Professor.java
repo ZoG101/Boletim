@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
  * contém suas informações básicas e de maior interesse.
  * 
  * @author Davi Campolina Leite Morato
- * @version 1.6
+ * @version 1.7
  * @see Usuario
  * @see Aluno
  * @see Turma
@@ -214,7 +214,7 @@ public final class Professor extends Usuario {
     public Aluno procuraAlunoID (String id) {
 
         if (!this.getAutenticacao()) throw new IllegalStateException("\nERRO: Autenticação necessária para executar tais ações!");
-        if ((id == null) || (id.equals(""))) throw new IllegalArgumentException("\nERRO: O ID não pode ser nulo e nem vazio!");
+        if ((id == null) || (id.equalsIgnoreCase(""))) throw new IllegalArgumentException("\nERRO: O ID não pode ser nulo ou vazio!");
 
         return Aluno.getAlunoID(id);
     
@@ -222,13 +222,19 @@ public final class Professor extends Usuario {
 
     public void criaBoletimRapido (Aluno aluno) {
 
+        if (!this.getAutenticacao()) throw new IllegalStateException("\nERRO: Autenticação necessária para executar tais ações!");
+        if (aluno == null) throw new IllegalArgumentException("\nERRO: O aluno não pode ser nulo ou vazio!");
+
         aluno.criarBoletim(this);
 
     }
 
     public Boletim procuraBoletim (String materia, Aluno aluno) {
 
-        return aluno.getBoletim(materia);
+        if (!this.getAutenticacao()) throw new IllegalStateException("\nERRO: Autenticação necessária para executar tais ações!");
+        if ((aluno == null) || (materia == null) || (materia.equalsIgnoreCase(""))) throw new IllegalArgumentException("\nERRO: Nem o aluno e nem a matéria podem ser nulos ou vazios!");
+
+        return aluno.getBoletim(materia, this);
 
     }
     
