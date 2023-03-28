@@ -173,6 +173,19 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
 
     }
 
+    /**
+     * Método de busca de {@code Aluno} por ID.
+     * 
+     * @param id
+     * @return {@value Aluno} buscado.
+     * @throws IllegalArgumentException
+     * @throws NoSuchElementException
+     * @see Aluno
+     * @see String
+     * @see Pattern
+     * @see Matcher
+     * @see HashMap
+     */
     public static Aluno getAlunoID (String id) {
 
         if ((id == null) || (id.equals(""))) throw new IllegalArgumentException("\nERRO: O ID não pode ser nulo e nem vazio!");
@@ -203,6 +216,7 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
      * 
      * @param turma
      * @throws IllegalArgumentException
+     * @see Turma
      */
     public void setTurma (Turma turma) {
 
@@ -218,13 +232,14 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
      * para criar o {@code Boletim}.
      * 
      * @param professor
+     * @throws RejectedExecutionException
      * @see Professor
      * @see Boletim
      */
     public void criarBoletim (Professor professor) {
 
         Boletim a = new Boletim(this, professor);
-        if (!this.verificaBoletim(professor)) throw new RejectedExecutionException("\nERRO: Já existe um boletim da matéria deste professor matéria para este aluno! \n Matéria: " + professor.getMateria()); 
+        if (!this.verificaBoletim(professor)) throw new RejectedExecutionException("\nERRO: Já existe um boletim da matéria deste professor para este aluno! \n Matéria: " + professor.getMateria()); 
         this.adicionarBoletim(a);
 
     }
@@ -249,6 +264,25 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
 
     }
 
+    /**
+     * Método de busca de boletim por matéria.
+     * 
+     * @param materia
+     * @param professor
+     * @return <p>{@value Boletim} Buscado pela matéria;<br>
+     *         {@code Boletim.toString()} e {@value null} se o professor não tiver permissão de alterar o boletim.</p>
+     */
+    public Boletim getBoletim (String materia, Professor professor) {
+
+        if (professor.getMateria().equalsIgnoreCase(materia)) return DataHelper.procura(this.boletins, new Boletim(this, materia, professor.getNome()), 0, (this.boletins.size() - 1));
+        else System.out.println("Você pode visualizar este boletim, mas você não tem permissão de alterá-lo já que ele pertence a outro professor.");
+
+        DataHelper.procura(this.boletins, new Boletim(this, materia, professor.getNome()), 0, (this.boletins.size() - 1)).toString();
+
+        return null;
+
+    }
+
     @Override
     public int compareTo(Aluno o) {
         
@@ -264,15 +298,6 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
 
     }
 
-    public Boletim getBoletim (String materia, Professor professor) {
-
-        if (professor.getMateria().equalsIgnoreCase(materia)) return DataHelper.procura(this.boletins, new Boletim(this, materia, professor.getNome()), 0, (this.boletins.size() - 1));
-        else System.out.println("Você pode visualizar este boletim, mas você não tem permissão de alterá-lo já que ele pertence a outro professor.");
-
-        DataHelper.procura(this.boletins, new Boletim(this, materia, professor.getNome()), 0, (this.boletins.size() - 1)).toString();
-
-        return null;
-
-    }
+    
     
 }

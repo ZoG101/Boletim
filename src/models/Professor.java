@@ -220,7 +220,15 @@ public final class Professor extends Usuario {
     
     }
 
-    public void criaBoletimRapido (Aluno aluno) {
+    /**
+     * Método para que o professor crie um boletim para seu {@code Aluno}.
+     * 
+     * @param aluno
+     * @throws IllegalStateException
+     * @throws IllegalArgumentException
+     * @see Aluno
+     */
+    public void criaBoletim (Aluno aluno) {
 
         if (!this.getAutenticacao()) throw new IllegalStateException("\nERRO: Autenticação necessária para executar tais ações!");
         if (aluno == null) throw new IllegalArgumentException("\nERRO: O aluno não pode ser nulo ou vazio!");
@@ -229,6 +237,19 @@ public final class Professor extends Usuario {
 
     }
 
+    /**
+     * Método que procura um bolitim de um {@code Aluno} específico de
+     * uma {@value matéria} específica.
+     *  
+     * @param materia
+     * @param aluno
+     * @return {@value Boletim} se o {@code Professor} tiver a permissão de alterar o boletim;
+     *         {@value null} Se o {@code Professor} não tiver permissão de alterar o boletim.
+     * @throws IllegalArgumentException
+     * @see Boletim
+     * @see String
+     * @see Aluno
+     */
     public Boletim procuraBoletim (String materia, Aluno aluno) {
 
         if (!this.getAutenticacao()) throw new IllegalStateException("\nERRO: Autenticação necessária para executar tais ações!");
