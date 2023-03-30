@@ -16,7 +16,7 @@ public class Cli {
 
     public void menuInicial () throws IOException {
 
-        Integer condition;
+        Integer opcao;
 
         do {
             
@@ -32,9 +32,10 @@ public class Cli {
             System.out.printf("%-81s|\n", terceiraOpcao);
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             System.out.printf("|%1s", "> ");
-            condition = Integer.valueOf(scan.nextInt());
+            opcao = Integer.valueOf(scan.nextInt());
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
 
-            switch (condition) {
+            switch (opcao.intValue()) {
 
                 case 1:
 
@@ -64,7 +65,7 @@ public class Cli {
             
             System.out.println("|" + repeteCaracter('-', 80) + "|");
 
-        } while (condition.intValue() != 3);
+        } while (opcao.intValue() != 3);
 
     }
 
@@ -76,7 +77,8 @@ public class Cli {
      * 
      * @param c
      * @param tamanho
-     * @return String
+     * @return {@value String} com um caractere repetido quantas vezes
+     *         for escolhido.
      * @see String
      * @see Integer
      * @see Arrays
