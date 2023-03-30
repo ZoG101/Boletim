@@ -653,7 +653,7 @@ public class Boletim implements Serializable, Comparable<Boletim> {
      * 
      * @see String
      */
-    private void printMediaCabecalho() {
+    private void printMediaCabecalho () {
 
         String cabecalho = String.format("|%40.5s", "Média");
         System.out.printf("%-81s|\n", cabecalho);
@@ -802,7 +802,7 @@ public class Boletim implements Serializable, Comparable<Boletim> {
     @Override
     public int compareTo(Boletim o) {
 
-        if (o == null) throw new NullPointerException("\nERRO: O objeto de comparação não pode ser nulo!");
+        if (o == null) throw new NullPointerException("\nERRO: O Boletim de comparação não pode ser nulo!");
 
         return this.getMateria().compareToIgnoreCase(o.getMateria());
 

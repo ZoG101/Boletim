@@ -1,4 +1,5 @@
 //import java.nio.charset.Charset;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Scanner;
 
@@ -7,10 +8,11 @@ import models.Boletim;
 import models.Professor;
 import models.Turma;
 import security.Token;
+import ui.Cli;
 
 public class App {
 
-    public static void main (String[] args) {
+    public static void main (String[] args) throws IOException {
 
         Professor professor = new Professor("Marcos", "Filho","28001238938", "(22) 2222-2222", null, "Zinc", "asdfS1", "Matemática");
         Aluno aluno = new Aluno("Davi", "Campolina", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "Blab", "Zasp23", "POSGRADUACAO");
@@ -31,6 +33,10 @@ public class App {
         Boletim nota = new Boletim(aluno, professor);
 
         nota.setFalta();
+
+        Cli i = new Cli();
+
+        i.menuInicial();
 
         System.out.println(nota.getFalta());
 
