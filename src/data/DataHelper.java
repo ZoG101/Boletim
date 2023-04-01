@@ -3,6 +3,8 @@ package data;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import models.Usuario;
 
@@ -443,6 +445,230 @@ public final class DataHelper {
         if (lista.get(mid).getNomeCompleto().compareToIgnoreCase(nome) > 0) return procuraNomeCompleto(lista, nome, inicio, mid - 1);
 
         return null;
+
+    }
+
+    /**
+     * Método auxiliar para verificar se a senha está conforme o 
+     * padrão de sengurança de senha permitido.
+     * 
+     * @param s
+     * @return {@value true} se a senha estiver conforme o padrão de sengurança de senha;
+     *         {@value false} se a senha estiver fora do padrão de sengurança de senha.
+     * @see Boolean
+     * @see String
+     * @see Pattern
+     * @see Matcher
+     */
+    public static Boolean verificaSenha (String s) {
+
+        Pattern formato = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?!.*[ !@#$%^&*_=+-]).{6,20}$");
+        Matcher confirma = formato.matcher(s);
+
+        if(confirma.matches()) return Boolean.TRUE;
+        return Boolean.FALSE;
+
+    }
+
+    /**
+     * Método auxiliar que verifica se o nome de usuário inserido para
+     * cadastro está de acordo com as regras da instituição.
+     * 
+     * @param u
+     * @return {@value true} se o nome de usuário estiver de acordo com as regras da instituição;
+     *         {@value false} se o nome de usuário não estiver de acordo com as regras da instituição.
+     * @see Boolean
+     * @see String
+     * @see Pattern
+     * @see Matcher
+     */
+    public static Boolean verificaUsuário (String u) {
+
+        Pattern formato = Pattern.compile("^(?!.*[ !@#$%^&*_=+-]).{4,20}$");
+        Matcher confirma = formato.matcher(u);
+
+        if (confirma.matches()) return Boolean.TRUE;
+        return Boolean.FALSE;
+
+    }
+
+    public static Boolean exiteUsuario (String nomeUsuario) {
+
+        if ((nomeUsuario == null) || (nomeUsuario.compareToIgnoreCase("") == 0)) return Boolean.FALSE;
+        if (Usuario.getUsuarios().containsKey(nomeUsuario)) return Boolean.TRUE;
+        return Boolean.FALSE;
+
+    }
+
+    /**
+     * Método auxiliar para verificar formatos de {@code email} que
+     * podem ser válidos.
+     * 
+     * @param email
+     * @return {@value true} Se o fomato de {@code email} inserido for válido;
+     *         {@value false} Se o fomato de {@code email} não for válido.
+     * @see Boolean
+     * @see String
+     * @see Pattern
+     * @see Matcher
+     */
+    public static Boolean verificaEmail (String email) {
+
+        Pattern formato = Pattern.compile("^([a-zA-Z0-9._]){2,64}([@]){1,1}([a-zA-Z0-9._]){2,64}(?=.*[.])(?!.*[ !#$%^&*=+-]).{6,64}$");
+        Matcher confirma = formato.matcher(email);
+
+        if (confirma.matches()) return Boolean.TRUE; 
+        return Boolean.FALSE;
+
+    }
+
+    /**
+     * Método auxiliar para verificar o CPF por meio do cálculo para confirmar os
+     * dois dígitos verificadores.
+     * 
+     * @param cpf
+     * @return {@value true} Se o cpf for válido;
+     *         {@value false} Se o cpf for inválido.
+     * @see Boolean
+     * @see String
+     * @see Pattern
+     * @see Matcher
+     * @see Integer
+     * @implNote <p>Para o primeiro dígito ({@code dig1}) os nove primeiros algarismos são 
+     * ordenadamente multiplicados pela sequência {@value10, 9, 8, 7, 6,
+     * 5, 4, 3, 2} (o primeiro por {@value 10}, o segundo por {@value 9}, e
+     * assim sucessivamente). Em seguida, calcula-se o resto da divisão
+     * ({@code sobra}) da soma dos resultados das multiplicações por {@value 11}.
+     * Se esse resto ({@code sobra}) for {@value 0} ou {@value 1}, o primeiro dígito
+     * verificador é {@value 0}.</p>
+     * 
+     * <p>Para o segundo dígito verificador {@code dig2} é calculado pela mesma
+     * regra, na qual os números a serem multiplicados pela sequência {@value 10,
+     * 9, 8, 7, 6, 5, 4, 3, 2} são contados a partir do segundo algarismo, sendo 
+     * {@code dig1} o último algarismo. Se {@code sobra} for {@value 0} ou {@value 1},
+     * {@code dig2} é igual a {@value 0}.</p>
+     */
+    public static Boolean verificaCPF (String cpf) {
+
+        Pattern formato1 = Pattern.compile("^([0-9]){3}.([0-9]){3}.([0-9]){3}-([0-9]){2}$");
+        Matcher matcher1 = formato1.matcher(cpf);
+
+        Pattern formato2 = Pattern.compile("^([0-9]){3}([0-9]){3}([0-9]){3}([0-9]){2}$");
+        Matcher matcher2 = formato2.matcher(cpf);
+
+        if (matcher1.matches()) {
+
+            int count1 = 10;
+            int count2 = 10;
+            int dig1 = 0;
+            int dig2 = 0;
+            Integer cpfPartido;
+
+            for (int i = 0; i < cpf.length() - 1; i++) {
+
+                if ((i != 3) && (i != 7) && (i != 11)) {
+
+                    cpfPartido = Integer.parseInt(cpf.substring(i, i + 1));
+
+                    if (count1 >= 2) { 
+
+                        dig1 += cpfPartido * count1; 
+
+                        count1--;
+
+                    } else {
+
+                        int sobra = (dig1 % 11);
+
+                        if ((sobra == 0) || (sobra == 1)) {
+
+                            dig1 = 0;
+
+                        } else {
+
+                            dig1 = 11 - sobra;
+
+                        }
+
+                    }
+
+                    if ((i >= 1) && (count2 >= 2)) {
+
+                        dig2 += cpfPartido * count2;
+
+                        count2--;
+
+                        if (i == 12) {
+
+                            int sobra = (dig2 % 11);
+
+                            if ((sobra == 0) || (sobra == 1)) {
+
+                                dig2 = 0;
+    
+                            } else {
+    
+                                dig2 = 11 - sobra;
+    
+                            }
+    
+                        }
+
+                    }
+
+                }
+
+            }
+
+            if ((dig1 == (Integer.parseInt(cpf.substring(cpf.length() - 2, cpf.length() - 1)))) && (dig2 == Integer.parseInt(cpf.substring(cpf.length() - 1, cpf.length())))) return Boolean.TRUE;
+
+        } else if (matcher2.matches()) {
+
+            int count1 = 10;
+            int count2 = 10;
+            int dig1 = 0;
+            int dig2 = 0;
+            Integer cpfPartido;
+
+            for (int i = 0; i < cpf.length()-1; i++) {
+
+                cpfPartido = Integer.parseInt(cpf.substring(i, i + 1));
+
+                if (count1 >= 2) { 
+
+                    dig1 += cpfPartido * count1; 
+
+                    count1--;
+
+                } else {
+
+                    int sobra = (dig1 % 11);
+                    dig1 = 11 - sobra;
+
+                }
+
+                if ((i >= 1) && (count2 >= 2)) {
+
+                    dig2 += cpfPartido * count2;
+
+                    count2--;
+
+                    if (i == 9) {
+
+                        int sobra = (dig2 % 11);
+                        dig2 = 11 - sobra;
+
+                    }
+
+                }
+
+            }
+
+            if ((dig1 == (Integer.parseInt(cpf.substring(cpf.length() - 2, cpf.length() - 1)))) && (dig2 == Integer.parseInt(cpf.substring(cpf.length() - 1, cpf.length())))) return Boolean.TRUE;
+
+        }
+
+        return Boolean.FALSE;
 
     }
 
