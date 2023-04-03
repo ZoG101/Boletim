@@ -30,6 +30,7 @@ public abstract class Usuario implements Serializable, Autenticavel {
 
     private static final long serialVersionUID = 1L;
 
+    private String nomeCompleto;
     private String nome;
     private String sobrenome;
     private String senha;
@@ -54,13 +55,14 @@ public abstract class Usuario implements Serializable, Autenticavel {
      * @see String
      * @see Boolean
      */
-    public Usuario (String nome, String sobrenome, String cpf, String telefone, String email, String usuario, String senha) {
+    public Usuario (String nomeCompleto, String nome, String sobrenome, String cpf, String telefone, String email, String usuario, String senha) {
 
         if (!(this instanceof Aluno) && ((cpf == null) ||(cpf.equals("")))) throw new RejectedExecutionException("\nERRO: Somente um aluno pode não ter um CPF!");
         if (((telefone == null) || (telefone.equals(""))) && ((email == null) || (email.equals("")))) throw new RejectedExecutionException("\nERRO: Você deve adicionar pelo menos um meio de contato!");
         if ((email != null) && (!email.equals(""))) if ((!this.verificaEmail(email))) throw new IllegalArgumentException("\nERRO: E-mail inválido!");
         if ((cpf != null) && (!cpf.equals(""))) if (!this.verificaCPF(cpf)) throw new IllegalArgumentException("\nERRO: CPF inválido!");
 
+        this.nomeCompleto = nomeCompleto;
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.cpf = cpf;
@@ -107,7 +109,7 @@ public abstract class Usuario implements Serializable, Autenticavel {
      */
     public String getNomeCompleto () {
 
-        return this.getNome() + " " + this.getSobrenome();
+        return this.nomeCompleto;
 
     }
 

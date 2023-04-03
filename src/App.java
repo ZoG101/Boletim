@@ -1,4 +1,6 @@
 //import java.nio.charset.Charset;
+
+/*
 import java.nio.charset.Charset;
 import java.util.Scanner;
 
@@ -7,12 +9,14 @@ import models.Boletim;
 import models.Professor;
 import models.Turma;
 import security.Token;
+ */
 import ui.Cli;
 
 public class App {
 
     public static void main (String[] args) {
 
+        /* 
         Professor professor = new Professor("Marcos", "Filho","28001238938", "(22) 2222-2222", null, "Zinc", "asdfS1", "Matemática");
         Aluno aluno = new Aluno("Davi", "Campolina", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "Blab", "Zasp23", "POSGRADUACAO");
         Aluno aluno2 = new Aluno("zezé", "Bota", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "fdsfs", "dfdS2f", "POSGRADUACAO");
@@ -30,14 +34,16 @@ public class App {
         Aluno aluno14 = new Aluno("Davi", "Campolina", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "Blabdfgsfg", "Zasp23", "POSGRADUACAO");
         Aluno aluno15 = new Aluno("Davi", "zé", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "Blaasdjfncb", "Zasp23", "POSGRADUACAO");
         Boletim nota = new Boletim(aluno, professor);
+        */
 
-        nota.setFalta();
+        //nota.setFalta();
 
         Cli i = new Cli();
 
         i.menuInicialVazio();
         i.menuIniciaComLogin();
 
+        /* 
         System.out.println(nota.getFalta());
 
         nota.setNota(9, 6);
@@ -116,6 +122,8 @@ public class App {
             e.printStackTrace();
 
         }
+
+        */
         
     }
 

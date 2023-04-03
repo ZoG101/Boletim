@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import models.Professor;
 import models.Usuario;
 
 /**
@@ -487,8 +488,8 @@ public final class DataHelper {
         Pattern formato = Pattern.compile("^(?!.*[ !@#$%^&*_=+-]).{4,20}$");
         Matcher confirma = formato.matcher(u);
 
-        if (confirma.matches()) return Boolean.TRUE;
-        return Boolean.FALSE;
+        if ((!confirma.matches()) || (Professor.getUsuarios().containsKey(u))) return Boolean.FALSE;
+        return Boolean.TRUE;
 
     }
 
@@ -669,6 +670,12 @@ public final class DataHelper {
         }
 
         return Boolean.FALSE;
+
+    }
+
+    public static String formataCPF(String cpf) {
+
+        return cpf = cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." + cpf.substring(6, 9) + "-" + cpf.substring(9);
 
     }
 

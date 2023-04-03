@@ -40,9 +40,9 @@ public final class Professor extends Usuario {
      * @see String
      * @see Boolean
      */
-    public Professor (String nome, String sobrenome, String cpf, String telefone, String email, String usuario, String senha, String materia) {
+    public Professor (String nomeCompleto, String nome, String sobrenome, String cpf, String telefone, String email, String usuario, String senha, String materia) {
 
-        super(nome, sobrenome, cpf, telefone, email, usuario, senha);
+        super(nomeCompleto, nome, sobrenome, cpf, telefone, email, usuario, senha);
         this.materia = materia;
 
     }

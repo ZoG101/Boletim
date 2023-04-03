@@ -44,9 +44,9 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
      * @param nivel
      * @see String
      */
-    public Aluno (String nome, String sobrenome, String cpf, String telefone, String email, String usuario, String senha, String nivel) {
+    public Aluno (String nomeCompleto, String nome, String sobrenome, String cpf, String telefone, String email, String usuario, String senha, String nivel) {
 
-        super(nome, sobrenome, cpf, telefone, email, usuario, senha);
+        super(nomeCompleto, nome, sobrenome, cpf, telefone, email, usuario, senha);
         this.id = this.setID();
         this.nivel = nivel;
         this.boletins = new ArrayList<Boletim>();
