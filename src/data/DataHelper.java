@@ -679,4 +679,20 @@ public final class DataHelper {
 
     }
 
+    public static Boolean verificaTelefone (String telefone) {
+
+        Pattern formato1 = Pattern.compile("^(?=.*[0-9])(?!.*[a-z])(?!.*[A-Z])(?!.*[!@#$%^&*_=+.]).{12,15}$");
+        Matcher matcher1 = formato1.matcher(telefone);
+
+        if (!matcher1.matches()) return Boolean.FALSE;
+
+        Pattern formato2 = Pattern.compile("^(\\([0-9]{2}\\))([0-9]{5})-([0-9]{4})$");
+        Matcher matcher2 = formato2.matcher(telefone);
+        
+        if (matcher2.matches()) telefone = telefone.replaceAll("^([ )(-])$", "");
+
+        return Boolean.TRUE;
+
+    }
+
 }

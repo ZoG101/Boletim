@@ -50,6 +50,7 @@ public class Cli {
                     System.out.printf("|Sua escolha: %-67s|\n", "Cadastrar Professor.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
                     this.cadastroProfessor();
+                    opcao = Integer.valueOf(menuIniciaComLogin());
 
                 break;
 
@@ -80,7 +81,7 @@ public class Cli {
 
     }
 
-    public void menuIniciaComLogin () {
+    public Integer menuIniciaComLogin () {
 
         Integer opcao;
 
@@ -155,6 +156,8 @@ public class Cli {
             }
 
         } while (opcao.intValue() != 5);
+
+        return 3;
 
     }
 
@@ -276,6 +279,18 @@ public class Cli {
             telefone = scan.next();
             complementar = scan.nextLine();
             telefone = telefone + complementar;
+
+            while (!DataHelper.verificaTelefone(telefone)) {
+
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                System.out.printf("|ATENÇÃO: %-71s|\n", "NÚMERO DE TELEFONE INVÁLIDO! TENTE NOVAMENTE.");
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                System.out.printf("|%1s", "> ");
+                telefone = scan.next();
+                complementar = scan.nextLine();
+                telefone = telefone + complementar;
+                
+            }
 
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             System.out.printf("|%-80s|\n", "Digite seu e-mail:");
