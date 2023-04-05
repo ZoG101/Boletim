@@ -267,10 +267,7 @@ public class Cli {
 
             }
 
-            formato = Pattern.compile("^([0-9]){3}([0-9]){3}([0-9]){3}([0-9]){2}$");
-            confirma = formato.matcher(cpf);
-
-            if (confirma.matches()) cpf = DataHelper.formataCPF(cpf);
+            cpf = DataHelper.formataCPF(cpf);
 
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             System.out.printf("|%-80s|\n", "Digite seu número de telefone:");
@@ -289,8 +286,10 @@ public class Cli {
                 telefone = scan.next();
                 complementar = scan.nextLine();
                 telefone = telefone + complementar;
-                
+
             }
+
+            telefone = DataHelper.formataTelefone(telefone);
 
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             System.out.printf("|%-80s|\n", "Digite seu e-mail:");
@@ -435,7 +434,7 @@ public class Cli {
             System.out.printf("|Nome completo: %-65s|\n", nomeCompleto);
             System.out.printf("|Primeiro nome: %-65s|\n", primeiroNome);
             System.out.printf("|Sobrenome: %-69s|\n", sobrenome);
-            System.out.printf("|CPF: %-75s|\n", cpf);
+            System.out.printf("|CPF: %-75s|\n", DataHelper.reformataCPF(cpf));
             System.out.printf("|Telefone: %-70s|\n", telefone);
             System.out.printf("|E-mail: %-72s|\n", email);
             System.out.printf("|Nome de usuário: %-63s|\n", nomeUsuario);

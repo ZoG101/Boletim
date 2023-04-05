@@ -14,7 +14,7 @@ import models.Usuario;
  * a organizar e procurar os dados dos usuários.
  * 
  * @author Davi Campolina Leite Morato
- * @version 1.2
+ * @version 1.3
  * @see Usuario
  * @see Professor
  * @see Aluno
@@ -673,25 +673,49 @@ public final class DataHelper {
 
     }
 
+    public static String reformataCPF(String cpf) {
+
+        Pattern formato = Pattern.compile("^([0-9]){3}([0-9]){3}([0-9]){3}([0-9]){2}$");
+        Matcher confirma = formato.matcher(cpf);
+
+        if (confirma.matches()) {
+ 
+            String cpfReformatado = cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." + cpf.substring(6, 9) + "-" + cpf.substring(9);
+            return cpfReformatado;
+
+        }
+
+        return cpf;
+
+    }
+
     public static String formataCPF(String cpf) {
 
-        return cpf = cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." + cpf.substring(6, 9) + "-" + cpf.substring(9);
+        Pattern formato = Pattern.compile("^([0-9]){3}.([0-9]){3}.([0-9]){3}-([0-9]){2}$");
+        Matcher confirma = formato.matcher(cpf);
+
+        if (confirma.matches()) cpf = cpf.replaceAll("[.-]", "");
+        return cpf;
 
     }
 
     public static Boolean verificaTelefone (String telefone) {
 
-        Pattern formato1 = Pattern.compile("^(?=.*[0-9])(?!.*[a-z])(?!.*[A-Z])(?!.*[!@#$%^&*_=+.]).{12,15}$");
-        Matcher matcher1 = formato1.matcher(telefone);
+        Pattern formato = Pattern.compile("^(?=.*[0-9])(?!.*[a-z])(?!.*[A-Z])(?!.*[!@#$%^&*_=+.]).{12,15}$");
+        Matcher matcher = formato.matcher(telefone);
 
-        if (!matcher1.matches()) return Boolean.FALSE;
-
-        Pattern formato2 = Pattern.compile("^(\\([0-9]{2}\\))([0-9]{5})-([0-9]{4})$");
-        Matcher matcher2 = formato2.matcher(telefone);
-        
-        if (matcher2.matches()) telefone = telefone.replaceAll("^([ )(-])$", "");
-
+        if (!matcher.matches()) return Boolean.FALSE;
         return Boolean.TRUE;
+
+    }
+
+    public static String formataTelefone (String telefone) {
+
+        Pattern formato = Pattern.compile("^(?=.*[0-9])(?=.*[)(])(?!.*[a-z])(?!.*[A-Z])(?!.*[!@#$%^&*_=+.]).{15}$");
+        Matcher matcher = formato.matcher(telefone);
+        
+        if (matcher.matches()) return telefone = "0" + telefone.replaceAll("[ )(-]", "");
+        return telefone;
 
     }
 
