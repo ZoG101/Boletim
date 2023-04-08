@@ -15,7 +15,7 @@ import java.util.Locale;
  * suas operações.
  * 
  * @author Davi Campolina Leite Morato
- * @version 1.1
+ * @version 1.2
  * @see Aluno
  * @see Professor
  * @see Turma
@@ -291,13 +291,13 @@ public class Boletim implements Serializable, Comparable<Boletim> {
 
         switch (this.nivel) {
 
-            case "GRADUACAO": 
+            case "GRADUAÇÃO": 
 
                 if (((verificarMediaGraduacao(a, b, c) >= 7)) && ((getFalta()) < 15)) this.aprovacao = true;
 
             break;
 
-            case "POSGRADUACAO": 
+            case "PÓS-GRADUAÇÃO": 
             
                 if (((verificarMediaPosGraduacao(a, b)) >= 7) && ((getFalta()) < 15)) this.aprovacao = true;
             
@@ -354,8 +354,8 @@ public class Boletim implements Serializable, Comparable<Boletim> {
      */
     public void setNota (Double... notas) {
 
-        if ((this.getNivel().equals("GRADUACAO")) && ((this.notas.size() == 3) || (notas.length > 3))) throw new ArrayIndexOutOfBoundsException("ERRO: Todas as notas de graduação foram adicionadas neste boletim!");
-        if ((this.getNivel().equals("POSGRADUACAO")) && ((this.notas.size() == 2))) throw new ArrayIndexOutOfBoundsException("ERRO: Todas as notas de pós-graduação foram adicionadas neste boletim!");
+        if ((this.getNivel().equals("GRADUAÇÃO")) && ((this.notas.size() == 3) || (notas.length > 3))) throw new ArrayIndexOutOfBoundsException("ERRO: Todas as notas de graduação foram adicionadas neste boletim!");
+        if ((this.getNivel().equals("PÓS-GRADUAÇÃO")) && ((this.notas.size() == 2))) throw new ArrayIndexOutOfBoundsException("ERRO: Todas as notas de pós-graduação foram adicionadas neste boletim!");
 
         int c = 1;
 
@@ -388,8 +388,8 @@ public class Boletim implements Serializable, Comparable<Boletim> {
      */
     public void setNota (Integer... notas) {
 
-        if ((this.getNivel().equals("GRADUACAO")) && ((this.notas.size() == 3) || (notas.length > 3))) throw new ArrayIndexOutOfBoundsException("ERRO: Todas as notas de graduação foram adicionadas neste boletim!");
-        if ((this.getNivel().equals("POSGRADUACAO")) && ((this.notas.size() == 2) || (notas.length > 2))) throw new ArrayIndexOutOfBoundsException("ERRO: Todas as notas de pós-graduação foram adicionadas neste boletim!");
+        if ((this.getNivel().equals("GRADUAÇÃO")) && ((this.notas.size() == 3) || (notas.length > 3))) throw new ArrayIndexOutOfBoundsException("ERRO: Todas as notas de graduação foram adicionadas neste boletim!");
+        if ((this.getNivel().equals("PÓS-GRADUAÇÃO")) && ((this.notas.size() == 2) || (notas.length > 2))) throw new ArrayIndexOutOfBoundsException("ERRO: Todas as notas de pós-graduação foram adicionadas neste boletim!");
 
         ArrayList<Double> notasCast = new ArrayList<Double>();
 
@@ -718,7 +718,7 @@ public class Boletim implements Serializable, Comparable<Boletim> {
 
         switch (this.getNivel()) {
 
-            case "GRADUACAO": 
+            case "GRADUAÇÃO": 
 
                 printCabecalhoGraduacao();
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
@@ -727,7 +727,7 @@ public class Boletim implements Serializable, Comparable<Boletim> {
 
             break;
 
-            case "POSGRADUACAO": 
+            case "PÓS-GRADUAÇÃO": 
             
                 printCabecalhoPosGraduacao();
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
@@ -763,7 +763,7 @@ public class Boletim implements Serializable, Comparable<Boletim> {
 
         switch (this.getNivel()) {
 
-            case "GRADUACAO": 
+            case "GRADUAÇÃO": 
 
                 printCabecalhoGraduacao();
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
@@ -772,7 +772,7 @@ public class Boletim implements Serializable, Comparable<Boletim> {
 
             break;
 
-            case "POSGRADUACAO": 
+            case "PÓS-GRADUAÇÃO": 
             
                 printCabecalhoPosGraduacao();
                 System.out.println("|" + repeteCaracter('-', 80) + "|");

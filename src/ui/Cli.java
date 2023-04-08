@@ -7,7 +7,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import data.DataHelper;
+import models.Aluno;
 import models.Materia;
+import models.Nivel;
 import models.Professor;
 
 public class Cli {
@@ -58,6 +60,8 @@ public class Cli {
 
                     System.out.printf("|Sua escolha: %-67s|\n", "Cadastrar Aluno.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
+                    this.cadastroAluno();
+                    opcao = Integer.valueOf(menuIniciaComLogin());
 
                 break;
 
@@ -122,6 +126,7 @@ public class Cli {
 
                     System.out.printf("|Sua escolha: %-67s|\n", "Cadastrar Aluno.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
+                    this.cadastroAluno();
 
                 break;
 
@@ -216,7 +221,7 @@ public class Cli {
             Pattern formato = Pattern.compile(primeiroNomeRegex, Pattern.MULTILINE);
             Matcher confirma = formato.matcher(nomeCompleto);
 
-            if (!confirma.find()) {
+            if ((!confirma.find()) || (nomeCompleto.length() < 4)) {
 
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
                 System.out.printf("|%-80s|\n", "Digite APENAS o seu primeiro nome:");
@@ -425,6 +430,7 @@ public class Cli {
                 }
 
             }
+
             System.out.println("|" + repeteCaracter('-', 80) + "|");
 
             System.out.println();
@@ -453,6 +459,284 @@ public class Cli {
         Professor p = new Professor(nomeCompleto, primeiroNome, sobrenome, cpf, telefone, email, nomeUsuario, senha, materia);
 
         System.out.println(p.toString());
+
+    }
+
+    private void cadastroAluno () {
+
+        String opcao;
+        String nomeCompleto;
+        String primeiroNome;
+        String sobrenome;
+        String cpf;
+        String telefone;
+        String email;
+        String nomeUsuario;
+        String senha;
+        String nivel;
+        String complementar;
+        Boolean confirmaSenha = Boolean.FALSE;
+
+        do {
+
+            System.out.println();
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%-80s|\n", "Digite o seu nome completo:");
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%1s", "> ");
+            nomeCompleto = scan.next();
+            complementar = scan.nextLine();
+            nomeCompleto = nomeCompleto + complementar;
+            nomeCompleto = nomeCompleto.toUpperCase();
+
+            final String primeiroNomeRegex = "(^[a-zA-Z]+)";
+            final String sobrenomeRegex = "([a-zA-Z]+$)";
+
+            Pattern formato = Pattern.compile(primeiroNomeRegex, Pattern.MULTILINE);
+            Matcher confirma = formato.matcher(nomeCompleto);
+
+            if ((!confirma.find()) || (nomeCompleto.length() < 4)) {
+
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                System.out.printf("|%-80s|\n", "Digite APENAS o seu primeiro nome:");
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                System.out.printf("|%1s", "> ");
+                primeiroNome = scan.next();
+
+            } else {
+
+                primeiroNome = confirma.group(1);
+
+            }
+            
+            formato = Pattern.compile(sobrenomeRegex, Pattern.MULTILINE);
+            confirma = formato.matcher(nomeCompleto);
+
+            if (!confirma.find()) {
+
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                System.out.printf("|%-80s|\n", "Digite APENAS o seu último nome:");
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                System.out.printf("|%1s", "> ");
+                sobrenome = scan.next();
+
+            } else {
+
+                sobrenome = confirma.group(1);
+
+            }
+
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%-80s|\n", "Digite seu cpf:");
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%1s", "> ");
+            cpf = scan.next();
+            complementar = scan.nextLine();
+            cpf = cpf + complementar;
+
+            while (!DataHelper.verificaCPF(cpf)) {
+
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                System.out.printf("|ATENÇÃO: %-71s|\n", "CPF INVÁLIDO! TENTE NOVAMENTE.");
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                System.out.printf("|%1s", "> ");
+                cpf = scan.next();
+                complementar = scan.nextLine();
+                cpf = cpf + complementar;
+
+            }
+
+            cpf = DataHelper.formataCPF(cpf);
+
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%-80s|\n", "Digite seu número de telefone:");
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%1s", "> ");
+            telefone = scan.next();
+            complementar = scan.nextLine();
+            telefone = telefone + complementar;
+
+            while (!DataHelper.verificaTelefone(telefone)) {
+
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                System.out.printf("|ATENÇÃO: %-71s|\n", "NÚMERO DE TELEFONE INVÁLIDO! TENTE NOVAMENTE.");
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                System.out.printf("|%1s", "> ");
+                telefone = scan.next();
+                complementar = scan.nextLine();
+                telefone = telefone + complementar;
+
+            }
+
+            telefone = DataHelper.formataTelefone(telefone);
+
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%-80s|\n", "Digite seu e-mail:");
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%1s", "> ");
+            email = scan.next();
+            complementar = scan.nextLine();
+            email = email + complementar;
+
+            while (!DataHelper.verificaEmail(email)) {
+
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                System.out.printf("|ATENÇÃO: %-71s|\n", "E-MAIL INVÁLIDO! TENTE NOVAMENTE.");
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                System.out.printf("|%1s", "> ");
+                email = scan.next();
+                complementar = scan.nextLine();
+                email = email + complementar;
+
+            }
+
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%-80s|\n", "Digite seu nome de usuário:");
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%1s", "> ");
+            nomeUsuario = scan.next();
+            complementar = scan.nextLine();
+            nomeUsuario = nomeUsuario + complementar;
+
+            while (!DataHelper.verificaUsuário(nomeUsuario)) {
+
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                System.out.printf("|ATENÇÃO: %-71s|\n", "NOME DE USUÁRIO INVÁLIDO! TENTE NOVAMENTE.");
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                System.out.printf("|%1s", "> ");
+                nomeUsuario = scan.next();
+                complementar = scan.nextLine();
+                nomeUsuario = nomeUsuario + complementar;
+
+            }
+
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%-80s|\n", "Digite sua senha:");
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%1s", "> ");
+            senha = scan.next();
+            complementar = scan.nextLine();
+            senha = senha + complementar;
+
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%-80s|\n", "Confirme sua senha:");
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%1s", "> ");
+            String confirmacao = scan.next();
+            complementar = scan.nextLine();
+            confirmacao = confirmacao + complementar;
+
+            if (senha.compareTo(confirmacao) == 0) confirmaSenha = Boolean.TRUE;
+
+            while ((!DataHelper.verificaSenha(senha)) || (!confirmaSenha)) {
+
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                System.out.printf("|ATENÇÃO: %-71s|\n", "FORMATO DE SENHA INVÁLIDA OU A SENHA NÃO FOI REPETIDA CORRETAMENTE!");
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                System.out.printf("|%-80s|\n", "A senha deve conter entre 6 a 20 caracteres,");
+                System.out.printf("|%-80s|\n", "deve conter pelo menos uma letra maiúscula,");
+                System.out.printf("|%-80s|\n", "um número e não deve conter estes símbolos [ !@#$%^&*_=+-].");
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                System.out.printf("|%-80s|\n", "TENTE NOVAMENTE:");
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                System.out.printf("|%1s", "> ");
+                senha = scan.next();
+                complementar = scan.nextLine();
+                senha = senha + complementar;
+
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                System.out.printf("|%-80s|\n", "Confirme sua senha:");
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                System.out.printf("|%1s", "> ");
+                confirmacao = scan.next();
+                complementar = scan.nextLine();
+                confirmacao = confirmacao + complementar;
+
+                if (senha.compareTo(confirmacao) == 0) confirmaSenha = Boolean.TRUE;
+
+            }
+            
+            Boolean condition = Boolean.FALSE;
+
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%-80s|\n", "Digite o nível escolar:");
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%-80s|\n", "(Graduação/Pós-Graduação)");
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%1s", "> ");
+            nivel = scan.next();
+            complementar = scan.nextLine();
+            nivel = nivel + complementar;
+            Nivel[] niveis = Nivel.values();
+
+            for (Nivel n : niveis) {
+
+                if (n.toString().equalsIgnoreCase(nivel) || n.name().equalsIgnoreCase(nivel)) {
+
+                    condition = Boolean.TRUE;
+                    nivel = n.toString();
+                    break;
+
+                }
+
+            }
+
+            
+
+            while (!condition) {
+
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                System.out.printf("|ATENÇÃO: %-71s|\n", "Nível inválido! Tente novamente:");
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                System.out.printf("|%1s", "> ");
+                nivel = scan.next();
+                complementar = scan.nextLine();
+                nivel = nivel + complementar;
+                
+                for (Nivel n : niveis) {
+
+                    if (n.toString().equalsIgnoreCase(nivel) || n.name().equalsIgnoreCase(nivel)) {
+
+                        condition = Boolean.TRUE;
+                        nivel = n.toString();
+                        break;
+
+                    }
+
+                }
+
+            }
+
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+            System.out.println();
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|ATENÇÃO: %-71s|\n", "CONFIRME AS INFORMAÇÕES ABAIXO:");
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|Nome completo: %-65s|\n", nomeCompleto);
+            System.out.printf("|Primeiro nome: %-65s|\n", primeiroNome);
+            System.out.printf("|Sobrenome: %-69s|\n", sobrenome);
+            System.out.printf("|CPF: %-75s|\n", DataHelper.reformataCPF(cpf));
+            System.out.printf("|Telefone: %-70s|\n", telefone);
+            System.out.printf("|E-mail: %-72s|\n", email);
+            System.out.printf("|Nome de usuário: %-63s|\n", nomeUsuario);
+            String senhaCensurada = new String(repeteCaracter('*', senha.length()));
+            System.out.printf("|Senha: %-73s|\n", senhaCensurada);
+            System.out.printf("|Nível Escolar: %-71s|\n", nivel);
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%-80s|\n", "As informações acima estão corretas? (S/N)");
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            
+            System.out.printf("|%1s", "> ");
+            opcao = scan.next();
+
+        } while ((opcao.compareToIgnoreCase("n") == 0) || (opcao.compareToIgnoreCase("não") == 0) || (opcao.compareToIgnoreCase("nao") == 0));
+
+        Aluno a = new Aluno(nomeCompleto, primeiroNome, sobrenome, cpf, telefone, email, nomeUsuario, senha, nivel);
+
+        System.out.println(a.toString());
 
     }
     

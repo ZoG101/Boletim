@@ -41,7 +41,6 @@ public class App {
         Cli i = new Cli();
 
         i.menuInicialVazio();
-        i.menuIniciaComLogin();
 
         /* 
         System.out.println(nota.getFalta());
