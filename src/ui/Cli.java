@@ -1,7 +1,6 @@
 package ui;
 
 import java.nio.charset.Charset;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,7 +11,7 @@ import models.Materia;
 import models.Nivel;
 import models.Professor;
 
-public class Cli {
+public class Cli extends UserCli {
 
     private Scanner scan;
     private Charset charset;
@@ -163,28 +162,6 @@ public class Cli {
         } while (opcao.intValue() != 5);
 
         return 3;
-
-    }
-
-    /**
-     * Método auxiliar privado de formatação para a formação e exibição
-     * do {@code Cli}. Este método recebe um caracter e um {@code Iteger}
-     * e, com base nesse parametro, o mesmo irá repetir o caracter inserido
-     * o número de vezes que lhe for informado no parâmetro de {@code tamanho}.
-     * 
-     * @param c
-     * @param tamanho
-     * @return {@value String} com um caractere repetido quantas vezes
-     *         for escolhido.
-     * @see String
-     * @see Integer
-     * @see Arrays
-     */
-    private String repeteCaracter (char c, Integer tamanho) {
-
-        char[] caracteres = new char[tamanho.intValue()];
-        Arrays.fill(caracteres, c);
-        return new String(caracteres);
 
     }
 
