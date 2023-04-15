@@ -12,12 +12,15 @@ public abstract class UserCli {
     Professor usuarioProfessor;
     Aluno usuarioAluno;
 
-    public void alunoLogado () {
+    public void alunoLogado (Aluno aluno) {
 
         Integer opcao;
 
         do {
 
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            String intrudocao = String.format("|%20s", aluno.getNomeCompleto());
+            System.out.printf("%-81s|\n", intrudocao);
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             String primeiraOpcao = String.format("|%20s", "1.Ver informações");
             System.out.printf("%-81s|\n", primeiraOpcao);
@@ -36,15 +39,17 @@ public abstract class UserCli {
 
                 case 1:
 
-                    System.out.printf("|Sua escolha: %-67s|\n", "Cadastrar Professor.");
+                    System.out.printf("|Sua escolha: %-67s|\n", "Ver Informações.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
+                    System.out.println(aluno.toString());
 
                 break;
 
                 case 2:
 
-                    System.out.printf("|Sua escolha: %-67s|\n", "Cadastrar Aluno.");
+                    System.out.printf("|Sua escolha: %-67s|\n", "Boletim.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
+                    System.out.println(aluno.getBoletins());
 
                 break;
 
@@ -64,7 +69,7 @@ public abstract class UserCli {
 
             }
 
-        }while (opcao.intValue() != 3);
+        } while (opcao.intValue() != 3);
 
     }
     

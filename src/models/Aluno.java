@@ -1,6 +1,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -279,6 +280,13 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
 
         DataHelper.procura(this.boletins, new Boletim(this, materia, professor.getNome()), 0, (this.boletins.size() - 1)).toString();
 
+        return null;
+
+    }
+
+    public List<Boletim> getBoletins () {
+
+        if (!this.boletins.isEmpty()) return Collections.unmodifiableList(this.boletins);
         return null;
 
     }
