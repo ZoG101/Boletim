@@ -10,7 +10,7 @@ import models.Professor;
 import models.Turma;
 import security.Token;
  */
-import ui.Cli;
+import ui.MenuCli;
 
 public class App {
 
@@ -38,7 +38,7 @@ public class App {
 
         //nota.setFalta();
 
-        Cli i = new Cli();
+        MenuCli i = new MenuCli();
 
         i.menuInicialVazio();
 

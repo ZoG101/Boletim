@@ -143,18 +143,22 @@ public final class Professor extends Usuario {
      * @see String
      * @see Turma
      */
-    public void criaTurma (String senha) {
+    public Turma criaTurma (String senha) {
 
         if (!this.getAutenticacao()) throw new IllegalStateException("\nERRO: Autenticação necessária para executar tais ações!");
-        if ((senha == null) || (senha.equals(""))) throw new IllegalArgumentException("\nERRO: Senha não pode estar vazia!");
+        if ((senha == null) || (senha.isEmpty())) throw new IllegalArgumentException("\nERRO: Senha não pode estar vazia!");
+
+        Turma turma = null;
 
         if (this.autentica(senha)) {
 
-            Turma t = new Turma();
+            turma = new Turma();
 
-            this.addTurma(t);
+            this.addTurma(turma);
 
         }
+
+        return turma;
 
     }
 

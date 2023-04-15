@@ -11,12 +11,12 @@ import models.Materia;
 import models.Nivel;
 import models.Professor;
 
-public class Cli extends UserCli {
+public class MenuCli extends UserCli {
 
     private Scanner scan;
     private Charset charset;
     
-    public Cli () {
+    public MenuCli () {
 
         charset = Charset.defaultCharset();
         scan = new Scanner(System.in, charset);
@@ -50,8 +50,22 @@ public class Cli extends UserCli {
 
                     System.out.printf("|Sua escolha: %-67s|\n", "Cadastrar Professor.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
-                    this.cadastroProfessor();
-                    opcao = Integer.valueOf(menuIniciaComLogin());
+
+                    try {
+                        
+                        this.cadastroProfessor();
+
+                    } catch (Exception e) {
+                        
+                        System.err.println(e.getMessage());
+                        e.printStackTrace();
+
+                    } finally {
+
+                        opcao = Integer.valueOf(menuInicialComLogin());
+
+                    }
+                    
 
                 break;
 
@@ -59,8 +73,23 @@ public class Cli extends UserCli {
 
                     System.out.printf("|Sua escolha: %-67s|\n", "Cadastrar Aluno.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
-                    this.cadastroAluno();
-                    opcao = Integer.valueOf(menuIniciaComLogin());
+
+                    try {
+                        
+                        Professor professorLogado = this.loginProfessor();
+                        Aluno aluno = this.cadastroAluno();
+                        this.registraAluno(aluno, professorLogado);
+
+                    } catch (Exception e) {
+                       
+                        System.err.println(e.getMessage());
+                        e.printStackTrace();
+
+                    } finally {
+
+                        opcao = Integer.valueOf(menuInicialComLogin());
+
+                    }
 
                 break;
 
@@ -84,7 +113,7 @@ public class Cli extends UserCli {
 
     }
 
-    public Integer menuIniciaComLogin () {
+    public Integer menuInicialComLogin () {
 
         Integer opcao;
 
@@ -117,7 +146,17 @@ public class Cli extends UserCli {
 
                     System.out.printf("|Sua escolha: %-67s|\n", "Cadastrar Professor.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
-                    this.cadastroProfessor();
+
+                    try {
+
+                        this.cadastroProfessor();
+                        
+                    } catch (Exception e) {
+                       
+                        System.err.println(e.getMessage());
+                        e.printStackTrace();
+
+                    }
 
                 break;
 
@@ -125,7 +164,23 @@ public class Cli extends UserCli {
 
                     System.out.printf("|Sua escolha: %-67s|\n", "Cadastrar Aluno.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
-                    this.cadastroAluno();
+
+                    try {
+                        
+                        Professor professorLogado = this.loginProfessor();
+                        Aluno aluno = this.cadastroAluno();
+                        this.registraAluno(aluno, professorLogado);
+
+                    } catch (Exception e) {
+                       
+                        System.err.println(e.getMessage());
+                        e.printStackTrace();
+
+                    } finally {
+
+                        opcao = Integer.valueOf(menuInicialComLogin());
+
+                    }
 
                 break;
 
@@ -134,12 +189,35 @@ public class Cli extends UserCli {
                     System.out.printf("|Sua escolha: %-67s|\n", "Logar como aluno.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
 
+                    try {
+                        
+                        Aluno alunoLogado = this.loginAluno();
+                        super.alunoLogado(alunoLogado);
+
+                    } catch (Exception e) {
+                       
+                        System.err.println(e.getMessage());
+                        e.printStackTrace();
+
+                    }
+
                 break;
 
                 case 4:
 
                     System.out.printf("|Sua escolha: %-67s|\n", "Logar como professor.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+                    try {
+                        
+                        Professor professorLogado = this.loginProfessor();
+
+                    } catch (Exception e) {
+                       
+                        System.err.println(e.getMessage());
+                        e.printStackTrace();
+
+                    }
 
                 break;
 
@@ -439,7 +517,7 @@ public class Cli extends UserCli {
 
     }
 
-    private void cadastroAluno () {
+    private Aluno cadastroAluno () {
 
         String opcao;
         String nomeCompleto;
@@ -712,8 +790,126 @@ public class Cli extends UserCli {
         } while ((opcao.compareToIgnoreCase("n") == 0) || (opcao.compareToIgnoreCase("não") == 0) || (opcao.compareToIgnoreCase("nao") == 0));
 
         Aluno a = new Aluno(nomeCompleto, primeiroNome, sobrenome, cpf, telefone, email, nomeUsuario, senha, nivel);
-
         System.out.println(a.toString());
+        return a;
+
+    }
+
+    private Aluno loginAluno () {
+
+        Aluno aluno = null;
+        String opcao;
+
+        do {
+
+            System.out.println();
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%-80s|\n", "Digite seu nome de usuário:");
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%1s", "> ");
+            String nomeUsuario = scan.next();
+            String complementar = scan.nextLine();
+            nomeUsuario = nomeUsuario + complementar;
+
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%-80s|\n", "Digite sua senha:");
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%1s", "> ");
+            String senha = scan.next();
+            complementar = scan.nextLine();
+            senha = senha + complementar;
+
+            try {
+
+                aluno = (Aluno) Aluno.login(nomeUsuario, senha);
+
+            } catch (Exception e) {
+                
+                System.err.println(e.getMessage());
+                aluno = null;
+
+            } finally {
+
+                if (aluno == null) {
+
+                    System.out.println("|" + repeteCaracter('-', 80) + "|");
+                    System.out.printf("|%-80s|\n", "Deseja tentar novamente? (S/N)");
+                    System.out.println("|" + repeteCaracter('-', 80) + "|");
+                    System.out.printf("|%1s", "> ");
+                    opcao = scan.next();
+                    complementar = scan.nextLine();
+                    opcao = opcao + complementar;
+
+                } else {
+
+                    opcao = "N";
+
+                }
+
+            }
+
+        } while ((aluno == null) && (!opcao.equalsIgnoreCase("n")) || (!opcao.equalsIgnoreCase("não") || (!opcao.equalsIgnoreCase("nao"))));
+        
+        return aluno;
+
+    }
+
+    private Professor loginProfessor () {
+
+        Professor professor = null;
+        String opcao;
+
+        do {
+
+            System.out.println();
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%-80s|\n", "Digite seu nome de usuário:");
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%1s", "> ");
+            String nomeUsuario = scan.next();
+            String complementar = scan.nextLine();
+            nomeUsuario = nomeUsuario + complementar;
+
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%-80s|\n", "Digite sua senha:");
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%1s", "> ");
+            String senha = scan.next();
+            complementar = scan.nextLine();
+            senha = senha + complementar;
+
+            try {
+
+                professor = (Professor) Aluno.login(nomeUsuario, senha);
+
+            } catch (Exception e) {
+                
+                System.err.println(e.getMessage());
+                professor = null;
+
+            } finally {
+
+                if (professor == null) {
+
+                    System.out.println("|" + repeteCaracter('-', 80) + "|");
+                    System.out.printf("|%-80s|\n", "Deseja tentar novamente? (S/N)");
+                    System.out.println("|" + repeteCaracter('-', 80) + "|");
+                    System.out.printf("|%1s", "> ");
+                    opcao = scan.next();
+                    complementar = scan.nextLine();
+                    opcao = opcao + complementar;
+
+                } else {
+
+                    opcao = "N";
+
+                }
+
+            }
+
+        } while ((professor == null) && (!opcao.equalsIgnoreCase("n")) || (!opcao.equalsIgnoreCase("não") || (!opcao.equalsIgnoreCase("nao"))));
+        
+        return professor;
 
     }
     

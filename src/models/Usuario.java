@@ -678,7 +678,7 @@ public abstract class Usuario implements Serializable, Autenticavel {
 
     }
 
-    private Usuario recuperaUsuario (String usuario) {
+    private static Usuario recuperaUsuario (String usuario) {
 
         if (!Usuario.usuarios.containsKey(usuario)) throw new IllegalArgumentException("\nERRO: Usuário não existe!");
 
@@ -692,24 +692,23 @@ public abstract class Usuario implements Serializable, Autenticavel {
      * 
      * @param u
      * @param s
-     * @return {@value true} Se a senha e usuário estiverem corretos.
+     * @return {@value Usuario} autenticado se a senha e usuário estiverem corretos.
      * @throws NullPointerException
      * @throws RejectedExecutionException
-     * @see Boolean
+     * @see Usuario
      * @see String
      */
-    @Override
-    public Boolean autentica (String u, String s) {
-        
-        if ((s == null) || (u == null)) throw new NullPointerException("\nERRO: A senha e usuário não podem ser nulos!");
+    public static Usuario login (String u, String s) {
 
+        if ((s == null) || (u == null)) throw new NullPointerException("\nERRO: A senha e usuário não podem ser nulos!");
+        
         Usuario user = (Usuario) recuperaUsuario(u);
 
         if (!(user.getSenha().equals(s)) || (!user.getUsuario().equals(u))) throw new RejectedExecutionException("\nERRO: A senha ou o usuário estão incorretos!");
 
-        this.autenticado = Boolean.TRUE;
+        user.autenticado = Boolean.TRUE;
         System.out.println("\nAutenticado com sucesso!");
-        return Boolean.TRUE;
+        return user;
 
     }
 
