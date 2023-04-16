@@ -211,6 +211,7 @@ public class MenuCli extends UserCli {
                     try {
                         
                         Professor professorLogado = this.loginProfessor();
+                        super.professorLogado(professorLogado);
 
                     } catch (Exception e) {
                        
