@@ -19,6 +19,7 @@ public abstract class UserCli {
 
         do {
 
+            System.out.println();
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             String intrudocao = String.format("|%20s", aluno.getNomeCompleto());
             System.out.printf("%-81s|\n", intrudocao);
@@ -80,6 +81,7 @@ public abstract class UserCli {
 
         do {
 
+            System.out.println();
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             String intrudocao = String.format("|%20s", professor.getNomeCompleto());
             System.out.printf("%-81s|\n", intrudocao);
@@ -185,6 +187,13 @@ public abstract class UserCli {
 
                 break;
 
+                case 11:
+
+                    System.out.printf("|Sua escolha: %-67s|\n", "Sair.");
+                    System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+                break;
+
                 default:
 
                     System.err.println(String.format("|Sua escolha: %-67s|", "Nenhuma das existentes."));
@@ -194,7 +203,7 @@ public abstract class UserCli {
 
             }
 
-        } while (opcao.intValue() != 3);
+        } while (opcao.intValue() != 11);
 
     }
 
@@ -204,6 +213,7 @@ public abstract class UserCli {
 
         do {
 
+            System.out.println();
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             String primeiraOpcao = String.format("|%20s", "1.Inserir o novo aluno em uma nova turma");
             System.out.printf("%-81s|\n", primeiraOpcao);
@@ -223,20 +233,33 @@ public abstract class UserCli {
                 case 1:
 
                     System.out.printf("|Sua escolha: %-67s|\n", "Criar um novo aluno e uma nova turma.");
-                    System.out.println("|" + repeteCaracter('-', 80) + "|");
 
                     try {
-                        
-                        System.out.printf("|%-80s|\n", "Digite sua senha:");
-                        System.out.println("|" + repeteCaracter('-', 80) + "|");
-                        System.out.printf("|%1s", "> ");
-                        String senha = scan.next();
-                        String complementar = scan.nextLine();
-                        senha = senha + complementar;
-                        System.out.println("|" + repeteCaracter('-', 80) + "|");
 
-                        Turma turmaNova = professor.criaTurma(senha);
-                        turmaNova.adicionarAluno(aluno);
+                        for (int i = 3; i > 0; i--) {
+                        
+                            System.out.println("|" + repeteCaracter('-', 80) + "|");
+                            System.out.printf("|%-80s|\n", "Digite sua senha:");
+                            System.out.println("|" + repeteCaracter('-', 80) + "|");
+                            System.out.printf("|%1s", "> ");
+                            String senha = scan.next();
+                            String complementar = scan.nextLine();
+                            senha = senha + complementar;
+                            System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+                            try {
+                                
+                                Turma turmaNova = professor.criaTurma(senha);
+                                turmaNova.adicionarAluno(aluno);
+
+                            } catch (Exception e) {
+                                
+                                System.err.println(e.getMessage());
+                                System.out.println("\nNúmeros restantes de tentativas: " + i);
+
+                            }
+
+                        }
 
                     } catch (Exception e) {
                         
@@ -318,6 +341,7 @@ public abstract class UserCli {
 
     private String getTurmaId (Professor professor) {
 
+        System.out.println();
         System.out.println(professor.getTurmas());
         System.out.println();
         System.out.println("|" + repeteCaracter('-', 80) + "|");
