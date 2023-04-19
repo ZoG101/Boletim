@@ -714,7 +714,7 @@ public abstract class Usuario implements Serializable, Autenticavel {
 
     /**
      * Autentica o usuário verificando se a senha inserida 
-     * está conforme a senha gravados. É um método sobrecarregado para
+     * está conforme a senha gravada. É um método sobrecarregado para
      * caso o usuário já esteja autenticado porém a senha precisa ser 
      * confirmada para utilizar alguma funcionalidade interna do sistema.
      * 

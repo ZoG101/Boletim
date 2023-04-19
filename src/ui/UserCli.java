@@ -1,9 +1,14 @@
 package ui;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import models.Aluno;
+import models.Boletim;
+import models.Materia;
 import models.Professor;
 import models.Turma;
 
@@ -13,7 +18,7 @@ public abstract class UserCli {
     Professor usuarioProfessor;
     Aluno usuarioAluno;
 
-    public void alunoLogado (Aluno aluno) {
+    protected void alunoLogado (Aluno aluno) {
 
         Integer opcao;
 
@@ -75,7 +80,7 @@ public abstract class UserCli {
 
     }
 
-    public void professorLogado (Professor professor) {
+    protected void professorLogado (Professor professor) {
 
         Integer opcao;
 
@@ -134,7 +139,16 @@ public abstract class UserCli {
 
                     System.out.printf("|Sua escolha: %-67s|\n", "Procurar boletim.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
-                    System.out.println(professor);
+                    
+                    try {
+
+                        this.procuraBoletim(professor);
+
+                    } catch (Exception e) {
+
+                        System.err.println(e.getMessage());
+
+                    }
 
                 break;
 
@@ -142,6 +156,32 @@ public abstract class UserCli {
 
                     System.out.printf("|Sua escolha: %-67s|\n", "Exibir turmas.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
+                    Map<String, Turma> turmas = null;
+
+                    try {
+                        
+                        turmas = professor.getTurmas();
+
+                    } catch (Exception e) {
+                        
+                        System.err.println(e.getMessage());
+
+                    }
+
+                    if ((turmas == null) || (turmas.isEmpty())) {
+
+                        System.err.println("\nVocê não possui turmas.");
+                        break;
+
+                    }
+
+                    Collection<Turma> turmasColecao = turmas.values();
+
+                    for (Turma turma : turmasColecao) {
+
+                        System.out.println(turma.getAlunos());
+
+                    }
 
                 break;
 
@@ -207,7 +247,361 @@ public abstract class UserCli {
 
     }
 
-    public void registraAluno (Aluno aluno, Professor professor) {
+    private Boletim procuraBoletim (Professor professor) {
+        
+        Integer opcao = null;
+        Aluno aluno = null;
+        Boletim boletimAluno = null;
+
+        do {
+
+            System.out.println();
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            String primeiraOpcao = String.format("|%20s", "1.Procurar aluno por nome");
+            System.out.printf("%-81s|\n", primeiraOpcao);
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            String segundaOpcao = String.format("|%1s", "2.Procurar aluno por ID");
+            System.out.printf("%-81s|\n", segundaOpcao);
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            String terceiraOpcao = String.format("|%1s", "3.Voltar");
+            System.out.printf("%-81s|\n", terceiraOpcao);
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%1s", "> ");
+            opcao = Integer.valueOf(scan.nextInt());
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+            switch (opcao.intValue()) {
+
+                case 1:
+
+                    System.out.printf("|Sua escolha: %-67s|\n", "Procurar aluno por nome.");
+                    System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+                    try {
+
+                        aluno = this.retornaAluno(professor);
+
+                    } catch (Exception e) {
+
+                        System.out.println(e.getMessage());
+
+                    }
+
+                    if (aluno == null) {
+
+                        System.err.println("\nNenhum aluno encontrado.");
+                        break;
+
+                    }
+
+                    try {
+                        
+                        boletimAluno = this.retornaBoletim(professor, aluno);
+
+                    } catch (Exception e) {
+                        
+                        System.err.println(e.getMessage());
+
+                    }
+
+                    if (boletimAluno == null) {
+
+                        System.err.println("\nNenhum boletim encontrado.");
+                        break;
+
+                    }
+                    
+                return boletimAluno;
+
+                case 2:
+
+                    System.out.printf("|Sua escolha: %-67s|\n", "Procurar aluno por ID.");
+                    System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+                    try {
+
+                        aluno = this.retornaAlunoID(professor);
+
+                    } catch (Exception e) {
+
+                        System.out.println(e.getMessage());
+
+                    }
+
+                    if (aluno == null) {
+
+                        System.err.println("\nNenhum aluno encontrado.");
+                        break;
+
+                    }
+
+                    try {
+                        
+                        boletimAluno = this.retornaBoletim(professor, aluno);
+
+                    } catch (Exception e) {
+                        
+                        System.err.println(e.getMessage());
+
+                    }
+
+                    if (boletimAluno == null) {
+
+                        System.err.println("\nNenhum boletim encontrado.");
+                        break;
+
+                    }
+                    
+                return boletimAluno;
+
+                case 3:
+
+                    System.out.printf("|Sua escolha: %-67s|\n", "Voltando...");
+                    System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+                return null;
+
+                default:
+
+                    System.err.println(String.format("|Sua escolha: %-67s|", "Nenhuma das existentes."));
+                    System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+                break;
+
+            }
+
+        } while (opcao.intValue() != 3);
+
+        return null;
+
+    }
+
+    private Boletim retornaBoletim (Professor professor, Aluno aluno) {
+
+        Integer subOpcao = Integer.valueOf(this.subMenuBoletim ());
+        Boletim boletimAluno = null;
+
+        switch (subOpcao.intValue()) {
+
+            case 1:
+                
+                System.out.printf("|Sua escolha: %-67s|\n", "Procurar pelo boletim da própria matéria.");
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+                try {
+                    
+                    boletimAluno = professor.procuraBoletim(professor.getMateria(), aluno);
+
+                } catch (Exception e) {
+                    
+                    System.err.println(e.getMessage());
+
+                }
+
+                if (boletimAluno != null) return boletimAluno;
+
+            break;
+
+            case 2:
+
+                System.out.printf("|Sua escolha: %-67s|\n", "Procurar pelo boletim de outra matéria.");
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+                String materia = this.retornarMateria();
+
+                if (materia == null) break;
+
+                try {
+                    
+                    boletimAluno = professor.procuraBoletim(materia, aluno);
+
+                } catch (Exception e) {
+                    
+                    System.out.println(e.getMessage());
+                    
+                }
+
+                if (boletimAluno != null) return boletimAluno;
+
+            break;
+
+            case 3:
+
+                System.err.printf("|Sua escolha: %-67s|\n", "Cancelar.");
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+            return null;
+        
+            default:
+
+                System.err.println(String.format("|Sua escolha: %-67s|", "Nenhuma das existentes."));
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+            break;
+
+        }
+
+        return boletimAluno;
+
+    }
+
+    private Integer subMenuBoletim () {
+
+        System.out.println();
+        System.out.println("|" + repeteCaracter('-', 80) + "|");
+        String opcao1 = String.format("|%20s", "1.Procurar pelo boletim da própria matéria");
+        System.out.printf("%-81s|\n", opcao1);
+        System.out.println("|" + repeteCaracter('-', 80) + "|");
+        String opcao2 = String.format("|%20s", "2.Procurar pelo boletim de outra matéria");
+        System.out.printf("%-81s|\n", opcao2);
+        System.out.println("|" + repeteCaracter('-', 80) + "|");
+        String opcao3 = String.format("|%20s", "3.Cancelar");
+        System.out.printf("%-81s|\n", opcao3);
+        System.out.println("|" + repeteCaracter('-', 80) + "|");
+        System.out.printf("|%1s", "> ");
+        Integer subOpcao = Integer.valueOf(scan.nextInt());
+        System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+        return subOpcao;
+
+    }
+
+    private String retornarMateria () {
+
+        Boolean condition = Boolean.TRUE;
+        Integer count = Integer.valueOf(0);
+
+        do {
+
+            if (count.intValue() > 0) {
+
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                System.out.printf("|%-80s|\n", "Nenhuma matéria com esse nome foi encontrada.");
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+            }
+
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%-80s|\n", "Digite a matéria (ENTER para voltar):");
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%1s", "> ");
+            String materia = scan.next();
+            String complementar = scan.nextLine();
+            materia = materia + complementar;
+            Materia[] materias = Materia.values();
+            System.out.println();
+
+            if (materia.isEmpty()) break;
+
+            for (Materia m : Materia.values()) {
+
+                System.out.println(m);
+
+            }
+
+
+            for (Materia m : materias) {
+
+                if (m.toString().equalsIgnoreCase(materia) || m.name().equalsIgnoreCase(materia)) {
+
+                    condition = Boolean.TRUE;
+                    return materia = m.toString();
+
+                }
+
+            }
+
+            if (count.intValue() == 0) count++;
+
+        } while (condition != Boolean.TRUE);
+
+        return null;
+
+    }
+
+    private Aluno retornaAluno (Professor professor) {
+
+        Aluno aluno = null;
+
+        System.out.println();
+        System.out.println("|" + repeteCaracter('-', 80) + "|");
+        System.out.printf("|%-80s|\n", "Digite o nome do aluno:");
+        System.out.println("|" + repeteCaracter('-', 80) + "|");
+        System.out.printf("|%1s", "> ");
+        String alunoNome = scan.next();
+        String complementar = scan.nextLine();
+        alunoNome = alunoNome + complementar;
+        System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+        List<Aluno> alunosRetornados = null;
+
+        try {
+
+            alunosRetornados = professor.procuraAluno(alunoNome);
+            
+        } catch (Exception e) {
+            
+            System.err.println(e.getMessage());
+            
+        }
+
+        if ((!alunosRetornados.isEmpty()) && (alunosRetornados != null)) {
+
+            for (int i = 0; i < alunosRetornados.size(); i++) {
+
+                System.out.println((i + 1) + "." + alunosRetornados.get(i));
+
+            }
+
+            System.out.println();
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%-80s|\n", "Digite o nome do aluno:");
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%1s", "> ");
+            Integer alunoPos = Integer.valueOf(scan.nextInt());
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+            aluno = alunosRetornados.get(alunoPos + 1);
+
+            if (aluno != null) return aluno;
+
+        }
+
+        return null;
+
+    }
+
+    private Aluno retornaAlunoID (Professor professor) {
+
+        Aluno aluno = null;
+
+        System.out.println();
+        System.out.println("|" + repeteCaracter('-', 80) + "|");
+        System.out.printf("|%-80s|\n", "Digite o ID do aluno:");
+        System.out.println("|" + repeteCaracter('-', 80) + "|");
+        System.out.printf("|%1s", "> ");
+        String alunoID = scan.next();
+        String complementar = scan.nextLine();
+        alunoID = alunoID + complementar;
+        System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+        alunoID.replaceAll("^[ !#$%^&*=+-]&", "");
+
+        try {
+
+            aluno = professor.procuraAlunoID(alunoID);
+            
+        } catch (Exception e) {
+            
+            System.err.println(e.getMessage());
+            
+        }
+
+        return aluno;
+
+    }
+
+    protected void registraAluno (Aluno aluno, Professor professor) {
 
         Integer opcao;
 
@@ -331,7 +725,7 @@ public abstract class UserCli {
      * @see Integer
      * @see Arrays
      */
-    public String repeteCaracter (char c, Integer tamanho) {
+    protected String repeteCaracter (char c, Integer tamanho) {
 
         char[] caracteres = new char[tamanho.intValue()];
         Arrays.fill(caracteres, c);
