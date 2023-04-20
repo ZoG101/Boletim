@@ -118,7 +118,7 @@ public abstract class UserCli {
             String nonaOpcao = String.format("|%20s", "9.Criar boletim");
             System.out.printf("%-81s|\n", nonaOpcao);
             System.out.println("|" + repeteCaracter('-', 80) + "|");
-            String decimaOpcao = String.format("|%20s", "10.Procurar boletim");
+            String decimaOpcao = String.format("|%20s", "10.Sair");
             System.out.printf("%-81s|\n", decimaOpcao);
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             System.out.printf("|%1s", "> ");
@@ -190,12 +190,32 @@ public abstract class UserCli {
                     System.out.printf("|Sua escolha: %-67s|\n", "Procurar turma por ID.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
 
+                    try {
+
+                        System.out.println(this.retornaTurma(professor));
+
+                    } catch (Exception e) {
+                        
+                        System.out.println(e.getMessage());
+
+                    }
+
                 break;
 
                 case 6:
 
                     System.out.printf("|Sua escolha: %-67s|\n", "Criar turma.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+                    try {
+
+                        this.criaTurma(professor);
+
+                    } catch (Exception e) {
+                        
+                        System.err.println(e.getMessage());
+
+                    }
 
                 break;
 
@@ -222,13 +242,6 @@ public abstract class UserCli {
 
                 case 10:
 
-                    System.out.printf("|Sua escolha: %-67s|\n", "Procurar boletim.");
-                    System.out.println("|" + repeteCaracter('-', 80) + "|");
-
-                break;
-
-                case 11:
-
                     System.out.printf("|Sua escolha: %-67s|\n", "Sair.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
 
@@ -243,9 +256,46 @@ public abstract class UserCli {
 
             }
 
-        } while (opcao.intValue() != 11);
+        } while (opcao.intValue() != 10);
 
     }
+
+    private void criaTurma (Professor professor) {
+
+        String senha = null;
+        Integer count = Integer.valueOf(3);
+
+        do {
+
+            if (count < 3) {
+
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                System.out.printf("|%-80s|\n", "Você tem mais " + count + " tentativas!");
+
+            }
+
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%-80s|\n", "Digite sua senha:");
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%1s", "> ");
+            senha = new String(System.console().readPassword());
+            System.out.println();
+
+            count--;
+
+        } while ((!professor.autentica(senha)) && (count.intValue() > 0));
+
+        try {
+            
+            professor.criaTurma(senha);
+
+        } catch (Exception e) {
+
+            System.err.println(e.getMessage());
+
+        }
+
+    } 
 
     private Boletim procuraBoletim (Professor professor) {
         
@@ -516,6 +566,54 @@ public abstract class UserCli {
         } while (condition != Boolean.TRUE);
 
         return null;
+
+    }
+
+    private Turma retornaTurma (Professor professor) {
+
+        Boolean condition = Boolean.TRUE;
+        Integer count = Integer.valueOf(0);
+
+        do {
+
+            if (count.intValue() > 0) {
+
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                System.out.printf("|%-80s|\n", "Nenhuma turma com esse ID foi encontrada.");
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+            }
+
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%-80s|\n", "Digite o ID (ENTER para voltar):");
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%1s", "> ");
+            String id = scan.next();
+            String complementar = scan.nextLine();
+            id = id + complementar;
+            System.out.println();
+
+            if (id.isEmpty()) break;
+
+            Turma turma = null;
+
+            try {
+                
+                turma = professor.getTurma(id);
+
+            } catch (Exception e) {
+                
+                System.err.println(e.getMessage());
+                
+            }
+
+            if ((count.intValue() == 0) && (turma == null)) count++;
+            else return turma;
+
+        } while (condition != Boolean.TRUE);
+
+        return null;
+
 
     }
 
