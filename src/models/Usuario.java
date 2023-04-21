@@ -712,6 +712,14 @@ public abstract class Usuario implements Serializable, Autenticavel {
 
     }
 
+    public void logout () {
+
+        if (!(getAutenticacao())) throw new IllegalStateException("\nERRO: Usuário tem que estar autenticado para acessar esta área!");
+        
+        this.autenticado = Boolean.FALSE;
+
+    }
+
     /**
      * Autentica o usuário verificando se a senha inserida 
      * está conforme a senha gravada. É um método sobrecarregado para

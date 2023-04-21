@@ -62,8 +62,18 @@ public abstract class UserCli {
 
                 case 3:
 
-                    System.out.printf("|Sua escolha: %-67s|\n", "Sair... Que pena, até a póxima.");
+                    System.out.printf("|Sua escolha: %-67s|\n", "Sair.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+                    try {
+
+                        aluno.logout();
+
+                    } catch (Exception e) {
+                        
+                        System.err.println(e.getMessage());
+                        
+                    }
 
                 break;
 
@@ -139,16 +149,26 @@ public abstract class UserCli {
 
                     System.out.printf("|Sua escolha: %-67s|\n", "Procurar boletim.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
+                    Boletim boletimRetornado = null;
                     
                     try {
 
-                        this.procuraBoletim(professor);
+                        boletimRetornado = this.procuraBoletim(professor);
 
                     } catch (Exception e) {
 
                         System.err.println(e.getMessage());
 
                     }
+
+                    if (boletimRetornado == null) {
+
+                        System.err.println("\nNenhum boletim encontrado.");
+                        break;
+
+                    }
+
+                    System.out.println(boletimRetornado);
 
                 break;
 
@@ -189,16 +209,26 @@ public abstract class UserCli {
 
                     System.out.printf("|Sua escolha: %-67s|\n", "Procurar turma por ID.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
+                    Turma turmaRetornada = null;
 
                     try {
 
-                        System.out.println(this.retornaTurma(professor));
+                        turmaRetornada = this.retornaTurma(professor);
 
                     } catch (Exception e) {
                         
                         System.out.println(e.getMessage());
 
                     }
+
+                    if (turmaRetornada == null) {
+
+                        System.err.println("\nNenhuma turma foi encontrada.");
+                        break;
+
+                    }
+
+                    System.out.println(turmaRetornada);
 
                 break;
 
@@ -223,6 +253,26 @@ public abstract class UserCli {
 
                     System.out.printf("|Sua escolha: %-67s|\n", "Procurar aluno por nome.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
+                    Aluno alunoRetornado = null;
+
+                    try {
+                        
+                        alunoRetornado = this.retornaAluno(professor);
+
+                    } catch (Exception e) {
+                        
+                        System.err.println(e.getMessage());
+
+                    }
+
+                    if (alunoRetornado == null) {
+
+                        System.err.println("\nNenhum aluno foi encontrado.");
+                        break;
+
+                    }
+
+                    System.out.println(alunoRetornado);
 
                 break;
 
@@ -230,6 +280,26 @@ public abstract class UserCli {
 
                     System.out.printf("|Sua escolha: %-67s|\n", "Procurar aluno por ID.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
+                    Aluno alunoRetornadoPorId = null;
+
+                    try {
+                        
+                        alunoRetornadoPorId = this.retornaAlunoID(professor);
+
+                    } catch (Exception e) {
+                        
+                        System.out.println(e.getMessage());
+                        
+                    }
+
+                    if (alunoRetornadoPorId == null) {
+
+                        System.err.println("\nNenhum aluno foi encontrado.");
+                        break;
+
+                    }
+
+                    System.out.println(alunoRetornadoPorId);
 
                 break;
 
@@ -237,6 +307,19 @@ public abstract class UserCli {
 
                     System.out.printf("|Sua escolha: %-67s|\n", "Criar boletim.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
+                    Boolean resultado = null;
+
+                    try {
+
+                        resultado = this.criaBoletim(professor);
+
+                    } catch (Exception e) {
+                        
+                        System.err.println(e.getMessage());
+                        
+                    }
+
+                    if (resultado) System.out.println("\nBoletim criado com sucesso!");
 
                 break;
 
@@ -244,6 +327,16 @@ public abstract class UserCli {
 
                     System.out.printf("|Sua escolha: %-67s|\n", "Sair.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+                    try {
+                        
+                        professor.logout();
+
+                    } catch (Exception e) {
+                        
+                        System.err.println(e.getMessage());
+                        
+                    }
 
                 break;
 
@@ -257,6 +350,155 @@ public abstract class UserCli {
             }
 
         } while (opcao.intValue() != 10);
+
+    }
+
+    private Boolean criaBoletim (Professor professor) {
+        
+        Integer opcao = null;
+        Aluno aluno = null;
+        Boolean resultado = null;
+
+        do {
+
+            System.out.println();
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            String primeiraOpcao = String.format("|%20s", "1.Procurar aluno por nome");
+            System.out.printf("%-81s|\n", primeiraOpcao);
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            String segundaOpcao = String.format("|%1s", "2.Procurar aluno por ID");
+            System.out.printf("%-81s|\n", segundaOpcao);
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            String terceiraOpcao = String.format("|%1s", "3.Voltar");
+            System.out.printf("%-81s|\n", terceiraOpcao);
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%1s", "> ");
+            opcao = Integer.valueOf(scan.nextInt());
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+            switch (opcao.intValue()) {
+
+                case 1:
+
+                    System.out.printf("|Sua escolha: %-67s|\n", "Procurar aluno por nome.");
+                    System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+                    try {
+
+                        aluno = this.retornaAluno(professor);
+
+                    } catch (Exception e) {
+
+                        System.out.println(e.getMessage());
+
+                    }
+
+                    if (aluno == null) {
+
+                        System.err.println("\nNenhum aluno criado.");
+                        break;
+
+                    }
+
+                    try {
+                        
+                        resultado = this.criaBoletimAluno(professor, aluno);
+
+                    } catch (Exception e) {
+                        
+                        System.err.println(e.getMessage());
+
+                    }
+
+                    if (!resultado) {
+
+                        System.err.println("\nNenhum boletim criado.");
+                        break;
+
+                    }
+                    
+                return resultado;
+
+                case 2:
+
+                    System.out.printf("|Sua escolha: %-67s|\n", "Procurar aluno por ID.");
+                    System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+                    try {
+
+                        aluno = this.retornaAlunoID(professor);
+
+                    } catch (Exception e) {
+
+                        System.out.println(e.getMessage());
+
+                    }
+
+                    if (aluno == null) {
+
+                        System.err.println("\nNenhum aluno encontrado.");
+                        break;
+
+                    }
+
+                    try {
+                        
+                        resultado = this.criaBoletimAluno(professor, aluno);
+
+                    } catch (Exception e) {
+                        
+                        System.err.println(e.getMessage());
+
+                    }
+
+                    if (!resultado) {
+
+                        System.err.println("\nNenhum boletim encontrado.");
+                        break;
+
+                    }
+                    
+                return resultado;
+
+                case 3:
+
+                    System.out.printf("|Sua escolha: %-67s|\n", "Voltando...");
+                    System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+                return null;
+
+                default:
+
+                    System.err.println(String.format("|Sua escolha: %-67s|", "Nenhuma das existentes."));
+                    System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+                break;
+
+            }
+
+        } while (opcao.intValue() != 3);
+
+        return null;
+
+    }
+
+    private Boolean criaBoletimAluno (Professor professor, Aluno aluno) {
+
+        Boolean resultado = Boolean.FALSE;
+
+        try {
+            
+            aluno.criarBoletim(professor);
+            resultado = Boolean.TRUE;
+
+        } catch (Exception e) {
+            
+            System.err.println(e.getMessage());
+            resultado = Boolean.FALSE;
+
+        }
+
+        return resultado;
 
     }
 
@@ -428,7 +670,7 @@ public abstract class UserCli {
 
     private Boletim retornaBoletim (Professor professor, Aluno aluno) {
 
-        Integer subOpcao = Integer.valueOf(this.subMenuBoletim ());
+        Integer subOpcao = Integer.valueOf(this.subMenuBoletim());
         Boletim boletimAluno = null;
 
         switch (subOpcao.intValue()) {
