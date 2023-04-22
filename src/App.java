@@ -10,6 +10,7 @@ import models.Professor;
 import models.Turma;
 import security.Token;
  */
+
 import ui.MenuCli;
 
 public class App {

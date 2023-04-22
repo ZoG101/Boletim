@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
@@ -97,8 +98,9 @@ public class Boletim implements Serializable, Comparable<Boletim> {
     public Double getFalta () {
 
         if (this.falta == 0) return 0.;
+        LocalDate data = LocalDate.now();
 
-        return (365/100) * this.falta;
+        return (data.lengthOfYear()/100) * this.falta;
 
     }
 
@@ -136,6 +138,12 @@ public class Boletim implements Serializable, Comparable<Boletim> {
     public String getNotas () {
 
         return notas.toString();
+
+    }
+
+    public List<Double> getListNotas () {
+
+        return Collections.unmodifiableList(notas);
 
     }
 
