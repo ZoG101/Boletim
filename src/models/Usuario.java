@@ -365,8 +365,6 @@ public abstract class Usuario implements Serializable, Autenticavel {
         this.setUsuario(usuario);
         this.setUltimaMudanca();
 
-        System.out.println("\nSeu nome de usuário foi redefinido com sucesso!");
-
     }
 
     /**
@@ -403,6 +401,46 @@ public abstract class Usuario implements Serializable, Autenticavel {
         if (!(this.verificaSenha(senha))) throw new IllegalArgumentException("\nERRO: A senha deve conter entre 6 a 20 caracteres, deve conter pelo menos uma letra maiúscula, um número e não deve conter símbolos.");
         this.senha = senha;
         this.unsetPermissaoNovaSenha();
+
+    }
+
+    public void redefinirNome (String nomeCompleto, String primeiroNome, String sobrenome) {
+
+        if (!(getAutenticacao())) throw new IllegalStateException("\nERRO: O usuário precisa estar autenticado para se alterar o nome!");
+        if ((nomeCompleto.isBlank()) || (nome.isBlank()) || (sobrenome.isBlank())) throw new IllegalArgumentException("\nERRO: O nome não pode ser vazio!");
+
+        this.nomeCompleto = nomeCompleto;
+        this.nome = primeiroNome;
+        this.sobrenome = sobrenome;
+
+    }
+
+    public void redefinirCPF (String cpf) {
+
+        if (!(getAutenticacao())) throw new IllegalStateException("\nERRO: O usuário precisa estar autenticado para se alterar o nome!");
+        if (cpf.isBlank()) throw new IllegalArgumentException("\nERRO: O nome não pode ser vazio!");
+        if (!this.verificaCPF(cpf)) throw new IllegalArgumentException("\nERRO: CPF inválido!");
+
+        this.cpf = cpf;
+
+    }
+
+    public void redefinirTelefone (String telefone) {
+
+        if (!(getAutenticacao())) throw new IllegalStateException("\nERRO: O usuário precisa estar autenticado para se alterar o nome!");
+        if (telefone.isBlank()) throw new IllegalArgumentException("\nERRO: O nome não pode ser vazio!");
+
+        this.telefone = telefone;
+
+    }
+
+    public void redefinirEmail (String email) {
+
+        if (!(getAutenticacao())) throw new IllegalStateException("\nERRO: O usuário precisa estar autenticado para se alterar o nome!");
+        if (email.isBlank()) throw new IllegalArgumentException("\nERRO: O nome não pode ser vazio!");
+        if (this.verificaEmail(email)) throw new IllegalArgumentException("\nERRO: E-mail inválido!");
+
+        this.email = email;
 
     }
 
