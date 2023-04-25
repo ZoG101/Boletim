@@ -11,6 +11,8 @@ import java.util.concurrent.RejectedExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import data.DataHelper;
+
 /**
  * A classe {@code Professor} é feita como uma abstração
  * de um professor real que possui seus {@code Alunos} e 
@@ -260,6 +262,20 @@ public final class Professor extends Usuario {
         if ((aluno == null) || (materia == null) || (materia.equalsIgnoreCase(""))) throw new IllegalArgumentException("\nERRO: Nem o aluno e nem a matéria podem ser nulos ou vazios!");
 
         return aluno.getBoletim(materia, this);
+
+    }
+
+    @Override
+    public String toString() {
+        
+        System.out.print(super.toString());
+        System.out.printf("|Matéria: %-71s|\n", materia);
+        System.out.println("|" + DataHelper.repeteCaracter('-', 80) + "|");
+        Integer hashId = Integer.valueOf(this.hashCode());
+        System.out.printf("|HashID: %-72s|\n", hashId);
+        System.out.println("|" + DataHelper.repeteCaracter('-', 80) + "|");
+
+        return "";
 
     }
     

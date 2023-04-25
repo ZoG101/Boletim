@@ -10,6 +10,7 @@ import java.util.concurrent.RejectedExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import data.DataHelper;
 import security.Autenticavel;
 import security.Token;
 
@@ -779,6 +780,32 @@ public abstract class Usuario implements Serializable, Autenticavel {
         if (!(this.getSenha().equals(s))) throw new RejectedExecutionException("\nERRO: A senha está incorreta!");
 
         return Boolean.TRUE;
+
+    }
+
+    @Override
+    public String toString() {
+        
+        Pattern formatPattern = Pattern.compile("([A-Za-z]+$)");
+        Matcher formatMatcher = formatPattern.matcher(this.getClass().getName());
+
+        if (!formatMatcher.find()) throw new IllegalArgumentException("ERRO: Tipo da conta não encontrado!");
+
+        String classeNome = formatMatcher.group(0);
+
+        System.out.println("|" + DataHelper.repeteCaracter('-', 80) + "|");
+        System.out.printf("|TIPO: %-74s|\n", classeNome);
+        System.out.println("|" + DataHelper.repeteCaracter('-', 80) + "|");
+        System.out.printf("|Nome completo: %-65s|\n", this.getNomeCompleto());
+        System.out.printf("|Primeiro nome: %-65s|\n", this.getNome());
+        System.out.printf("|Sobrenome: %-69s|\n", this.getSobrenome());
+        System.out.printf("|CPF: %-75s|\n", DataHelper.reformataCPF(this.getCpf(this.senha)));
+        System.out.printf("|Telefone: %-70s|\n", this.getTelefone());
+        System.out.printf("|E-mail: %-72s|\n", this.getEmail());
+        System.out.printf("|Nome de usuário: %-63s|\n", this.usuario);
+        String senhaCensurada = new String(DataHelper.repeteCaracter('*', this.senha.length()));
+        return String.format("|Senha: %-73s|\n", senhaCensurada);
+    
 
     }
     

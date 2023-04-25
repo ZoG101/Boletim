@@ -73,23 +73,26 @@ public class MenuCli extends UserCli {
 
                     System.out.printf("|Sua escolha: %-67s|\n", "Cadastrar Aluno.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
+                    Professor professorLogado = null;
 
                     try {
                         
-                        Professor professorLogado = this.loginProfessor();
-                        Aluno aluno = this.cadastroAluno();
-                        this.registraAluno(aluno, professorLogado);
+                        professorLogado = this.loginProfessor();
 
                     } catch (Exception e) {
                        
                         System.err.println(e.getMessage());
                         e.printStackTrace();
 
-                    } finally {
+                    } 
 
+                    if (professorLogado != null) {
+
+                        Aluno aluno = this.cadastroAluno();
+                        this.registraAluno(aluno, professorLogado);
                         opcao = Integer.valueOf(menuInicialComLogin());
 
-                    }
+                    }  
 
                 break;
 
@@ -139,6 +142,8 @@ public class MenuCli extends UserCli {
             System.out.printf("|%1s", "> ");
             opcao = Integer.valueOf(scan.nextInt());
             System.out.println("|" + repeteCaracter('-', 80) + "|");
+            Professor professorLogado = null;
+            Aluno alunoLogado = null;
 
             switch (opcao.intValue()) {
 
@@ -167,18 +172,19 @@ public class MenuCli extends UserCli {
 
                     try {
                         
-                        Professor professorLogado = this.loginProfessor();
-                        Aluno aluno = this.cadastroAluno();
-                        this.registraAluno(aluno, professorLogado);
+                        professorLogado = this.loginProfessor();
 
                     } catch (Exception e) {
                        
                         System.err.println(e.getMessage());
                         e.printStackTrace();
 
-                    } finally {
+                    }
 
-                        opcao = Integer.valueOf(menuInicialComLogin());
+                    if (professorLogado != null) {
+
+                        Aluno aluno = this.cadastroAluno();
+                        this.registraAluno(aluno, professorLogado);
 
                     }
 
@@ -191,13 +197,18 @@ public class MenuCli extends UserCli {
 
                     try {
                         
-                        Aluno alunoLogado = this.loginAluno();
-                        super.alunoLogado(alunoLogado);
+                        alunoLogado = this.loginAluno();
 
                     } catch (Exception e) {
                        
                         System.err.println(e.getMessage());
                         e.printStackTrace();
+
+                    }
+
+                    if (alunoLogado != null) {
+
+                        super.alunoLogado(alunoLogado);
 
                     }
 
@@ -210,13 +221,18 @@ public class MenuCli extends UserCli {
 
                     try {
                         
-                        Professor professorLogado = this.loginProfessor();
-                        super.professorLogado(professorLogado);
+                        professorLogado = this.loginProfessor();
 
                     } catch (Exception e) {
                        
                         System.err.println(e.getMessage());
                         e.printStackTrace();
+
+                    }
+
+                    if (professorLogado != null) {
+
+                        super.professorLogado(professorLogado);
 
                     }
 
@@ -514,7 +530,7 @@ public class MenuCli extends UserCli {
 
         Professor p = new Professor(nomeCompleto, primeiroNome, sobrenome, cpf, telefone, email, nomeUsuario, senha, materia);
 
-        System.out.println(p.toString());
+        if (p != null) System.out.println("\nUsuário criado com sucesso!");
 
     }
 
@@ -791,7 +807,7 @@ public class MenuCli extends UserCli {
         } while ((opcao.compareToIgnoreCase("n") == 0) || (opcao.compareToIgnoreCase("não") == 0) || (opcao.compareToIgnoreCase("nao") == 0));
 
         Aluno a = new Aluno(nomeCompleto, primeiroNome, sobrenome, cpf, telefone, email, nomeUsuario, senha, nivel);
-        System.out.println(a.toString());
+        if (a != null) System.out.println("\nUsuário criado com sucesso!");
         return a;
 
     }
@@ -849,7 +865,7 @@ public class MenuCli extends UserCli {
 
             }
 
-        } while ((aluno == null) && (!opcao.equalsIgnoreCase("n")) || (!opcao.equalsIgnoreCase("não") || (!opcao.equalsIgnoreCase("nao"))));
+        } while ((aluno == null) && (opcao.equalsIgnoreCase("s") || opcao.equalsIgnoreCase("sim")));
         
         return aluno;
 
@@ -908,7 +924,7 @@ public class MenuCli extends UserCli {
 
             }
 
-        } while ((professor == null) && (!opcao.equalsIgnoreCase("n")) || (!opcao.equalsIgnoreCase("não") || (!opcao.equalsIgnoreCase("nao"))));
+        } while ((professor == null) && (opcao.equalsIgnoreCase("s") || opcao.equalsIgnoreCase("sim")));
         
         return professor;
 

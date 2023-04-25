@@ -19,7 +19,7 @@ import models.Usuario;
 
 public abstract class UserCli {
 
-    private Scanner scan;
+    private Scanner scan = new Scanner(System.in, "UTF-8");
     Professor usuarioProfessor;
     Aluno usuarioAluno;
 
@@ -93,7 +93,7 @@ public abstract class UserCli {
 
                 default:
 
-                    System.err.println(String.format("|Sua escolha: %-67s|", "Nenhuma das existentes."));
+                    System.err.println(String.format("|Sua escolha: %-67s|\n", "Nenhuma das existentes."));
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
 
                 break;
@@ -112,22 +112,22 @@ public abstract class UserCli {
 
             System.out.println();
             System.out.println("|" + repeteCaracter('-', 80) + "|");
-            String intrudocao = String.format("|%20s", professor.getNomeCompleto());
+            String intrudocao = String.format("|%11s", professor.getNomeCompleto());
             System.out.printf("%-81s|\n", intrudocao);
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             String primeiraOpcao = String.format("|%20s", "1.Ver informações de perfil");
             System.out.printf("%-81s|\n", primeiraOpcao);
             System.out.println("|" + repeteCaracter('-', 80) + "|");
-            String segundaOpcao = String.format("|%20s", "2.Procurar boletim");
+            String segundaOpcao = String.format("|%18s", "2.Procurar boletim");
             System.out.printf("%-81s|\n", segundaOpcao);
             System.out.println("|" + repeteCaracter('-', 80) + "|");
-            String terceiraOpcao = String.format("|%20s", "3.Exibir turmas");
+            String terceiraOpcao = String.format("|%15s", "3.Exibir turmas");
             System.out.printf("%-81s|\n", terceiraOpcao);
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             String quartaOpcao = String.format("|%20s", "4.Procurar turma por ID");
             System.out.printf("%-81s|\n", quartaOpcao);
             System.out.println("|" + repeteCaracter('-', 80) + "|");
-            String quintaOpcao = String.format("|%20s", "5.Criar turma");
+            String quintaOpcao = String.format("|%13s", "5.Criar turma");
             System.out.printf("%-81s|\n", quintaOpcao);
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             String sextaOpcao = String.format("|%20s", "6.Procurar aluno por nome");
@@ -136,10 +136,10 @@ public abstract class UserCli {
             String setimaOpcao = String.format("|%20s", "7.Procurar aluno por ID");
             System.out.printf("%-81s|\n", setimaOpcao);
             System.out.println("|" + repeteCaracter('-', 80) + "|");
-            String oitavaOpcao = String.format("|%20s", "8.Criar boletim");
+            String oitavaOpcao = String.format("|%15s", "8.Criar boletim");
             System.out.printf("%-81s|\n", oitavaOpcao);
             System.out.println("|" + repeteCaracter('-', 80) + "|");
-            String nonaOpcao = String.format("|%20s", "9.Sair");
+            String nonaOpcao = String.format("|%6s", "9.Sair");
             System.out.printf("%-81s|\n", nonaOpcao);
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             System.out.printf("|%1s", "> ");
@@ -395,7 +395,7 @@ public abstract class UserCli {
 
                 default:
 
-                    System.err.println(String.format("|Sua escolha: %-67s|", "Nenhuma das existentes."));
+                    System.err.println(String.format("|Sua escolha: %-67s|\n", "Nenhuma das existentes."));
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
 
                 break;
@@ -411,16 +411,16 @@ public abstract class UserCli {
         Integer opcao;
         System.out.println();
         System.out.println("|" + repeteCaracter('-', 80) + "|");
-        String primeiraOpcao = String.format("|%20s", "1.Alterar nome");
+        String primeiraOpcao = String.format("|%14s", "1.Alterar nome");
         System.out.printf("%-81s|\n", primeiraOpcao);
         System.out.println("|" + repeteCaracter('-', 80) + "|");
-        String segundaOpcao = String.format("|%20s", "2.Alterar CPF");
+        String segundaOpcao = String.format("|%13s", "2.Alterar CPF");
         System.out.printf("%-81s|\n", segundaOpcao);
         System.out.println("|" + repeteCaracter('-', 80) + "|");
-        String terceiraOpcao = String.format("|%20s", "3.Alterar telefone");
+        String terceiraOpcao = String.format("|%18s", "3.Alterar telefone");
         System.out.printf("%-81s|\n", terceiraOpcao);
         System.out.println("|" + repeteCaracter('-', 80) + "|");
-        String quartaOpcao = String.format("|%20s", "4.Alterar E-mail");
+        String quartaOpcao = String.format("|%16s", "4.Alterar E-mail");
         System.out.printf("%-81s|\n", quartaOpcao);
         System.out.println("|" + repeteCaracter('-', 80) + "|");
         String quintaOpcao = String.format("|%20s", "5.Alterar nome de usuário");
@@ -429,7 +429,7 @@ public abstract class UserCli {
         String sextaOpcao = String.format("|%20s", "6.Alterar senha de usuário");
         System.out.printf("%-81s|\n", sextaOpcao);
         System.out.println("|" + repeteCaracter('-', 80) + "|");
-        String setimaOpcao = String.format("|%20s", "7.Voltar");
+        String setimaOpcao = String.format("|%8s", "7.Voltar");
         System.out.printf("%-81s|\n", setimaOpcao);
         System.out.println("|" + repeteCaracter('-', 80) + "|");
         System.out.printf("|%1s", "> ");
@@ -445,7 +445,7 @@ public abstract class UserCli {
 
                 case 1:
 
-                    System.out.printf("|Sua escolha: %-67s|", "Alterar nome.");
+                    System.out.printf("|Sua escolha: %-67s|\n", "Alterar nome.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
                     resultado = Boolean.FALSE;
 
@@ -472,7 +472,7 @@ public abstract class UserCli {
 
                 case 2:
 
-                    System.out.printf("|Sua escolha: %-67s|", "Alterar CPF.");
+                    System.out.printf("|Sua escolha: %-67s|\n", "Alterar CPF.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
                     resultado = Boolean.FALSE;
 
@@ -499,7 +499,7 @@ public abstract class UserCli {
 
                 case 3:
 
-                    System.out.printf("|Sua escolha: %-67s|", "Alterar telefone.");
+                    System.out.printf("|Sua escolha: %-67s|\n", "Alterar telefone.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
                     resultado = Boolean.FALSE;
 
@@ -526,7 +526,7 @@ public abstract class UserCli {
 
                 case 4:
 
-                    System.out.printf("|Sua escolha: %-67s|", "Alterar E-mail.");
+                    System.out.printf("|Sua escolha: %-67s|\n", "Alterar E-mail.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
                     resultado = Boolean.FALSE;
 
@@ -553,7 +553,7 @@ public abstract class UserCli {
 
                 case 5:
 
-                    System.out.printf("|Sua escolha: %-67s|", "Alterar nome de usuário.");
+                    System.out.printf("|Sua escolha: %-67s|\n", "Alterar nome de usuário.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
                     resultado = Boolean.FALSE;
 
@@ -580,7 +580,7 @@ public abstract class UserCli {
 
                 case 6:
 
-                    System.out.printf("|Sua escolha: %-67s|", "Alterar senha.");
+                    System.out.printf("|Sua escolha: %-67s|\n", "Alterar senha.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
                     resultado = Boolean.FALSE;
 
@@ -607,14 +607,14 @@ public abstract class UserCli {
 
                 case 7:
 
-                    System.out.printf("|Sua escolha: %-67s|", "Voltando...");
+                    System.out.printf("|Sua escolha: %-67s|\n", "Voltando...");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
 
                 break;
 
                 default:
 
-                    System.err.println(String.format("|Sua escolha: %-67s|", "Nenhuma das existentes."));
+                    System.err.println(String.format("|Sua escolha: %-67s|\n", "Nenhuma das existentes."));
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
 
                 break;
@@ -1020,7 +1020,7 @@ public abstract class UserCli {
 
                 case 1:
 
-                    System.out.printf("|Sua escolha: %-67s|", "Gerar boletim.");
+                    System.out.printf("|Sua escolha: %-67s|\n", "Gerar boletim.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
 
                     try {
@@ -1037,7 +1037,7 @@ public abstract class UserCli {
 
                 case 2:
 
-                    System.out.printf("|Sua escolha: %-67s|", "Verificar estado de aprovação.");
+                    System.out.printf("|Sua escolha: %-67s|\n", "Verificar estado de aprovação.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
                     Boolean aprovacao = null;
 
@@ -1055,7 +1055,7 @@ public abstract class UserCli {
 
                         System.out.println();
                         System.out.println("|" + repeteCaracter('-', 80) + "|");
-                        System.out.printf("|Estado: %-72s|", "Não foi possível verificar a estado de aprovação.");
+                        System.out.printf("|Estado: %-72s|\n", "Não foi possível verificar a estado de aprovação.");
                         System.out.println("|" + repeteCaracter('-', 80) + "|");
                         break;
 
@@ -1063,14 +1063,14 @@ public abstract class UserCli {
 
                         System.out.println();
                         System.out.println("|" + repeteCaracter('-', 80) + "|");
-                        System.out.printf("|Estado: %-72s|", "Aprovado(a).");
+                        System.out.printf("|Estado: %-72s|\n", "Aprovado(a).");
                         System.out.println("|" + repeteCaracter('-', 80) + "|");
 
                     } else {
 
                         System.out.println();
                         System.out.println("|" + repeteCaracter('-', 80) + "|");
-                        System.out.printf("|Estado: %-72s|", "Reprovado(a).");
+                        System.out.printf("|Estado: %-72s|\n", "Reprovado(a).");
                         System.out.println("|" + repeteCaracter('-', 80) + "|");
 
                     }
@@ -1079,7 +1079,7 @@ public abstract class UserCli {
             
                 case 3:
 
-                    System.out.printf("|Sua escolha: %-67s|", "Porcentagem de faltas.");
+                    System.out.printf("|Sua escolha: %-67s|\n", "Porcentagem de faltas.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
 
                     System.out.println();
@@ -1101,7 +1101,7 @@ public abstract class UserCli {
 
                 case 4:
 
-                    System.out.printf("|Sua escolha: %-67s|", "Verificar matéria do boletim.");
+                    System.out.printf("|Sua escolha: %-67s|\n", "Verificar matéria do boletim.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
 
                     System.out.println();
@@ -1109,7 +1109,7 @@ public abstract class UserCli {
 
                     try {
 
-                        System.out.printf("|%-80s|", boletim.getMateria());
+                        System.out.printf("|%-80s|\n", boletim.getMateria());
 
                     } catch (Exception e) {
 
@@ -1123,7 +1123,7 @@ public abstract class UserCli {
 
                 case 5:
 
-                    System.out.printf("|Sua escolha: %-67s|", "Verificar média do aluno.");
+                    System.out.printf("|Sua escolha: %-67s|\n", "Verificar média do aluno.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
 
                     System.out.println();
@@ -1131,7 +1131,7 @@ public abstract class UserCli {
 
                     try {
 
-                        System.out.printf("|%-80s|", boletim.getMediaFormatada());
+                        System.out.printf("|%-80s|\n", boletim.getMediaFormatada());
 
                     } catch (Exception e) {
 
@@ -1145,7 +1145,7 @@ public abstract class UserCli {
 
                 case 6:
 
-                    System.out.printf("|Sua escolha: %-67s|", "Verificar nível do aluno.");
+                    System.out.printf("|Sua escolha: %-67s|\n", "Verificar nível do aluno.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
 
                     System.out.println();
@@ -1153,7 +1153,7 @@ public abstract class UserCli {
 
                     try {
 
-                        System.out.printf("|%-80s|", boletim.getNivel());
+                        System.out.printf("|%-80s|\n", boletim.getNivel());
 
                     } catch (Exception e) {
 
@@ -1167,7 +1167,7 @@ public abstract class UserCli {
 
                 case 7:
 
-                    System.out.printf("|Sua escolha: %-67s|", "Verificar última nota adicionada.");
+                    System.out.printf("|Sua escolha: %-67s|\n", "Verificar última nota adicionada.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
 
                     System.out.println();
@@ -1175,7 +1175,7 @@ public abstract class UserCli {
 
                     try {
 
-                        System.out.printf("|%-80s|", boletim.getUltimaNotaAdicionada());
+                        System.out.printf("|%-80s|\n", boletim.getUltimaNotaAdicionada());
 
                     } catch (Exception e) {
 
@@ -1189,7 +1189,7 @@ public abstract class UserCli {
 
                 case 8:
 
-                    System.out.printf("|Sua escolha: %-67s|", "Verificar última nota adicionada.");
+                    System.out.printf("|Sua escolha: %-67s|\n", "Verificar última nota adicionada.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
                     Boolean resultado = Boolean.FALSE;
 
@@ -1206,7 +1206,7 @@ public abstract class UserCli {
                     if (resultado.booleanValue()) {
 
                         System.out.println("|" + repeteCaracter('-', 80) + "|");
-                        System.out.printf("|%-80s|", "Nota(s) adicionadas com sucesso.");
+                        System.out.printf("|%-80s|\n", "Nota(s) adicionadas com sucesso.");
                         System.out.println("|" + repeteCaracter('-', 80) + "|");
 
                     }
@@ -1215,7 +1215,7 @@ public abstract class UserCli {
 
                 case 9:
 
-                    System.out.printf("|Sua escolha: %-67s|", "Adicionar falta.");
+                    System.out.printf("|Sua escolha: %-67s|\n", "Adicionar falta.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
 
                     try {
@@ -1231,14 +1231,14 @@ public abstract class UserCli {
 
                     System.out.println();
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
-                    System.out.printf("|%-80s|", "Falta adicionada.");
+                    System.out.printf("|%-80s|\n", "Falta adicionada.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
                     
                 break;
 
                 case 10:
 
-                    System.out.printf("|Sua escolha: %-67s|", "Adicionar falta.");
+                    System.out.printf("|Sua escolha: %-67s|\n", "Adicionar falta.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
                     Boolean resultadoAdicao = Boolean.FALSE;
 
@@ -1257,7 +1257,7 @@ public abstract class UserCli {
 
                         System.out.println();
                         System.out.println("|" + repeteCaracter('-', 80) + "|");
-                        System.out.printf("|%-80s|", "Faltas adicionadas.");
+                        System.out.printf("|%-80s|\n", "Faltas adicionadas.");
                         System.out.println("|" + repeteCaracter('-', 80) + "|");
 
                     }
@@ -1266,14 +1266,14 @@ public abstract class UserCli {
 
                 case 11:
 
-                    System.out.printf("|Sua escolha: %-67s|", "Voltando...");
+                    System.out.printf("|Sua escolha: %-67s|\n", "Voltando...");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
                     
                 break;
 
                 default:
 
-                    System.err.println(String.format("|Sua escolha: %-67s|", "Nenhuma das existentes."));
+                    System.err.println(String.format("|Sua escolha: %-67s|\n", "Nenhuma das existentes."));
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
 
                 break;
@@ -1287,9 +1287,9 @@ public abstract class UserCli {
     private Boolean adicionarFaltas(Boletim boletim) {
 
         System.out.println("|" + repeteCaracter('-', 80) + "|");
-        System.out.printf("|%-80s|", "Digite o número de faltas:");
+        System.out.printf("|%-80s|\n", "Digite o número de faltas:");
         System.out.println("|" + repeteCaracter('-', 80) + "|");
-        System.out.printf("|%-80s|", "Aperte 'ENTER' em vazio para cancelar");
+        System.out.printf("|%-80s|\n", "Aperte 'ENTER' em vazio para cancelar");
         System.out.println("|" + repeteCaracter('-', 80) + "|");
         System.out.printf("|%1s", "> ");
         String faltas = scan.next();
@@ -1302,16 +1302,16 @@ public abstract class UserCli {
         if (!matcher.matches()) {
 
             System.out.println("|" + repeteCaracter('-', 80) + "|");
-            System.out.printf("|%-80s|", "Você não digitou um número.");
+            System.out.printf("|%-80s|\n", "Você não digitou um número.");
             System.out.println("|" + repeteCaracter('-', 80) + "|");
-            System.out.printf("|%-80s|", "Nenhuma nota foi adicionada.");
+            System.out.printf("|%-80s|\n", "Nenhuma nota foi adicionada.");
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             return Boolean.FALSE;
 
         } else if (faltas.isEmpty()) {
 
             System.out.println("|" + repeteCaracter('-', 80) + "|");
-            System.out.printf("|%-80s|", "Nenhuma nota foi adicionada.");
+            System.out.printf("|%-80s|\n", "Nenhuma nota foi adicionada.");
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             return Boolean.FALSE;
 
@@ -1344,7 +1344,7 @@ public abstract class UserCli {
             if (boletim.getListNotas().size() == 3) {
 
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
-                System.out.printf("|%-80s|", "Todas as notas deste aluno(a) já foram adicionadas.");
+                System.out.printf("|%-80s|\n", "Todas as notas deste aluno(a) já foram adicionadas.");
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
 
                 return Boolean.FALSE;
@@ -1354,7 +1354,7 @@ public abstract class UserCli {
             while (boletim.getListNotas().size() < 3) {
 
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
-                System.out.printf("|%-80s|", "Digite a " + (boletim.getListNotas().size() + 1) + " nota do aluno(a):");
+                System.out.printf("|%-80s|\n", "Digite a " + (boletim.getListNotas().size() + 1) + " nota do aluno(a):");
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
                 System.out.printf("|%1s", "> ");
                 nota = scan.next();
@@ -1365,7 +1365,7 @@ public abstract class UserCli {
                 if (nota.isEmpty()) {
 
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
-                    System.out.printf("|%-80s|", "Foram adicionadas " + count + " notas.");
+                    System.out.printf("|%-80s|\n", "Foram adicionadas " + count + " notas.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
 
                     if (count == 0) return Boolean.FALSE;
@@ -1394,7 +1394,7 @@ public abstract class UserCli {
             if (boletim.getListNotas().size() == 2) {
 
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
-                System.out.printf("|%-80s|", "Todas as notas deste aluno(a) já foram adicionadas.");
+                System.out.printf("|%-80s|\n", "Todas as notas deste aluno(a) já foram adicionadas.");
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
 
                 return Boolean.FALSE;
@@ -1404,7 +1404,7 @@ public abstract class UserCli {
             while (boletim.getListNotas().size() < 2) {
 
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
-                System.out.printf("|%-80s|", "Digite a " + (boletim.getListNotas().size() + 1) + " nota do aluno(a):");
+                System.out.printf("|%-80s|\n", "Digite a " + (boletim.getListNotas().size() + 1) + " nota do aluno(a):");
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
                 System.out.printf("|%1s", "> ");
                 nota = scan.next();
@@ -1415,7 +1415,7 @@ public abstract class UserCli {
                 if (nota.isEmpty()) {
 
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
-                    System.out.printf("|%-80s|", "Foram adicionadas " + count + " notas.");
+                    System.out.printf("|%-80s|\n", "Foram adicionadas " + count + " notas.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
 
                     if (count == 0) return Boolean.FALSE;
@@ -1561,7 +1561,7 @@ public abstract class UserCli {
 
                 default:
 
-                    System.err.println(String.format("|Sua escolha: %-67s|", "Nenhuma das existentes."));
+                    System.err.println(String.format("|Sua escolha: %-67s|\n", "Nenhuma das existentes."));
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
 
                 break;
@@ -1747,7 +1747,7 @@ public abstract class UserCli {
 
                 default:
 
-                    System.err.println(String.format("|Sua escolha: %-67s|", "Nenhuma das existentes."));
+                    System.err.println(String.format("|Sua escolha: %-67s|\n", "Nenhuma das existentes."));
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
 
                 break;
@@ -1818,7 +1818,7 @@ public abstract class UserCli {
         
             default:
 
-                System.err.println(String.format("|Sua escolha: %-67s|", "Nenhuma das existentes."));
+                System.err.println(String.format("|Sua escolha: %-67s|\n", "Nenhuma das existentes."));
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
 
             break;
@@ -2132,7 +2132,7 @@ public abstract class UserCli {
 
                 default:
 
-                    System.err.println(String.format("|Sua escolha: %-67s|", "Nenhuma das existentes."));
+                    System.err.println(String.format("|Sua escolha: %-67s|\n", "Nenhuma das existentes."));
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
 
                 break;

@@ -301,8 +301,14 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
     @Override
     public String toString() {
         
-        String formato = String.format("Nome: %s; id: %s\n", this.getNomeCompleto(), this.getId());
-        return formato;
+        System.out.print(super.toString());
+        System.out.printf("|Nível Escolar: %-71s|\n", this.getNivel());
+        System.out.println("|" + DataHelper.repeteCaracter('-', 80) + "|");
+        Integer hashId = Integer.valueOf(this.hashCode());
+        System.out.printf("|HashID: %-72s|\n", hashId);
+        System.out.println("|" + DataHelper.repeteCaracter('-', 80) + "|");
+
+        return "";
 
     }
 

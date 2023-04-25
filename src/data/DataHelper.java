@@ -1,6 +1,7 @@
 package data;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
@@ -716,6 +717,28 @@ public final class DataHelper {
         
         if (matcher.matches()) return telefone = "0" + telefone.replaceAll("[ )(-]", "");
         return telefone;
+
+    }
+
+    /**
+     * Método auxiliar privado de formatação para a formação e exibição
+     * do {@code Cli}. Este método recebe um caracter e um {@code Iteger}
+     * e, com base nesse parametro, o mesmo irá repetir o caracter inserido
+     * o número de vezes que lhe for informado no parâmetro de {@code tamanho}.
+     * 
+     * @param c
+     * @param tamanho
+     * @return {@value String} com um caractere repetido quantas vezes
+     *         for escolhido.
+     * @see String
+     * @see Integer
+     * @see Arrays
+     */
+    public static String repeteCaracter (char c, Integer tamanho) {
+
+        char[] caracteres = new char[tamanho.intValue()];
+        Arrays.fill(caracteres, c);
+        return new String(caracteres);
 
     }
 
