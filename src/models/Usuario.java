@@ -252,6 +252,22 @@ public abstract class Usuario implements Serializable, Autenticavel {
 
     }
 
+    public String getNomeUsuario () {
+
+        if (!(this.getAutenticacao())) throw new IllegalStateException("\nERRO: Usuário tem que estar autenticado para acessar esta área!");
+
+        return this.usuario;
+
+    }
+
+    public String getNomeUsuario (Professor professor) {
+
+        if (!(professor.getAutenticacao())) throw new IllegalStateException("\nERRO: Usuário tem que estar autenticado para acessar esta área!");
+
+        return this.usuario;
+
+    }
+
     /**
      * Método auxiliar para marcar a data de uma nova mudança
      * no nome de usuário.
@@ -756,6 +772,14 @@ public abstract class Usuario implements Serializable, Autenticavel {
         if (!(getAutenticacao())) throw new IllegalStateException("\nERRO: Usuário tem que estar autenticado para acessar esta área!");
         
         this.autenticado = Boolean.FALSE;
+
+    }
+
+    public void apagaUsuario (Professor professor, String nomeUsuario) {
+
+        if (!(professor.getAutenticacao())) throw new IllegalStateException("\nERRO: Professor tem que estar autenticado para acessar esta área!");
+
+        Usuario.usuarios.remove(nomeUsuario);
 
     }
 

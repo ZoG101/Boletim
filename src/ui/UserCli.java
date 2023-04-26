@@ -2047,36 +2047,44 @@ public abstract class UserCli {
             String segundaOpcao = String.format("|%20s", "2.Inserir o aluno novo em uma turma existente");
             System.out.printf("%-81s|\n", segundaOpcao);
             System.out.println("|" + repeteCaracter('-', 80) + "|");
-            String terceiraOpcao = String.format("|%20s", "3.Voltar");
+            String terceiraOpcao = String.format("|%8s", "3.Cancelar");
             System.out.printf("%-81s|\n", terceiraOpcao);
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             System.out.printf("|%1s", "> ");
             opcao = Integer.valueOf(scan.nextInt());
             System.out.println("|" + repeteCaracter('-', 80) + "|");
 
+            if (opcao.intValue() == -1) opcao = Integer.valueOf(0);
+
             switch (opcao.intValue()) {
 
                 case 1:
 
                     System.out.printf("|Sua escolha: %-67s|\n", "Criar um novo aluno e uma nova turma.");
+                    System.out.println("|" + repeteCaracter('-', 80) + "|");
 
                     try {
 
                         for (int i = 3; i > 0; i--) {
                         
+                            System.out.println();
                             System.out.println("|" + repeteCaracter('-', 80) + "|");
-                            System.out.printf("|%-80s|\n", "Digite sua senha:");
+                            System.out.printf("|%-80s|\n", "Digite sua senha de professor:");
                             System.out.println("|" + repeteCaracter('-', 80) + "|");
                             System.out.printf("|%1s", "> ");
-                            String senha = scan.next();
-                            String complementar = scan.nextLine();
-                            senha = senha + complementar;
+                            String senha = new String(System.console().readPassword());
                             System.out.println("|" + repeteCaracter('-', 80) + "|");
+                            Turma turmaNova = null;
 
                             try {
                                 
-                                Turma turmaNova = professor.criaTurma(senha);
+                                turmaNova = professor.criaTurma(senha);
                                 turmaNova.adicionarAluno(aluno);
+                                System.out.println();
+                                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                                System.out.printf("|%-80s|\n", "Aluno criado com sucesso dentro da turma de id: " + turmaNova.getId());
+                                System.out.println("|" + repeteCaracter('-', 80) + "|");
+                                break;
 
                             } catch (Exception e) {
                                 
@@ -2091,11 +2099,19 @@ public abstract class UserCli {
                         
                         System.err.println(e.getMessage());
 
-                    } finally {
+                    }
 
-                        opcao = Integer.valueOf(3);
+                    try {
+                        
+                        professor.logout();
+
+                    } catch (Exception e) {
+                        
+                        System.err.println(e.getMessage());
 
                     }
+
+                    opcao = Integer.valueOf(-1);
 
                 break;
 
@@ -2103,30 +2119,64 @@ public abstract class UserCli {
 
                     System.out.printf("|Sua escolha: %-67s|\n", "Criar um aluno e inseri-lo em uma turma existente.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
+                    Turma turmaNova = null;
 
                     try {
 
                         String id = this.getTurmaId(professor);
                         System.out.println("|" + repeteCaracter('-', 80) + "|");
-                        Turma turma = professor.getTurma(id);
-                        turma.adicionarAluno(aluno);
+                        turmaNova = professor.getTurma(id);
+                        turmaNova.adicionarAluno(aluno);
+
+                        System.out.println();
+                        System.out.println("|" + repeteCaracter('-', 80) + "|");
+                        System.out.printf("|%-80s|\n", "Aluno criado com sucesso dentro da turma de id: " + turmaNova.getId());
+                        System.out.println("|" + repeteCaracter('-', 80) + "|");
                         
                     } catch (Exception e) {
                         
                         System.err.println(e.getMessage());
 
-                    } finally {
+                    }
 
-                        opcao = Integer.valueOf(3);
+                    try {
+                        
+                        professor.logout();
+
+                    } catch (Exception e) {
+                        
+                        System.err.println(e.getMessage());
 
                     }
+
+                    opcao = Integer.valueOf(-1);
 
                 break;
 
                 case 3:
 
-                    System.out.printf("|Sua escolha: %-67s|\n", "Voltar.");
+                    System.out.printf("|Sua escolha: %-67s|\n", "Cancelar.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+                    try {
+                        
+                        professor.apagaUsuario(professor, aluno.getNomeUsuario(professor));
+
+                    } catch (Exception e) {
+                        
+                        System.err.println(e.getMessage());
+
+                    }
+
+                    try {
+                        
+                        professor.logout();
+
+                    } catch (Exception e) {
+                        
+                        System.err.println(e.getMessage());
+
+                    }
 
                 break;
 
@@ -2139,7 +2189,7 @@ public abstract class UserCli {
 
             }
 
-        } while (opcao.intValue() != 3);
+        } while ((opcao.intValue() != 3) && (opcao.intValue() != -1));
 
     }
     
@@ -2168,7 +2218,7 @@ public abstract class UserCli {
     private String getTurmaId (Professor professor) {
 
         System.out.println();
-        System.out.println(professor.getTurmas());
+        System.out.println(professor.getTurmas().values());
         System.out.println();
         System.out.println("|" + repeteCaracter('-', 80) + "|");
         System.out.printf("|%-80s|\n", "Digite o ID da turma:");

@@ -147,7 +147,6 @@ public final class Professor extends Usuario {
      */
     public Turma criaTurma (String senha) {
 
-        if (!this.getAutenticacao()) throw new IllegalStateException("\nERRO: Autenticação necessária para executar tais ações!");
         if ((senha == null) || (senha.isEmpty())) throw new IllegalArgumentException("\nERRO: Senha não pode estar vazia!");
 
         Turma turma = null;

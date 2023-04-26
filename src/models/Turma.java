@@ -119,8 +119,6 @@ public class Turma implements Serializable {
 
         DataHelper.ordena(Turma.IDs, 0, (Turma.IDs.size() - 1));
 
-        System.out.println("\n" + Turma.IDs);
-
     }
 
     /**
@@ -177,8 +175,6 @@ public class Turma implements Serializable {
 
         DataHelper.ordena(this.alunos, 0, (this.alunos.size() - 1));
 
-        System.out.println(this.alunos);
-
     }
 
     /**
@@ -231,6 +227,32 @@ public class Turma implements Serializable {
 
         return alunos;
 
+    }
+
+    @Override
+    public String toString() {
+        
+        System.out.println("|" + DataHelper.repeteCaracter('-', 80) + "|");
+        System.out.printf("|ID DA TURMA %-67s|\n", this.getId());
+        System.out.println("|" + DataHelper.repeteCaracter('-', 80) + "|");
+
+        List<Aluno> alunos = this.getAlunos();
+
+        alunos.forEach((aluno) -> {
+
+            System.out.printf("|Aluno: %-73s|\n", aluno.getNomeCompleto());
+            System.out.printf("|ID: %-76s|\n", aluno.getId());
+            System.out.println("|" + DataHelper.repeteCaracter('-', 80) + "|");
+
+        });
+
+        System.out.println("|" + DataHelper.repeteCaracter('-', 80) + "|");
+        Integer hashId = Integer.valueOf(this.hashCode());
+        System.out.printf("|HashID: %-72s|\n", hashId);
+        System.out.println("|" + DataHelper.repeteCaracter('-', 80) + "|");
+
+        return "";
+        
     }
     
 }

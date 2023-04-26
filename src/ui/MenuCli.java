@@ -25,11 +25,18 @@ public class MenuCli extends UserCli {
 
     public void menuInicialVazio () {
 
+        if (!Professor.getUsuarios().isEmpty()) {
+
+            this.menuInicialComLogin();
+            return;
+
+        }
+
         Integer opcao;
 
         do {
             
-            System.out.println("\n");
+            System.out.println();
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             String primeiraOpcao = String.format("|%20s", "1.Cadastrar Professor");
             System.out.printf("%-81s|\n", primeiraOpcao);
@@ -122,7 +129,7 @@ public class MenuCli extends UserCli {
 
         do {
             
-            System.out.println("\n");
+            System.out.println();
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             String primeiraOpcao = String.format("|%20s", "1.Cadastrar Professor");
             System.out.printf("%-81s|\n", primeiraOpcao);
@@ -522,9 +529,9 @@ public class MenuCli extends UserCli {
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             System.out.printf("|%-80s|\n", "As informações acima estão corretas? (S/N)");
             System.out.println("|" + repeteCaracter('-', 80) + "|");
-            
             System.out.printf("|%1s", "> ");
             opcao = scan.next();
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
 
         } while ((opcao.compareToIgnoreCase("n") == 0) || (opcao.compareToIgnoreCase("não") == 0) || (opcao.compareToIgnoreCase("nao") == 0));
 
@@ -796,13 +803,13 @@ public class MenuCli extends UserCli {
             System.out.printf("|Nome de usuário: %-63s|\n", nomeUsuario);
             String senhaCensurada = new String(repeteCaracter('*', senha.length()));
             System.out.printf("|Senha: %-73s|\n", senhaCensurada);
-            System.out.printf("|Nível Escolar: %-71s|\n", nivel);
+            System.out.printf("|Nível Escolar: %-65s|\n", nivel);
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             System.out.printf("|%-80s|\n", "As informações acima estão corretas? (S/N)");
             System.out.println("|" + repeteCaracter('-', 80) + "|");
-            
             System.out.printf("|%1s", "> ");
             opcao = scan.next();
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
 
         } while ((opcao.compareToIgnoreCase("n") == 0) || (opcao.compareToIgnoreCase("não") == 0) || (opcao.compareToIgnoreCase("nao") == 0));
 
@@ -821,6 +828,8 @@ public class MenuCli extends UserCli {
 
             System.out.println();
             System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%-80s|\n", "LOGIN DE ALUNO");
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
             System.out.printf("|%-80s|\n", "Digite seu nome de usuário:");
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             System.out.printf("|%1s", "> ");
@@ -832,9 +841,7 @@ public class MenuCli extends UserCli {
             System.out.printf("|%-80s|\n", "Digite sua senha:");
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             System.out.printf("|%1s", "> ");
-            String senha = scan.next();
-            complementar = scan.nextLine();
-            senha = senha + complementar;
+            String senha = new String(System.console().readPassword());
 
             try {
 
@@ -880,6 +887,8 @@ public class MenuCli extends UserCli {
 
             System.out.println();
             System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%-80s|\n", "LOGIN DE PRFESSOR");
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
             System.out.printf("|%-80s|\n", "Digite seu nome de usuário:");
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             System.out.printf("|%1s", "> ");
@@ -891,13 +900,11 @@ public class MenuCli extends UserCli {
             System.out.printf("|%-80s|\n", "Digite sua senha:");
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             System.out.printf("|%1s", "> ");
-            String senha = scan.next();
-            complementar = scan.nextLine();
-            senha = senha + complementar;
+            String senha = new String(System.console().readPassword());
 
             try {
 
-                professor = (Professor) Aluno.login(nomeUsuario, senha);
+                professor = (Professor) Professor.login(nomeUsuario, senha);
 
             } catch (Exception e) {
                 
@@ -908,6 +915,7 @@ public class MenuCli extends UserCli {
 
                 if (professor == null) {
 
+                    System.out.println();
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
                     System.out.printf("|%-80s|\n", "Deseja tentar novamente? (S/N)");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
@@ -915,6 +923,7 @@ public class MenuCli extends UserCli {
                     opcao = scan.next();
                     complementar = scan.nextLine();
                     opcao = opcao + complementar;
+                    System.out.println("|" + repeteCaracter('-', 80) + "|");
 
                 } else {
 

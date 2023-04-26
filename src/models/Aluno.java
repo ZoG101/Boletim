@@ -118,8 +118,6 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
 
         DataHelper.ordena(Aluno.IDs, 0, (Aluno.IDs.size() - 1));
 
-        System.out.println("\n" + Aluno.IDs);
-
     }
 
     /**
@@ -303,6 +301,7 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
         
         System.out.print(super.toString());
         System.out.printf("|Nível Escolar: %-71s|\n", this.getNivel());
+        System.out.printf("|Turma: %-73s|\n", this.getTurma().getId());
         System.out.println("|" + DataHelper.repeteCaracter('-', 80) + "|");
         Integer hashId = Integer.valueOf(this.hashCode());
         System.out.printf("|HashID: %-72s|\n", hashId);
@@ -311,7 +310,5 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
         return "";
 
     }
-
-    
     
 }
