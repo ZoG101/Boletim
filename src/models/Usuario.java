@@ -455,7 +455,7 @@ public abstract class Usuario implements Serializable, Autenticavel {
 
         if (!(getAutenticacao())) throw new IllegalStateException("\nERRO: O usuário precisa estar autenticado para se alterar o nome!");
         if (email.isBlank()) throw new IllegalArgumentException("\nERRO: O nome não pode ser vazio!");
-        if (this.verificaEmail(email)) throw new IllegalArgumentException("\nERRO: E-mail inválido!");
+        if (!this.verificaEmail(email)) throw new IllegalArgumentException("\nERRO: E-mail inválido!");
 
         this.email = email;
 
@@ -513,7 +513,6 @@ public abstract class Usuario implements Serializable, Autenticavel {
         if (senha == null) throw new NullPointerException("\nERRO: A senha não pode ser nula!");
         this.setPermissaoNovaSenha();
         setSenha(senha);
-        System.out.println("Sua senha foi redefinida com sucesso!");
 
     }
 

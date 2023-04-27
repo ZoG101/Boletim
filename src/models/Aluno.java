@@ -300,7 +300,7 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
     public String toString() {
         
         System.out.print(super.toString());
-        System.out.printf("|Nível Escolar: %-71s|\n", this.getNivel());
+        System.out.printf("|Nível Escolar: %-65s|\n", this.getNivel());
         System.out.printf("|Turma: %-73s|\n", this.getTurma().getId());
         System.out.println("|" + DataHelper.repeteCaracter('-', 80) + "|");
         Integer hashId = Integer.valueOf(this.hashCode());

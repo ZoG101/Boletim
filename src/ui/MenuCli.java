@@ -300,13 +300,20 @@ public class MenuCli extends UserCli {
             Pattern formato = Pattern.compile(primeiroNomeRegex, Pattern.MULTILINE);
             Matcher confirma = formato.matcher(nomeCompleto);
 
-            if ((!confirma.find()) || (nomeCompleto.length() < 4)) {
+            String nomeCompletoAux = nomeCompleto;
+
+            if ((!confirma.find()) || (nomeCompletoAux.length() < 4)) {
 
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
                 System.out.printf("|%-80s|\n", "Digite APENAS o seu primeiro nome:");
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
                 System.out.printf("|%1s", "> ");
                 primeiroNome = scan.next();
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+                nomeCompleto = nomeCompleto + primeiroNome;
+                nomeCompleto = nomeCompleto.toUpperCase();
+                primeiroNome = primeiroNome.toUpperCase();
 
             } else {
 
@@ -317,13 +324,18 @@ public class MenuCli extends UserCli {
             formato = Pattern.compile(sobrenomeRegex, Pattern.MULTILINE);
             confirma = formato.matcher(nomeCompleto);
 
-            if (!confirma.find()) {
+            if (!confirma.find() || (nomeCompletoAux.length() < 4)) {
 
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
                 System.out.printf("|%-80s|\n", "Digite APENAS o seu último nome:");
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
                 System.out.printf("|%1s", "> ");
                 sobrenome = scan.next();
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+                nomeCompleto = nomeCompleto + " " + sobrenome;
+                nomeCompleto = nomeCompleto.toUpperCase();
+                sobrenome = sobrenome.toUpperCase();
 
             } else {
 
@@ -574,13 +586,20 @@ public class MenuCli extends UserCli {
             Pattern formato = Pattern.compile(primeiroNomeRegex, Pattern.MULTILINE);
             Matcher confirma = formato.matcher(nomeCompleto);
 
-            if ((!confirma.find()) || (nomeCompleto.length() < 4)) {
+            String nomeCompletoAux = nomeCompleto;
+
+            if ((!confirma.find()) || (nomeCompletoAux.length() < 4)) {
 
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
                 System.out.printf("|%-80s|\n", "Digite APENAS o seu primeiro nome:");
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
                 System.out.printf("|%1s", "> ");
                 primeiroNome = scan.next();
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+                nomeCompleto = nomeCompleto + primeiroNome;
+                nomeCompleto = nomeCompleto.toUpperCase();
+                primeiroNome = primeiroNome.toUpperCase();
 
             } else {
 
@@ -591,13 +610,18 @@ public class MenuCli extends UserCli {
             formato = Pattern.compile(sobrenomeRegex, Pattern.MULTILINE);
             confirma = formato.matcher(nomeCompleto);
 
-            if (!confirma.find()) {
+            if (!confirma.find() || (nomeCompletoAux.length() < 4)) {
 
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
                 System.out.printf("|%-80s|\n", "Digite APENAS o seu último nome:");
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
                 System.out.printf("|%1s", "> ");
                 sobrenome = scan.next();
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+                nomeCompleto = nomeCompleto + " " + sobrenome;
+                nomeCompleto = nomeCompleto.toUpperCase();
+                sobrenome = sobrenome.toUpperCase();
 
             } else {
 

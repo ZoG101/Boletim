@@ -489,7 +489,8 @@ public final class DataHelper {
         Pattern formato = Pattern.compile("^(?!.*[ !@#$%^&*_=+-]).{4,20}$");
         Matcher confirma = formato.matcher(u);
 
-        if ((!confirma.matches()) || (Professor.getUsuarios().containsKey(u))) return Boolean.FALSE;
+        if ((Professor.getUsuarios().containsKey(u))) throw new IllegalArgumentException("\nERRO: Nome de usuário já está em uso, tente outro.");
+        if ((!confirma.matches())) return Boolean.FALSE;
         return Boolean.TRUE;
 
     }

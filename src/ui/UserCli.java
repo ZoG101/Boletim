@@ -31,16 +31,16 @@ public abstract class UserCli {
 
             System.out.println();
             System.out.println("|" + repeteCaracter('-', 80) + "|");
-            String intrudocao = String.format("|%20s", aluno.getNomeCompleto());
+            String intrudocao = String.format("|%14s", aluno.getNomeCompleto());
             System.out.printf("%-81s|\n", intrudocao);
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             String primeiraOpcao = String.format("|%20s", "1.Ver informações de perfil");
             System.out.printf("%-81s|\n", primeiraOpcao);
             System.out.println("|" + repeteCaracter('-', 80) + "|");
-            String segundaOpcao = String.format("|%20s", "2.Boletim");
+            String segundaOpcao = String.format("|%9s", "2.Boletim");
             System.out.printf("%-81s|\n", segundaOpcao);
             System.out.println("|" + repeteCaracter('-', 80) + "|");
-            String terceiraOpcao = String.format("|%20s", "3.Sair");
+            String terceiraOpcao = String.format("|%6s", "3.Sair");
             System.out.printf("%-81s|\n", terceiraOpcao);
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             System.out.printf("|%1s", "> ");
@@ -409,42 +409,45 @@ public abstract class UserCli {
     private void editorPerfil (Usuario user) {
 
         Integer opcao;
-        System.out.println();
-        System.out.println("|" + repeteCaracter('-', 80) + "|");
-        String primeiraOpcao = String.format("|%14s", "1.Alterar nome");
-        System.out.printf("%-81s|\n", primeiraOpcao);
-        System.out.println("|" + repeteCaracter('-', 80) + "|");
-        String segundaOpcao = String.format("|%13s", "2.Alterar CPF");
-        System.out.printf("%-81s|\n", segundaOpcao);
-        System.out.println("|" + repeteCaracter('-', 80) + "|");
-        String terceiraOpcao = String.format("|%18s", "3.Alterar telefone");
-        System.out.printf("%-81s|\n", terceiraOpcao);
-        System.out.println("|" + repeteCaracter('-', 80) + "|");
-        String quartaOpcao = String.format("|%16s", "4.Alterar E-mail");
-        System.out.printf("%-81s|\n", quartaOpcao);
-        System.out.println("|" + repeteCaracter('-', 80) + "|");
-        String quintaOpcao = String.format("|%20s", "5.Alterar nome de usuário");
-        System.out.printf("%-81s|\n", quintaOpcao);
-        System.out.println("|" + repeteCaracter('-', 80) + "|");
-        String sextaOpcao = String.format("|%20s", "6.Alterar senha de usuário");
-        System.out.printf("%-81s|\n", sextaOpcao);
-        System.out.println("|" + repeteCaracter('-', 80) + "|");
-        String setimaOpcao = String.format("|%8s", "7.Voltar");
-        System.out.printf("%-81s|\n", setimaOpcao);
-        System.out.println("|" + repeteCaracter('-', 80) + "|");
-        System.out.printf("|%1s", "> ");
-        opcao = Integer.valueOf(scan.nextInt());
-        System.out.println("|" + repeteCaracter('-', 80) + "|");
-        Boolean resultado = null;
 
         do {
 
+            System.out.println();
             System.out.println(user);
+
+            System.out.println();
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            String primeiraOpcao = String.format("|%14s", "1.Alterar nome");
+            System.out.printf("%-81s|\n", primeiraOpcao);
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            String segundaOpcao = String.format("|%13s", "2.Alterar CPF");
+            System.out.printf("%-81s|\n", segundaOpcao);
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            String terceiraOpcao = String.format("|%18s", "3.Alterar telefone");
+            System.out.printf("%-81s|\n", terceiraOpcao);
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            String quartaOpcao = String.format("|%16s", "4.Alterar E-mail");
+            System.out.printf("%-81s|\n", quartaOpcao);
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            String quintaOpcao = String.format("|%20s", "5.Alterar nome de usuário");
+            System.out.printf("%-81s|\n", quintaOpcao);
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            String sextaOpcao = String.format("|%20s", "6.Alterar senha de usuário");
+            System.out.printf("%-81s|\n", sextaOpcao);
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            String setimaOpcao = String.format("|%8s", "7.Voltar");
+            System.out.printf("%-81s|\n", setimaOpcao);
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%1s", "> ");
+            opcao = Integer.valueOf(scan.nextInt());
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            Boolean resultado = null;
 
             switch (opcao) {
 
                 case 1:
 
+                    System.out.println("|" + repeteCaracter('-', 80) + "|");
                     System.out.printf("|Sua escolha: %-67s|\n", "Alterar nome.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
                     resultado = Boolean.FALSE;
@@ -472,6 +475,7 @@ public abstract class UserCli {
 
                 case 2:
 
+                    System.out.println("|" + repeteCaracter('-', 80) + "|");
                     System.out.printf("|Sua escolha: %-67s|\n", "Alterar CPF.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
                     resultado = Boolean.FALSE;
@@ -634,6 +638,7 @@ public abstract class UserCli {
 
         do {
 
+            System.out.println();
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             System.out.printf("|%-80s|\n", "Digite sua senha:");
             System.out.println("|" + repeteCaracter('-', 80) + "|");
@@ -649,11 +654,13 @@ public abstract class UserCli {
             String confirmacao = scan.next();
             complementar = scan.nextLine();
             confirmacao = confirmacao + complementar;
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
 
             if (senha.compareTo(confirmacao) == 0) confirmaSenha = Boolean.TRUE;
 
             while ((!DataHelper.verificaSenha(senha)) || (!confirmaSenha)) {
 
+                System.out.println();
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
                 System.out.printf("|ATENÇÃO: %-71s|\n", "FORMATO DE SENHA INVÁLIDA OU A SENHA NÃO FOI REPETIDA CORRETAMENTE!");
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
@@ -677,6 +684,7 @@ public abstract class UserCli {
                 confirmacao = scan.next();
                 complementar = scan.nextLine();
                 confirmacao = confirmacao + complementar;
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
 
                 if (senha.compareTo(confirmacao) == 0) confirmaSenha = Boolean.TRUE;
 
@@ -709,6 +717,7 @@ public abstract class UserCli {
 
         do {
 
+            System.out.println();
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             System.out.printf("|%-80s|\n", "Digite seu nome de usuário:");
             System.out.println("|" + repeteCaracter('-', 80) + "|");
@@ -716,9 +725,11 @@ public abstract class UserCli {
             nomeUsuario = scan.next();
             complementar = scan.nextLine();
             nomeUsuario = nomeUsuario + complementar;
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
 
             while (!DataHelper.verificaUsuário(nomeUsuario)) {
 
+                System.out.println();
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
                 System.out.printf("|ATENÇÃO: %-71s|\n", "NOME DE USUÁRIO INVÁLIDO! TENTE NOVAMENTE.");
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
@@ -757,6 +768,7 @@ public abstract class UserCli {
 
         do {
 
+            System.out.println();
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             System.out.printf("|%-80s|\n", "Digite seu e-mail:");
             System.out.println("|" + repeteCaracter('-', 80) + "|");
@@ -804,6 +816,7 @@ public abstract class UserCli {
 
         do {
 
+            System.out.println();
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             System.out.printf("|%-80s|\n", "Digite seu número de telefone:");
             System.out.println("|" + repeteCaracter('-', 80) + "|");
@@ -853,6 +866,7 @@ public abstract class UserCli {
 
         do {
 
+            System.out.println();
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             System.out.printf("|%-80s|\n", "Digite seu cpf:");
             System.out.println("|" + repeteCaracter('-', 80) + "|");
@@ -920,13 +934,22 @@ public abstract class UserCli {
             Pattern formato = Pattern.compile(primeiroNomeRegex, Pattern.MULTILINE);
             Matcher confirma = formato.matcher(nomeCompleto);
 
-            if ((!confirma.find()) || (nomeCompleto.length() < 4)) {
+            String nomeCompletoAux = nomeCompleto;
+
+            if ((!confirma.find()) || (nomeCompletoAux.length() < 4)) {
+
+                nomeCompleto = "";
 
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
                 System.out.printf("|%-80s|\n", "Digite APENAS o seu primeiro nome:");
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
                 System.out.printf("|%1s", "> ");
                 primeiroNome = scan.next();
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+                nomeCompleto = nomeCompleto + primeiroNome;
+                nomeCompleto = nomeCompleto.toUpperCase();
+                primeiroNome = primeiroNome.toUpperCase();
 
             } else {
 
@@ -937,13 +960,18 @@ public abstract class UserCli {
             formato = Pattern.compile(sobrenomeRegex, Pattern.MULTILINE);
             confirma = formato.matcher(nomeCompleto);
 
-            if (!confirma.find()) {
+            if (!confirma.find() || (nomeCompletoAux.length() < 4)) {
 
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
                 System.out.printf("|%-80s|\n", "Digite APENAS o seu último nome:");
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
                 System.out.printf("|%1s", "> ");
                 sobrenome = scan.next();
+                System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+                nomeCompleto = nomeCompleto + " " + sobrenome;
+                nomeCompleto = nomeCompleto.toUpperCase();
+                sobrenome = sobrenome.toUpperCase();
 
             } else {
 
