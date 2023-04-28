@@ -237,8 +237,8 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
      */
     public void criarBoletim (Professor professor) {
 
+        if (this.verificaBoletim(professor)) throw new RejectedExecutionException("\nERRO: Já existe um boletim da matéria deste professor para este aluno! \nMatéria: " + professor.getMateria()); 
         Boletim a = new Boletim(this, professor);
-        if (!this.verificaBoletim(professor)) throw new RejectedExecutionException("\nERRO: Já existe um boletim da matéria deste professor para este aluno! \n Matéria: " + professor.getMateria()); 
         this.adicionarBoletim(a);
 
     }
@@ -284,6 +284,7 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
 
     public List<Boletim> getBoletins () {
 
+        System.out.println();
         if (!this.boletins.isEmpty()) return Collections.unmodifiableList(this.boletins);
         return null;
 
@@ -302,6 +303,7 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
         System.out.print(super.toString());
         System.out.printf("|Nível Escolar: %-65s|\n", this.getNivel());
         System.out.printf("|Turma: %-73s|\n", this.getTurma().getId());
+        System.out.printf("|ID: %-76s|\n", this.getId());
         System.out.println("|" + DataHelper.repeteCaracter('-', 80) + "|");
         Integer hashId = Integer.valueOf(this.hashCode());
         System.out.printf("|HashID: %-72s|\n", hashId);

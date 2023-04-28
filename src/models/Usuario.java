@@ -766,6 +766,16 @@ public abstract class Usuario implements Serializable, Autenticavel {
 
     }
 
+    public void login (Professor professor, Usuario aluno) {
+
+        if (!(professor.getAutenticacao())) throw new IllegalStateException("\nERRO: O professor tem que estar autenticado para executar esta ação!");
+        if (!(aluno instanceof Aluno)) throw new IllegalArgumentException("\nERRO: Um aluno deve ser fornecido para autenticação temporária.");
+
+        aluno = (Aluno) aluno;
+        aluno.autenticado = Boolean.TRUE;
+
+    }
+
     public void logout () {
 
         if (!(getAutenticacao())) throw new IllegalStateException("\nERRO: Usuário tem que estar autenticado para acessar esta área!");

@@ -1,5 +1,8 @@
 package ui;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -1003,46 +1006,47 @@ public abstract class UserCli {
     private void controleBoletim (Boletim boletim) {
 
         Integer opcao;
-        System.out.println();
-        System.out.println("|" + repeteCaracter('-', 80) + "|");
-        String primeiraOpcao = String.format("|%20s", "1.Gerar Boletim");
-        System.out.printf("%-81s|\n", primeiraOpcao);
-        System.out.println("|" + repeteCaracter('-', 80) + "|");
-        String segundaOpcao = String.format("|%20s", "2.Verificar estado de aprovação");
-        System.out.printf("%-81s|\n", segundaOpcao);
-        System.out.println("|" + repeteCaracter('-', 80) + "|");
-        String terceiraOpcao = String.format("|%20s", "3.Porcentagem de faltas");
-        System.out.printf("%-81s|\n", terceiraOpcao);
-        System.out.println("|" + repeteCaracter('-', 80) + "|");
-        String quartaOpcao = String.format("|%20s", "4.Verificar matéria do boletim");
-        System.out.printf("%-81s|\n", quartaOpcao);
-        System.out.println("|" + repeteCaracter('-', 80) + "|");
-        String quintaOpcao = String.format("|%20s", "5.Verificar média do aluno");
-        System.out.printf("%-81s|\n", quintaOpcao);
-        System.out.println("|" + repeteCaracter('-', 80) + "|");
-        String sextaOpcao = String.format("|%20s", "6.Verificar nível do aluno");
-        System.out.printf("%-81s|\n", sextaOpcao);
-        System.out.println("|" + repeteCaracter('-', 80) + "|");
-        String setimaOpcao = String.format("|%20s", "7.Verificar última nota adicionada");
-        System.out.printf("%-81s|\n", setimaOpcao);
-        System.out.println("|" + repeteCaracter('-', 80) + "|");
-        String oitavaOpcao = String.format("|%20s", "8.Verificar última nota adicionada");
-        System.out.printf("%-81s|\n", oitavaOpcao);
-        System.out.println("|" + repeteCaracter('-', 80) + "|");
-        String nonaOpcao = String.format("|%20s", "9.Adicionar falta");
-        System.out.printf("%-81s|\n", nonaOpcao);
-        System.out.println("|" + repeteCaracter('-', 80) + "|");
-        String decimaOpcao = String.format("|%20s", "10.Adicionar mais de uma falta");
-        System.out.printf("%-81s|\n", decimaOpcao);
-        System.out.println("|" + repeteCaracter('-', 80) + "|");
-        String decimaPrimeiraOpcao = String.format("|%20s", "11.Sair");
-        System.out.printf("%-81s|\n", decimaPrimeiraOpcao);
-        System.out.println("|" + repeteCaracter('-', 80) + "|");
-        System.out.printf("|%1s", "> ");
-        opcao = Integer.valueOf(scan.nextInt());
-        System.out.println("|" + repeteCaracter('-', 80) + "|");
 
         do {
+
+            System.out.println();
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            String primeiraOpcao = String.format("|%15s", "1.Gerar Boletim");
+            System.out.printf("%-81s|\n", primeiraOpcao);
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            String segundaOpcao = String.format("|%20s", "2.Verificar estado de aprovação");
+            System.out.printf("%-81s|\n", segundaOpcao);
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            String terceiraOpcao = String.format("|%20s", "3.Porcentagem de faltas");
+            System.out.printf("%-81s|\n", terceiraOpcao);
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            String quartaOpcao = String.format("|%20s", "4.Verificar matéria do boletim");
+            System.out.printf("%-81s|\n", quartaOpcao);
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            String quintaOpcao = String.format("|%20s", "5.Verificar média do aluno");
+            System.out.printf("%-81s|\n", quintaOpcao);
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            String sextaOpcao = String.format("|%20s", "6.Verificar nível do aluno");
+            System.out.printf("%-81s|\n", sextaOpcao);
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            String setimaOpcao = String.format("|%20s", "7.Verificar última nota adicionada");
+            System.out.printf("%-81s|\n", setimaOpcao);
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            String oitavaOpcao = String.format("|%16s", "8.Adicionar nota");
+            System.out.printf("%-81s|\n", oitavaOpcao);
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            String nonaOpcao = String.format("|%17s", "9.Adicionar falta");
+            System.out.printf("%-81s|\n", nonaOpcao);
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            String decimaOpcao = String.format("|%20s", "10.Adicionar mais de uma falta");
+            System.out.printf("%-81s|\n", decimaOpcao);
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            String decimaPrimeiraOpcao = String.format("|%7s", "11.Sair");
+            System.out.printf("%-81s|\n", decimaPrimeiraOpcao);
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%1s", "> ");
+            opcao = Integer.valueOf(scan.nextInt());
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
 
             switch (opcao.intValue()) {
 
@@ -1050,6 +1054,7 @@ public abstract class UserCli {
 
                     System.out.printf("|Sua escolha: %-67s|\n", "Gerar boletim.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
+                    System.out.println();
 
                     try {
 
@@ -1115,7 +1120,7 @@ public abstract class UserCli {
 
                     try {
 
-                        System.out.println(boletim.getFalta() + "%");
+                        System.out.printf("|Porcentagem: %-67s|\n", (boletim.getFalta() + "%"));
 
                     } catch (Exception e) {
 
@@ -1137,7 +1142,7 @@ public abstract class UserCli {
 
                     try {
 
-                        System.out.printf("|%-80s|\n", boletim.getMateria());
+                        System.out.printf("|Matéria: %-71s|\n", boletim.getMateria());
 
                     } catch (Exception e) {
 
@@ -1159,7 +1164,7 @@ public abstract class UserCli {
 
                     try {
 
-                        System.out.printf("|%-80s|\n", boletim.getMediaFormatada());
+                        System.out.printf("|Média: %-73s|\n", boletim.getMediaFormatada());
 
                     } catch (Exception e) {
 
@@ -1181,7 +1186,7 @@ public abstract class UserCli {
 
                     try {
 
-                        System.out.printf("|%-80s|\n", boletim.getNivel());
+                        System.out.printf("|Nível de escolaridade: %-57s|\n", boletim.getNivel());
 
                     } catch (Exception e) {
 
@@ -1217,7 +1222,7 @@ public abstract class UserCli {
 
                 case 8:
 
-                    System.out.printf("|Sua escolha: %-67s|\n", "Verificar última nota adicionada.");
+                    System.out.printf("|Sua escolha: %-67s|\n", "Adicionar nota.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
                     Boolean resultado = Boolean.FALSE;
 
@@ -1266,7 +1271,7 @@ public abstract class UserCli {
 
                 case 10:
 
-                    System.out.printf("|Sua escolha: %-67s|\n", "Adicionar falta.");
+                    System.out.printf("|Sua escolha: %-67s|\n", "Adicionar mais de uma falta.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
                     Boolean resultadoAdicao = Boolean.FALSE;
 
@@ -1314,20 +1319,42 @@ public abstract class UserCli {
 
     private Boolean adicionarFaltas(Boletim boletim) {
 
+        System.out.println();
         System.out.println("|" + repeteCaracter('-', 80) + "|");
         System.out.printf("|%-80s|\n", "Digite o número de faltas:");
         System.out.println("|" + repeteCaracter('-', 80) + "|");
         System.out.printf("|%-80s|\n", "Aperte 'ENTER' em vazio para cancelar");
         System.out.println("|" + repeteCaracter('-', 80) + "|");
         System.out.printf("|%1s", "> ");
-        String faltas = scan.next();
+        InputStream fis = System.in;
+        InputStreamReader isr = new InputStreamReader(fis);
+        BufferedReader br = new BufferedReader(isr);
+        String faltas = "";
+
+        try {
+            
+            faltas = br.readLine();
+
+        } catch (Exception e) {
+           
+            System.err.println(e.getMessage());
+            
+        }
+
         String complementar = scan.nextLine();
         faltas = faltas + complementar;
 
         Pattern formato = Pattern.compile("^([0-9]){0,3}$");
         Matcher matcher = formato.matcher(faltas);
 
-        if (!matcher.matches()) {
+        if (faltas.isBlank()) {
+
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            System.out.printf("|%-80s|\n", "Nenhuma nota foi adicionada.");
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+            return Boolean.FALSE;
+
+        } else if (!matcher.matches()) {
 
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             System.out.printf("|%-80s|\n", "Você não digitou um número.");
@@ -1336,14 +1363,7 @@ public abstract class UserCli {
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             return Boolean.FALSE;
 
-        } else if (faltas.isEmpty()) {
-
-            System.out.println("|" + repeteCaracter('-', 80) + "|");
-            System.out.printf("|%-80s|\n", "Nenhuma nota foi adicionada.");
-            System.out.println("|" + repeteCaracter('-', 80) + "|");
-            return Boolean.FALSE;
-
-        }
+        } 
 
         try {
             
@@ -1382,7 +1402,7 @@ public abstract class UserCli {
             while (boletim.getListNotas().size() < 3) {
 
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
-                System.out.printf("|%-80s|\n", "Digite a " + (boletim.getListNotas().size() + 1) + " nota do aluno(a):");
+                System.out.printf("|%-80s|\n", "Digite a " + (boletim.getListNotas().size() + 1) + "ª nota do aluno(a):");
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
                 System.out.printf("|%1s", "> ");
                 nota = scan.next();
@@ -1432,7 +1452,7 @@ public abstract class UserCli {
             while (boletim.getListNotas().size() < 2) {
 
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
-                System.out.printf("|%-80s|\n", "Digite a " + (boletim.getListNotas().size() + 1) + " nota do aluno(a):");
+                System.out.printf("|%-80s|\n", "Digite a " + (boletim.getListNotas().size() + 1) + "ª nota do aluno(a):");
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
                 System.out.printf("|%1s", "> ");
                 nota = scan.next();
@@ -1867,7 +1887,7 @@ public abstract class UserCli {
         String opcao2 = String.format("|%20s", "2.Procurar pelo boletim de outra matéria");
         System.out.printf("%-81s|\n", opcao2);
         System.out.println("|" + repeteCaracter('-', 80) + "|");
-        String opcao3 = String.format("|%20s", "3.Cancelar");
+        String opcao3 = String.format("|%10s", "3.Cancelar");
         System.out.printf("%-81s|\n", opcao3);
         System.out.println("|" + repeteCaracter('-', 80) + "|");
         System.out.printf("|%1s", "> ");
@@ -2009,19 +2029,22 @@ public abstract class UserCli {
 
             for (int i = 0; i < alunosRetornados.size(); i++) {
 
+                System.out.println();
+                alunosRetornados.get(i).login(professor, alunosRetornados.get(i));
                 System.out.println((i + 1) + "." + alunosRetornados.get(i));
+                alunosRetornados.get(i).logout();
 
             }
 
             System.out.println();
             System.out.println("|" + repeteCaracter('-', 80) + "|");
-            System.out.printf("|%-80s|\n", "Digite o nome do aluno:");
+            System.out.printf("|%-80s|\n", "Digite o número da posição do aluno:");
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             System.out.printf("|%1s", "> ");
             Integer alunoPos = Integer.valueOf(scan.nextInt());
             System.out.println("|" + repeteCaracter('-', 80) + "|");
 
-            aluno = alunosRetornados.get(alunoPos + 1);
+            aluno = alunosRetornados.get(alunoPos - 1);
 
             if (aluno != null) return aluno;
 
@@ -2056,6 +2079,11 @@ public abstract class UserCli {
             System.err.println(e.getMessage());
             
         }
+
+        System.out.println();
+        aluno.login(professor, aluno);
+        System.out.println(aluno);
+        aluno.logout();
 
         return aluno;
 

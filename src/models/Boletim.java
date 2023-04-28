@@ -622,9 +622,16 @@ public class Boletim implements Serializable, Comparable<Boletim> {
         Double a = Double.valueOf(0);
         Double b = Double.valueOf(0);
 
-        if (this.notas.size() > 0 && this.notas.size() <= 2) {
+        if (this.notas.size() >= 0 && this.notas.size() <= 2) {
 
             switch (this.notas.size()){
+
+                case 0:
+
+                    a = Double.valueOf(0);
+                    b = Double.valueOf(0);
+
+                break;
 
                 case 1:
 

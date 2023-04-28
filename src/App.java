@@ -12,7 +12,6 @@ import security.Token;
  */
 
 import models.Aluno;
-import models.Boletim;
 import models.Professor;
 import models.Turma;
 import ui.MenuCli;
@@ -22,13 +21,12 @@ public class App {
     public static void main (String[] args) {
 
         Professor professor = new Professor("MARCOS FILHO", "MARCOS", "FILHO","28001238938", "(22) 2222-2222", null, "Zinc", "asdfS1", "Matemática");
-        Aluno aluno = new Aluno("DAVI CAMPOLINA", "DAVI", "CAMPOLINA", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "Blab", "Zasp23", "POSGRADUACAO");
+        Aluno aluno = new Aluno("DAVI CAMPOLINA", "DAVI", "CAMPOLINA", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "Blab", "Zasp23", "PÓS-GRADUAÇÃO");
         Professor.login("Zinc", "asdfS1");
         Turma turmaNova = professor.criaTurma("asdfS1");
         turmaNova.adicionarAluno(aluno);
+        professor.criaBoletim(aluno);
         professor.logout();
-        Boletim nota = new Boletim(aluno, professor);
-        System.out.println(nota);
         
 
         //nota.setFalta();
