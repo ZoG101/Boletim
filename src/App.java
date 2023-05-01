@@ -20,14 +20,14 @@ public class App {
 
     public static void main (String[] args) {
 
+        Professor professor2 = new Professor("MARCOS FILHO", "MARCOS", "FILHO","28001238938", "(22) 2222-2222", null, "Zinsc", "asdfS1", "PORTUGUÊS");
         Professor professor = new Professor("MARCOS FILHO", "MARCOS", "FILHO","28001238938", "(22) 2222-2222", null, "Zinc", "asdfS1", "Matemática");
         Aluno aluno = new Aluno("DAVI CAMPOLINA", "DAVI", "CAMPOLINA", "280.012.389-38", "(11) 1111-1111", "blavla@gamil.com", "Blab", "Zasp23", "PÓS-GRADUAÇÃO");
         Professor.login("Zinc", "asdfS1");
         Turma turmaNova = professor.criaTurma("asdfS1");
         turmaNova.adicionarAluno(aluno);
-        professor.criaBoletim(aluno);
         professor.logout();
-        
+        aluno.criarBoletim(professor2);
 
         //nota.setFalta();
 

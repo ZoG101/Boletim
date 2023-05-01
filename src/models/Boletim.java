@@ -492,7 +492,7 @@ public class Boletim implements Serializable, Comparable<Boletim> {
     private void printTitulo () {
 
         hoje = LocalDate.now();
-        String titulo = String.format("Boletim do Aluno - Mês: %s Ano: %-44d|\n| Nome do Aluno: %-64s|\n| Nome do Professor: %-60s|\n| Matéria: %-70s|",
+        String titulo = String.format("Boletim do Aluno - Mês: %s Ano: %-45d|\n| Nome do Aluno: %-64s|\n| Nome do Professor: %-60s|\n| Matéria: %-70s|",
         hoje.getMonth().getDisplayName(TextStyle.FULL, new Locale("pt", "BR")),
         hoje.getYear(), this.getAlunoNome(), this.getProfessorNome(), this.getMateria());
         System.out.printf("| %-79s\n", titulo);

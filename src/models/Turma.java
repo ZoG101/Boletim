@@ -232,8 +232,10 @@ public class Turma implements Serializable {
     @Override
     public String toString() {
         
+        System.out.println();
         System.out.println("|" + DataHelper.repeteCaracter('-', 80) + "|");
-        System.out.printf("|ID DA TURMA %-67s|\n", this.getId());
+        System.out.printf("|ID DA TURMA %-68s|\n", this.getId());
+        System.out.println("|" + DataHelper.repeteCaracter('-', 80) + "|");
         System.out.println("|" + DataHelper.repeteCaracter('-', 80) + "|");
 
         List<Aluno> alunos = this.getAlunos();

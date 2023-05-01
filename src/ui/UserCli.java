@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -234,13 +233,7 @@ public abstract class UserCli {
 
                     }
 
-                    Collection<Turma> turmasColecao = turmas.values();
-
-                    for (Turma turma : turmasColecao) {
-
-                        System.out.println(turma.getAlunos());
-
-                    }
+                    System.out.println(turmas.values());
 
                 break;
 
@@ -278,16 +271,32 @@ public abstract class UserCli {
 
                     System.out.printf("|Sua escolha: %-67s|\n", "Criar turma.");
                     System.out.println("|" + repeteCaracter('-', 80) + "|");
+                    Boolean result = Boolean.FALSE;
 
                     try {
 
-                        this.criaTurma(professor);
+                        result = this.criaTurma(professor);
 
                     } catch (Exception e) {
                         
                         System.err.println(e.getMessage());
 
                     }
+
+                    if (!result) {
+
+                        System.out.println();
+                        System.out.println("|" + repeteCaracter('-', 80) + "|");
+                        System.out.printf("|%-80s|\n", "Nenhuma turma foi criada!");
+                        System.out.println("|" + repeteCaracter('-', 80) + "|");
+                        break;
+
+                    }
+
+                    System.out.println();
+                    System.out.println("|" + repeteCaracter('-', 80) + "|");
+                    System.out.printf("|%-80s|\n", "Turma foi criada com sucesso!");
+                    System.out.println("|" + repeteCaracter('-', 80) + "|");
 
                 break;
 
@@ -317,7 +326,7 @@ public abstract class UserCli {
 
                     }
 
-                    System.out.println(alunoRetornado);
+                    this.exibeAluno(professor, alunoRetornado);
 
                 break;
 
@@ -347,7 +356,7 @@ public abstract class UserCli {
 
                     }
 
-                    System.out.println(alunoRetornadoPorId);
+                    this.exibeAluno(professor, alunoRetornadoPorId);
 
                 break;
 
@@ -364,10 +373,11 @@ public abstract class UserCli {
                     } catch (Exception e) {
                         
                         System.err.println(e.getMessage());
+                        resultado = Boolean.FALSE;
                         
                     }
 
-                    if (resultado) {
+                    if (resultado.booleanValue()) {
 
                         System.out.println();
                         System.out.println("|" + repeteCaracter('-', 80) + "|");
@@ -406,6 +416,15 @@ public abstract class UserCli {
             }
 
         } while (opcao.intValue() != 9);
+
+    }
+
+    private void exibeAluno (Professor professor, Aluno aluno) {
+
+        System.out.println();
+        aluno.login(professor, aluno);
+        System.out.println(aluno);
+        aluno.logout();
 
     }
 
@@ -1642,12 +1661,14 @@ public abstract class UserCli {
 
     }
 
-    private void criaTurma (Professor professor) {
+    private Boolean criaTurma (Professor professor) {
 
         String senha = null;
         Integer count = Integer.valueOf(3);
 
         do {
+
+            System.out.println();
 
             if (count < 3) {
 
@@ -1674,8 +1695,11 @@ public abstract class UserCli {
         } catch (Exception e) {
 
             System.err.println(e.getMessage());
+            return Boolean.FALSE;
 
         }
+
+        return Boolean.TRUE;
 
     } 
 
@@ -1738,7 +1762,7 @@ public abstract class UserCli {
 
                     if (boletimAluno == null) {
 
-                        System.err.println("\nNenhum boletim encontrado.");
+                        System.err.println("\nNenhum boletim seu encontrado.");
                         break;
 
                     }
@@ -1905,6 +1929,8 @@ public abstract class UserCli {
 
         do {
 
+            System.out.println();
+
             if (count.intValue() > 0) {
 
                 System.out.println("|" + repeteCaracter('-', 80) + "|");
@@ -1917,20 +1943,26 @@ public abstract class UserCli {
             System.out.printf("|%-80s|\n", "Digite a matéria (ENTER para voltar):");
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             System.out.printf("|%1s", "> ");
-            String materia = scan.next();
-            String complementar = scan.nextLine();
-            materia = materia + complementar;
-            Materia[] materias = Materia.values();
-            System.out.println();
+            String materia = "";
 
-            if (materia.isEmpty()) break;
+            try {
 
-            for (Materia m : Materia.values()) {
+                InputStream fis = System.in;
+                InputStreamReader isr = new InputStreamReader(fis);
+                BufferedReader br = new BufferedReader(isr);
+                materia = br.readLine();
 
-                System.out.println(m);
-
+            } catch (Exception e) {
+            
+                System.err.println(e.getMessage());
+                
             }
 
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+            Materia[] materias = Materia.values();
+
+            if (materia.isBlank()) break;
 
             for (Materia m : materias) {
 
@@ -1953,6 +1985,8 @@ public abstract class UserCli {
 
     private Turma retornaTurma (Professor professor) {
 
+        System.out.println();
+
         Boolean condition = Boolean.TRUE;
         Integer count = Integer.valueOf(0);
 
@@ -1970,12 +2004,24 @@ public abstract class UserCli {
             System.out.printf("|%-80s|\n", "Digite o ID (ENTER para voltar):");
             System.out.println("|" + repeteCaracter('-', 80) + "|");
             System.out.printf("|%1s", "> ");
-            String id = scan.next();
-            String complementar = scan.nextLine();
-            id = id + complementar;
-            System.out.println();
+            String id = "";
 
-            if (id.isEmpty()) break;
+            try {
+
+                InputStream fis = System.in;
+                InputStreamReader isr = new InputStreamReader(fis);
+                BufferedReader br = new BufferedReader(isr);
+                id = br.readLine();
+
+            } catch (Exception e) {
+            
+                System.err.println(e.getMessage());
+                
+            }
+
+            System.out.println("|" + repeteCaracter('-', 80) + "|");
+
+            if (id.isBlank()) break;
 
             Turma turma = null;
 
@@ -2079,11 +2125,6 @@ public abstract class UserCli {
             System.err.println(e.getMessage());
             
         }
-
-        System.out.println();
-        aluno.login(professor, aluno);
-        System.out.println(aluno);
-        aluno.logout();
 
         return aluno;
 
