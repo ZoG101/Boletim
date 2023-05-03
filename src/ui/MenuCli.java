@@ -11,11 +11,30 @@ import models.Materia;
 import models.Nivel;
 import models.Professor;
 
+/**
+ * A classe {@code MenuCli} é feita como uma interface
+ * de linha de comando (CLI) inicial, ou seja, aqui se tem
+ * o menu inicial de login e cadastro de {@code Usuario}.
+ * 
+ * @author Davi Campolina Leite Morato
+ * @version 1.0
+ * @see Aluno
+ * @see Professor
+ * @see Turma
+ * @see String
+ */
 public class MenuCli extends UserCli {
 
     private Scanner scan;
     private Charset charset;
     
+    /**
+     * Construtor da classe com o scanner e
+     * o charset padrão do usuário.
+     * 
+     * @see Charset
+     * @see Scanner
+     */
     public MenuCli () {
 
         charset = Charset.defaultCharset();
@@ -23,6 +42,16 @@ public class MenuCli extends UserCli {
 
     }
 
+    /**
+     * Método que inicializa um menu vazio, ou seja,
+     * caso não haja nenhum perfil já cadastrado.
+     * 
+     * @see Professor
+     * @see Aluno
+     * @see Integer
+     * @see String
+     * @see Exception
+     */
     public void menuInicialVazio () {
 
         if (!Professor.getUsuarios().isEmpty()) {
@@ -123,6 +152,19 @@ public class MenuCli extends UserCli {
 
     }
 
+    /**
+     * Método que inicializa um menu
+     * caso já exista algum perfil.
+     * 
+     * @return Um inteiro que representa o índice do {@code menuVazio}
+     * para cancelar sua execução em seu retorno.
+     * @see Integer
+     * @see Professor
+     * @see Aluno
+     * @see Integer
+     * @see String
+     * @see Exception
+     */
     public Integer menuInicialComLogin () {
 
         Integer opcao;
@@ -267,6 +309,16 @@ public class MenuCli extends UserCli {
 
     }
 
+    /**
+     * Método para cadastro de {@code Professor}.
+     * 
+     * @see String
+     * @see Boolean
+     * @see Pattern
+     * @see Matcher
+     * @see DataHelper
+     * @see Materia 
+     */
     private void cadastroProfessor () {
 
         String opcao;
@@ -553,6 +605,19 @@ public class MenuCli extends UserCli {
 
     }
 
+    /**
+     * Método de cadastro de {@code Aluno}.
+     * 
+     * @return {@value Aluno} criado.
+     * @see Aluno
+     * @see Professor
+     * @see Sting
+     * @see Boolean
+     * @see Pattern
+     * @see Matcher
+     * @see DataHelper
+     * @see Nivel
+     */
     private Aluno cadastroAluno () {
 
         String opcao;
@@ -843,6 +908,14 @@ public class MenuCli extends UserCli {
 
     }
 
+    /**
+     * Método para login de {@code Aluno}.
+     * 
+     * @return {@value Aluno} logado.
+     * @see Aluno
+     * @see String
+     * @see Exception
+     */
     private Aluno loginAluno () {
 
         Aluno aluno = null;
@@ -902,6 +975,14 @@ public class MenuCli extends UserCli {
 
     }
 
+    /**
+     * Método para login de {@code Professor}
+     * 
+     * @return {@value Professor} logado.
+     * @see Professor
+     * @see String
+     * @see Exception
+     */
     private Professor loginProfessor () {
 
         Professor professor = null;

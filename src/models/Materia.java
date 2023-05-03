@@ -1,5 +1,17 @@
 package models;
 
+/**
+ * O enum {@code Matéria} é feito para controle das constantes
+ * que armazenam as matérias que um {@code Aluno} pode possuir e que um
+ * {@code Professor} pode ministrar.
+ * 
+ * @author Davi Campolina Leite Morato
+ * @version 1.0
+ * @see Aluno
+ * @see Professor
+ * @see Turma
+ * @see String
+ */
 public enum Materia {
     
     MATEMATICA {
@@ -79,6 +91,12 @@ public enum Materia {
         
     };
 
+    /**
+     * Método abstrado que retornará a matéria
+     * determinada na instância do enum.
+     * 
+     * @return {@value Matéria} determinada.
+     */
     public abstract String escolherMateria ();
 
     @Override

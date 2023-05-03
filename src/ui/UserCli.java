@@ -3,6 +3,7 @@ package ui;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -19,12 +20,33 @@ import models.Professor;
 import models.Turma;
 import models.Usuario;
 
+/**
+ * A classe {@code UserCli} é feita como uma interface
+ * de linha de comando (CLI), ou seja, aqui se tem
+ * o menu de {@code Usuario} logado.
+ * 
+ * @author Davi Campolina Leite Morato
+ * @version 1.0
+ * @see Aluno
+ * @see Professor
+ * @see Turma
+ * @see String
+ */
 public abstract class UserCli {
 
-    private Scanner scan = new Scanner(System.in, "UTF-8");
+    private Scanner scan = new Scanner(System.in, Charset.defaultCharset());
     Professor usuarioProfessor;
     Aluno usuarioAluno;
 
+    /**
+     * Método que cria um menu para {@code Aluno}.
+     * 
+     * @param aluno
+     * @see Aluno
+     * @see Integer
+     * @see String
+     * @see Exception
+     */
     protected void alunoLogado (Aluno aluno) {
 
         Integer opcao;
@@ -106,6 +128,18 @@ public abstract class UserCli {
 
     }
 
+    /**
+     * Método que cria um menu para {@code Professor}.
+     * 
+     * @param professor
+     * @see Professor
+     * @see Integer
+     * @see String
+     * @see Exception
+     * @see Turma
+     * @see Aluno
+     * @see Boolean
+     */
     protected void professorLogado (Professor professor) {
 
         Integer opcao;
@@ -419,6 +453,15 @@ public abstract class UserCli {
 
     }
 
+    /**
+     * Método para exibir um determinado {@code Aluno}
+     * mesmo que ele não esteja logado.
+     * 
+     * @param professor
+     * @param aluno
+     * @see Professor
+     * @see Aluno
+     */
     private void exibeAluno (Professor professor, Aluno aluno) {
 
         System.out.println();
@@ -428,6 +471,17 @@ public abstract class UserCli {
 
     }
 
+    /**
+     * Método que cria um menu para editar um perfil
+     * de {@code Usuario}.
+     * 
+     * @param user
+     * @see Usuario
+     * @see Integer
+     * @see String
+     * @see Boolean
+     * @see Exception
+     */
     private void editorPerfil (Usuario user) {
 
         Integer opcao;
@@ -651,6 +705,17 @@ public abstract class UserCli {
 
     }
 
+    /**
+     * Método para alteração de senha do {@code Usuario}
+     * 
+     * @param user
+     * @return {@value true} caso a senha seja alterada com sucesso;
+     *          {@value false} caso não seja alterada com sucesso.
+     * @see Boolean
+     * @see Usuario
+     * @see String
+     * @see DataHelper
+     */
     private Boolean alterarSenha (Usuario user) {
 
         String opcao;
@@ -731,6 +796,17 @@ public abstract class UserCli {
 
     }
 
+    /**
+     * Método para alterar o nome de {@code Usuario}.
+     * 
+     * @param user
+     * @return {@value true} caso o nome de usuário seja alterado com sucesso;
+     *          {@value false} caso não seja alterado com sucesso.
+     * @see Boolean
+     * @see Usuario
+     * @see String
+     * @see DataHelper
+     */
     private Boolean alterarNomeUsuario (Usuario user) {
 
         String opcao;
@@ -781,6 +857,17 @@ public abstract class UserCli {
 
     }
 
+    /**
+     * Método para alteração de e-mail do {@code Usuario}.
+     * 
+     * @param user
+     * @return {@value true} caso o e-mail seja alterado com sucesso;
+     *          {@value false} caso não seja alterado com sucesso.
+     * @see Boolean
+     * @see Usuario
+     * @see String
+     * @see DataHelper 
+     */
     private Boolean alterarEmail (Usuario user) {
 
 
@@ -830,6 +917,17 @@ public abstract class UserCli {
 
     }
 
+    /**
+     * Método para alterar o número de telefone do {@code Usuario}.
+     * 
+     * @param user
+     * @return {@value true} caso o número de telefone seja alterado com sucesso;
+     *          {@value false} caso não seja alterado com sucesso.
+     * @see Boolean
+     * @see Usuario
+     * @see String
+     * @see DataHelper
+     */
     private Boolean alterarTelefone (Usuario user) {
 
         String opcao;
@@ -880,6 +978,17 @@ public abstract class UserCli {
 
     }
 
+    /**
+     * Método para alteração de CPF do {@code Usuario}.
+     * 
+     * @param user
+     * @return {@value true} caso o CPF seja alterado com sucesso.
+     *          {@value flase} caso não seja alterado com sucesso.
+     * @see Boolean
+     * @see Usuario
+     * @see String
+     * @see DataHelper
+     */
     private Boolean alterarCPF (Usuario user) {
 
         String cpf;
@@ -930,6 +1039,18 @@ public abstract class UserCli {
         
     }
 
+    /**
+     * Método para alteração do nome do {@code Usuario}.
+     * 
+     * @param user
+     * @return {@value true} caso o nome seja alterado com sucesso;
+     *          {@value false} caso nçaseja alterado com sucesso.
+     * @see Boolean
+     * @see Usuario
+     * @see String
+     * @see Pattern
+     * @see Matcher
+     */
     private Boolean alterarNome (Usuario user) {
 
         String opcao;
@@ -1022,6 +1143,15 @@ public abstract class UserCli {
 
     }
 
+    /**
+     * Método que cria um menu para controle do {@code Boletim}
+     * 
+     * @param boletim
+     * @see Boletim
+     * @see Integer
+     * @see String
+     * @see Exception
+     */
     private void controleBoletim (Boletim boletim) {
 
         Integer opcao;
@@ -1336,6 +1466,24 @@ public abstract class UserCli {
 
     }
 
+    /**
+     * Método que cria um menu para inserção de mais de uma falta
+     * para o {@code Boletim} de um determinado {@code Aluno}.
+     * 
+     * @param boletim
+     * @return {@value true} em caso de inserção co sucesso;
+     *          {@value false} em caso de inserção sem sucesso.
+     * @see Boolean
+     * @see Boletim
+     * @see String
+     * @see InputStream
+     * @see InputStreamReader
+     * @see BufferedReader
+     * @see Exception
+     * @see Pattern
+     * @see Matcher
+     * @see Integer
+     */
     private Boolean adicionarFaltas(Boletim boletim) {
 
         System.out.println();
@@ -1400,6 +1548,20 @@ public abstract class UserCli {
 
     }
 
+    /**
+     * Método para adição de notas em um {@code Boletim} de
+     * um determinado {@code Aluno}.
+     * 
+     * @param boletim
+     * @return {@value true} em coso de inserção com sucesso;
+     *          {@value false} em caso de inserção sem sucesso.
+     * @see Boolean
+     * @see Boletim
+     * @see String
+     * @see Nivel
+     * @see Double
+     * @see Exception
+     */
     private Boolean adicionarNotas (Boletim boletim) {
 
         String nota;
@@ -1512,6 +1674,21 @@ public abstract class UserCli {
 
     }
 
+    /**
+     * Método para criação de um {@code Boletim} para um
+     * determinado {@code Aluno} de um determinado {@code Professor}.
+     * 
+     * @param professor
+     * @return {@value true} Caso o boletim seja criado com sucesso;
+     *          {@value false} Caso não seja criado com sucesso.
+     * @see Boolean
+     * @see Professor
+     * @see Integer
+     * @see Aluno
+     * @see Boolean
+     * @see String
+     * @see Exception
+     */
     private Boolean criaBoletim (Professor professor) {
         
         Integer opcao = null;
@@ -1641,6 +1818,19 @@ public abstract class UserCli {
 
     }
 
+    /**
+     * Método auxiliar para criar e inserir o {@code Boletim}
+     * de um determinado {@code Professor} dentro do {@code Aluno}.
+     * 
+     * @param professor
+     * @param aluno
+     * @return {@value true} caso seja criado com sucesso.
+     *          {@value false} caso não seja criado com sucesso.
+     * @see Boolean
+     * @see Professor
+     * @see Aluno
+     * @see Exception
+     */
     private Boolean criaBoletimAluno (Professor professor, Aluno aluno) {
 
         Boolean resultado = Boolean.FALSE;
@@ -1661,6 +1851,17 @@ public abstract class UserCli {
 
     }
 
+    /**
+     * Método para criação de uma turma de um determinado {@code Professor}.
+     * 
+     * @param professor
+     * @return {@value true} caso a turma seja criada com sucesso;
+     *          {@value false} caso não seja criada com sucesso.
+     * @see Boolean
+     * @see Professor
+     * @see Integer
+     * @see String
+     */
     private Boolean criaTurma (Professor professor) {
 
         String senha = null;
@@ -1701,8 +1902,23 @@ public abstract class UserCli {
 
         return Boolean.TRUE;
 
-    } 
+    }
 
+    /**
+     * Método que cria um menu para procurar um determinado {@code Boletim}
+     * de um {@code Aluno} da própria matéria do {@code Professor}
+     * ou de outro
+     * 
+     * @return {@value Boletim} caso ele seja encontrado;
+     *          {@value null} caso o boletim não seja encontrado.
+     * @see Boletim
+     * @see Professor
+     * @see Integer
+     * @see Aluno
+     * @see Boletim
+     * @see String
+     * @see Exception
+     */
     private Boletim procuraBoletim (Professor professor) {
         
         Integer opcao = null;
@@ -1832,6 +2048,21 @@ public abstract class UserCli {
 
     }
 
+    /**
+     * Método auxiliar para procurar e retornar um {@code Boletim} de
+     * um determinado {@code Aluno}.
+     * 
+     * @param professor
+     * @param aluno
+     * @return {@value Boletim} caso seja encontrado;
+     *          {@value null} caso não seja encontrado.
+     * @see Boletim
+     * @see Professor
+     * @see Aluno
+     * @see Integer
+     * @see Exception
+     * @see String
+     */
     private Boletim retornaBoletim (Professor professor, Aluno aluno) {
 
         Integer subOpcao = Integer.valueOf(this.subMenuBoletim());
@@ -1901,6 +2132,13 @@ public abstract class UserCli {
 
     }
 
+    /**
+     * Método auxiliar para procura de {@code Boletim}.
+     * 
+     * @return {@value Integer} contendo a opção do usuário.
+     * @see Integer
+     * @see String
+     */
     private Integer subMenuBoletim () {
 
         System.out.println();
@@ -1922,6 +2160,21 @@ public abstract class UserCli {
 
     }
 
+    /**
+     * Método que procura e retorna uma determinada
+     * {@code Materia} inserida pelo {@code Usuario}
+     * 
+     * @return {@value Materia} em formato de {@value String} caso ela exista;
+     *          {@value null} caso não seja encontrada.
+     * @see String
+     * @see Boolean
+     * @see Integer
+     * @see InputStream
+     * @see InputStreamReader
+     * @see BufferedReader
+     * @see Exception
+     * @see Materia
+     */
     private String retornarMateria () {
 
         Boolean condition = Boolean.TRUE;
@@ -1983,6 +2236,23 @@ public abstract class UserCli {
 
     }
 
+    /**
+     * Método para procurar uma determinada {@code Turma}
+     * do {@code Professor}.
+     * 
+     * @param professor
+     * @return {@value Turma} caso seja encontrado;
+     *          {@value null} caso não seja encontrada.
+     * @see Turma
+     * @see Professor
+     * @see Boolean
+     * @see Integer
+     * @see String
+     * @see InputStream
+     * @see InputStreamReader
+     * @see BufferedReader
+     * @see Exception
+     */
     private Turma retornaTurma (Professor professor) {
 
         System.out.println();
@@ -2045,6 +2315,19 @@ public abstract class UserCli {
 
     }
 
+    /**
+     * Método para procura de {@code Aluno} por nome.
+     * 
+     * @param professor
+     * @return {@value Aluno} caso seja encontrado;
+     *          {@value null} caso não seja encontrado.
+     * @see Aluno
+     * @see Professor
+     * @see String
+     * @see List
+     * @see Exception
+     * @see Integer
+     */
     private Aluno retornaAluno (Professor professor) {
 
         Aluno aluno = null;
@@ -2100,6 +2383,17 @@ public abstract class UserCli {
 
     }
 
+    /**
+     * Método para procura de {@code Aluno} por nome.
+     * 
+     * @param professor
+     * @return {@value Aluno} caso seja encontrado;
+     *          {@value null} caso não seja encontrado.
+     * @see Aluno
+     * @see Professor
+     * @see String
+     * @see Exception
+     */
     private Aluno retornaAlunoID (Professor professor) {
 
         Aluno aluno = null;
@@ -2130,6 +2424,19 @@ public abstract class UserCli {
 
     }
 
+    /**
+     * Método auxiliar para inserção de um {@code Aluno} em uma
+     * {@code Turma} existente ou criar um nova e inseri-lo lá.
+     * 
+     * @param aluno
+     * @param professor
+     * @see Aluno
+     * @see Professor
+     * @see Integer
+     * @see String
+     * @see Turma
+     * @see Exception
+     */
     protected void registraAluno (Aluno aluno, Professor professor) {
 
         Integer opcao;
@@ -2312,6 +2619,16 @@ public abstract class UserCli {
 
     }
 
+    /**
+     * Método auxiliar que cria um sub-menu
+     * para solicitar o ID da turma ao {@code Usuario}
+     * e retorna esse ID em formato de {@code String}
+     * 
+     * @param professor
+     * @return {@value ID digitado}
+     * @see String
+     * @see Professor
+     */
     private String getTurmaId (Professor professor) {
 
         System.out.println();

@@ -15,7 +15,7 @@ import models.Usuario;
  * a organizar e procurar os dados dos usuários.
  * 
  * @author Davi Campolina Leite Morato
- * @version 1.3
+ * @version 1.5
  * @see Usuario
  * @see Professor
  * @see Aluno
@@ -675,6 +675,16 @@ public final class DataHelper {
 
     }
 
+    /**
+     * <p>Método auxiliar que reformata o {@code CPF} para exibição caso haja a necessidade.</p>
+     * <p>Formato de reformatação é de {@code ddddddddddd} para {@code ddd.ddd.ddd-dd}.</p>
+     * 
+     * @param cpf
+     * @return {@value CPF} reformatado.
+     * @see String
+     * @see Pattern
+     * @see Matcher
+     */
     public static String reformataCPF(String cpf) {
 
         Pattern formato = Pattern.compile("^([0-9]){3}([0-9]){3}([0-9]){3}([0-9]){2}$");
@@ -691,6 +701,17 @@ public final class DataHelper {
 
     }
 
+    /**
+     * <p>Método auxiliar que formata o {@code CPF} para um padrão para posterior
+     * armazenamento.</p>
+     * <p>Formata de {@code ddd.ddd.ddd-dd} para {@code ddddddddddd}.</p>
+     * 
+     * @param cpf
+     * @return {@value CPF} formatado.
+     * @see String
+     * @see Pattern
+     * @see Matcher
+     */
     public static String formataCPF(String cpf) {
 
         Pattern formato = Pattern.compile("^([0-9]){3}.([0-9]){3}.([0-9]){3}-([0-9]){2}$");
@@ -701,6 +722,18 @@ public final class DataHelper {
 
     }
 
+    /**
+     * <p>Método auxiliar que verifica se o telefone inserido tem um
+     * formato válio ou não.</p>
+     * 
+     * @param telefone
+     * @return {@value true} se o telefone tiver um formato válido;
+     *          {@value false} se o telefone não tiver um formato válido.
+     * @see Boolean
+     * @see String
+     * @see Pattern
+     * @see Matcher
+     */
     public static Boolean verificaTelefone (String telefone) {
 
         Pattern formato = Pattern.compile("^(?=.*[0-9])(?!.*[a-z])(?!.*[A-Z])(?!.*[!@#$%^&*_=+.]).{12,15}$");
@@ -711,6 +744,18 @@ public final class DataHelper {
 
     }
 
+    /**
+     * <p>Formata um telefone para um padrão para possível
+     * futuro armazenamento.</p>
+     * <p>Formata de {@code (DDD) ddddd-dddd} ou {@code DDDddddd-dddd}
+     * para {@code DDDddddddddd}.</p>
+     * 
+     * @param telefone
+     * @return {@value telefone} formatado.
+     * @see String
+     * @see Pattern
+     * @see Matcher
+     */
     public static String formataTelefone (String telefone) {
 
         Pattern formato = Pattern.compile("^(?=.*[0-9])(?=.*[)(])(?!.*[a-z])(?!.*[A-Z])(?!.*[!@#$%^&*_=+.]).{15}$");

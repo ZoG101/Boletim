@@ -20,7 +20,7 @@ import security.Token;
  * autentica-lo, administra-los e modifica-los.
  * 
  * @author Davi Campolina Leite Morato
- * @version 1.2
+ * @version 1.5
  * @see Professor
  * @see Aluno
  * @see Turma
@@ -252,6 +252,13 @@ public abstract class Usuario implements Serializable, Autenticavel {
 
     }
 
+    /**
+     * Retorna o nome de usuário atual.
+     * 
+     * @return {@value usuario}
+     * @throws IllegalStateException
+     * @see String
+     */
     public String getNomeUsuario () {
 
         if (!(this.getAutenticacao())) throw new IllegalStateException("\nERRO: Usuário tem que estar autenticado para acessar esta área!");
@@ -260,6 +267,15 @@ public abstract class Usuario implements Serializable, Autenticavel {
 
     }
 
+    /**
+     * Retorna o nome de usuário para um professor.
+     * 
+     * @param professor
+     * @return 	{@value usuario}
+     * @throws IllegalStateException
+     * @see String
+     * @see Professor
+     */
     public String getNomeUsuario (Professor professor) {
 
         if (!(professor.getAutenticacao())) throw new IllegalStateException("\nERRO: Usuário tem que estar autenticado para acessar esta área!");
@@ -421,6 +437,16 @@ public abstract class Usuario implements Serializable, Autenticavel {
 
     }
 
+    /**
+     * Método para redefinição de nome de usuário.
+     * 
+     * @param nomeCompleto
+     * @param primeiroNome
+     * @param sobrenome
+     * @throws IllegalStateException
+     * @throws IllegalArgumentException
+     * @see String
+     */
     public void redefinirNome (String nomeCompleto, String primeiroNome, String sobrenome) {
 
         if (!(getAutenticacao())) throw new IllegalStateException("\nERRO: O usuário precisa estar autenticado para se alterar o nome!");
@@ -432,6 +458,14 @@ public abstract class Usuario implements Serializable, Autenticavel {
 
     }
 
+    /**
+     * Método para redefinição de {@code CPF} do {@code Usuario}.
+     * 
+     * @param cpf
+     * @throws IllegalStateException
+     * @throws IllegalArgumentException
+     * @see String
+     */
     public void redefinirCPF (String cpf) {
 
         if (!(getAutenticacao())) throw new IllegalStateException("\nERRO: O usuário precisa estar autenticado para se alterar o nome!");
@@ -442,6 +476,15 @@ public abstract class Usuario implements Serializable, Autenticavel {
 
     }
 
+    /**
+     * Método para redefinição de {@code telefone} de
+     * {@code Usuario}.
+     * 
+     * @param telefone
+     * @throws IllegalStateException
+     * @throws IllegalArgumentException
+     * @see String
+     */
     public void redefinirTelefone (String telefone) {
 
         if (!(getAutenticacao())) throw new IllegalStateException("\nERRO: O usuário precisa estar autenticado para se alterar o nome!");
@@ -451,6 +494,15 @@ public abstract class Usuario implements Serializable, Autenticavel {
 
     }
 
+    /**
+     * Método para redefinição de {@code email} do
+     * {@code Usuario}.
+     * 
+     * @param email
+     * @throws IllegalStateException
+     * @throws IllegalArgumentException
+     * @see String
+     */
     public void redefinirEmail (String email) {
 
         if (!(getAutenticacao())) throw new IllegalStateException("\nERRO: O usuário precisa estar autenticado para se alterar o nome!");
@@ -732,6 +784,15 @@ public abstract class Usuario implements Serializable, Autenticavel {
 
     }
 
+    /**
+     * Método para recuperar o usuário logado.
+     * 
+     * @param usuario
+     * @return {@value usuario}
+     * @throws IllegalArgumentException
+     * @see Usuario
+     * @see String
+     */
     private static Usuario recuperaUsuario (String usuario) {
 
         if (!Usuario.usuarios.containsKey(usuario)) throw new IllegalArgumentException("\nERRO: Usuário não existe!");
@@ -766,6 +827,16 @@ public abstract class Usuario implements Serializable, Autenticavel {
 
     }
 
+    /**
+     * Método de login de usuário.
+     * 
+     * @param professor
+     * @param aluno
+     * @throws IllegalStateException
+     * @throws IllegalArgumentException
+     * @see Professor
+     * @see Usuario
+     */
     public void login (Professor professor, Usuario aluno) {
 
         if (!(professor.getAutenticacao())) throw new IllegalStateException("\nERRO: O professor tem que estar autenticado para executar esta ação!");
@@ -776,6 +847,12 @@ public abstract class Usuario implements Serializable, Autenticavel {
 
     }
 
+    /**
+     * Método para realizar o logout do {@code Usuario}.
+     * 
+     * @throws IllegalStateException
+     * @see Boolean
+     */
     public void logout () {
 
         if (!(getAutenticacao())) throw new IllegalStateException("\nERRO: Usuário tem que estar autenticado para acessar esta área!");
@@ -784,6 +861,16 @@ public abstract class Usuario implements Serializable, Autenticavel {
 
     }
 
+    /**
+     * Método para deletar um usuário.
+     * 
+     * @param professor
+     * @param nomeUsuario
+     * @throws IllegalStateException
+     * @see Professor
+     * @see String
+     * @see Usuario
+     */
     public void apagaUsuario (Professor professor, String nomeUsuario) {
 
         if (!(professor.getAutenticacao())) throw new IllegalStateException("\nERRO: Professor tem que estar autenticado para acessar esta área!");

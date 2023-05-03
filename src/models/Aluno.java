@@ -19,7 +19,7 @@ import data.DataHelper;
  * contém suas informações básicas e de maior interesse.
  * 
  * @author Davi Campolina Leite Morato
- * @version 1.3
+ * @version 1.4
  * @see Usuario
  * @see Professor
  * @see Turma
@@ -243,6 +243,17 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
 
     }
 
+    /**
+     * Método auxiliar privado que verifica se o bolitim
+     * que está sendo inserido já existe ou não.
+     * 
+     * @param professor
+     * @return {@value true} caso exista;
+     *          {@value false} caso não exista.
+     * @see Boolean
+     * @see Professor
+     * @see DataHelper
+     */
     private Boolean verificaBoletim (Professor professor) {
 
         return DataHelper.procuraBoolean(this.boletins, new Boletim(this, professor), 0, (this.boletins.size() - 1));
@@ -255,6 +266,7 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
      * 
      * @param boletim
      * @see Boletim
+     * @see DataHelper
      */
     private void adicionarBoletim (Boletim boletim) {
 
@@ -270,6 +282,10 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
      * @param professor
      * @return <p>{@value Boletim} Buscado pela matéria;<br>
      *         {@code Boletim.toString()} e {@value null} se o professor não tiver permissão de alterar o boletim.</p>
+     * @see Boletim
+     * @see String
+     * @see Professor
+     * @see DataHelper
      */
     public Boletim getBoletim (String materia, Professor professor) {
 
@@ -283,6 +299,15 @@ public final class Aluno extends Usuario implements Comparable<Aluno>{
 
     }
 
+    /**
+     * Retorna os boletins do {@code Aluno} se o 
+     * {@code Aluno} tiver {@code Boletim}
+     * 
+     * @return 	<p>Um vetor de {@value Boletim}; 
+     *          Ou {@value null} caso não tenha nenhum {@code Boletim}</p>
+     * @see List
+     * @see Collections
+     */
     public List<Boletim> getBoletins () {
 
         System.out.println();

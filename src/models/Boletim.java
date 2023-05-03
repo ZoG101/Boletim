@@ -16,7 +16,7 @@ import java.util.Locale;
  * suas operações.
  * 
  * @author Davi Campolina Leite Morato
- * @version 1.2
+ * @version 1.5
  * @see Aluno
  * @see Professor
  * @see Turma
@@ -340,6 +340,7 @@ public class Boletim implements Serializable, Comparable<Boletim> {
      * específica e gravado no objeto da classe.
      * 
      * @param m
+     * @see Double
      */
     private void setMedia (Double m) {
 
